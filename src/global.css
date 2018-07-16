@@ -1,0 +1,19 @@
+
+html, body, :global(#root) {
+  height: 100%;
+}
+
+.listHeader {
+  height: 48px; background:#FFF; line-height: 48px; padding: 0px 10px; position: relative;
+}
+.listFilter {
+  padding: 10px;
+  padding-bottom: 0px;
+}
+.listOperator {
+  position: absolute; right: 10px; top: 0px;
+}
+
+.listContent {
+  margin:10px; background:#FFF;
+}

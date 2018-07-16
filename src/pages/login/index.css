@@ -1,0 +1,21 @@
+html, body {
+  background: #f8f8f8;
+}
+
+.loginCard {
+  width:460px; position:absolute; left:50%; top:18%; margin-left: -230px;
+}
+.title {
+  text-align:center; border-bottom: 1px #f7f7f7 solid; padding-bottom:12px;
+}
+
+.loginForm {
+
+}
+.loginBtn {
+  width:100%;
+}
+
+.infoRow {
+  width:100%; text-align:center; color:#c8c8c8; padding-top:10px;
+}
