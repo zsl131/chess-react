@@ -40,14 +40,13 @@ const Role = ({
 
   const listOpts = {
     dataSource: role.datas,
-    loading: loading.models.users,
+    loading: loading.models.role,
     location,
     totalElement: role.totalElements,
     onDelConfirm: (id) => {
       dispatch({ type: 'role/deleteObj', payload: id }).then(() => {handleRefresh()});
     },
     onPageChange: (page) => {
-      // dispatch({ type: 'users/userList', payload: { page: page-1} });
       handleRefresh({page : page - 1});
     },
     onUpdate: (id) => {

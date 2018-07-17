@@ -9,7 +9,8 @@ export default {
   },
   reducers: {
     indexPage(state, { payload: data }) {
-      return {...state, menuTree: data};
+      console.log(data);
+      return {...state, menuTree: data.treeList, datas: data.menuList};
     }
   },
   effects: {
