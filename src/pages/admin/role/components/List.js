@@ -1,14 +1,14 @@
 import React from 'react';
-import { Table, Pagination } from 'antd';
+import {Menu, Pagination, Table, Icon} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 // import { ListOperator } from 'components';
-import styles from './list.css';
 import queryString from 'query-string'
 
 const List = ({
   onDelConfirm,
   onUpdate,
   onPageChange,
+  onMatchMenu,
   location,
   totalElement,
   ...listOpts
@@ -36,10 +36,18 @@ const List = ({
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.name} {...delOpts}/>
+        <ListOperator id={record.id} delName={record.name} {...delOpts}>
+          <Menu.Item>
+            <span onClick={()=>handleMatchMenu(record)}><Icon type="team"/> 授权菜单</span>
+          </Menu.Item>
+        </ListOperator>
       );
     }
   }];
+  const handleMatchMenu = (role) => {
+    // console.log("handleMatchMenu", role);
+    onMatchMenu(role);
+  }
 
   const handlePageChange = (pageNumber) => {
     onPageChange(pageNumber);

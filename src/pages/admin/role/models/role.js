@@ -1,27 +1,38 @@
 import * as roleService from '../services/roleService';
 import { message } from 'antd';
+import * as menuService from "../../menu/services/menuService";
 
 export default {
   namespace: 'role',
   state: {
     datas:[],
     item:{},
+    menuTree:[],
+    menuList:[],
+    menuElements:0,
     totalElements:0,
     addVisible: false,
-    updateVisible: false
+    updateVisible: false,
+    matchMenuVisible: false,
+    curRole:[],
+    curAuthMenu:[],
   },
   reducers: {
     'list'(state, { payload: datas }) {
-      console.log("listRole", datas);
+      // console.log("listRole", datas);
       return {...state, datas: datas.datas, totalElements: datas.size};
     },
     'setModalVisible'(state, { payload: options }) {
       return {...state, ...options};
     },
     'updateItem'(state, { payload: obj }) {
-      console.log("updateItem", obj);
+      // console.log("updateItem", obj);
       return {...state, updateVisible: true, item: obj};
-    }
+    },
+    showMenus(state, { payload: data }) {
+      // console.log(data);
+      return {...state, menuTree: data.treeList, menuElements: data.menuList.length, menuList: data.menuList, matchMenuVisible: true};
+    },
   },
   effects: {
     *listObj({ payload: query }, { call, put }) {
@@ -39,7 +50,7 @@ export default {
       yield call(roleService.deleteObj, {id});
     },
     *update({ payload: id }, { call, put }) {
-      console.log("update---->", id);
+      // console.log("update---->", id);
       const data = yield call(roleService.loadOne, {id});
       if(data.size) {
         yield put({ type: 'updateItem', payload: data.datas });
@@ -49,6 +60,19 @@ export default {
     },
     *updateRole({ payload: obj }, { call, put }) {
       yield call(roleService.update, obj);
+    },
+    *queryMenus({ payload: query }, { put, call }) {
+      // console.log("queryMenus::", query);
+      const data = yield call(menuService.listRoot, query);
+      const data2 = yield call(roleService.listMenuIds, query);
+
+      yield put({ type: 'setModalVisible', payload: { curAuthMenu: data2.datas } });
+      yield put({ type: 'showMenus', payload: data.datas });
+      // console.log("data2===", data2);
+    },
+    *authMenu({ payload: obj }, { call }) {
+      const data = yield call(roleService.authMenu, obj);
+      message.success(data.datas);
     }
   },
   subscriptions: {

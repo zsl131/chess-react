@@ -21,10 +21,20 @@ function loadOne(id) {
   return request("roleService.loadOne", JSON.stringify(id), true);
 }
 
+function listMenuIds(rid) {
+  return request("roleService.listRoleMenuIds", JSON.stringify(rid), true);
+}
+
+function authMenu(obj) {
+  return request("roleService.authMenu", JSON.stringify(obj), true);
+}
+
 export {
   list,
   add,
   update,
   deleteObj,
   loadOne,
+  listMenuIds,
+  authMenu,
 }

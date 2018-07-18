@@ -1,7 +1,7 @@
 import request from '../../../../utils/request';
 
-function listRoot() {
-  return request("menuService.listRoot", JSON.stringify({}), true);
+function listRoot(query) {
+  return request("menuService.listRoot", JSON.stringify(query), true);
 }
 
 function listChildren(pid) {
@@ -9,11 +9,22 @@ function listChildren(pid) {
 }
 
 function update(obj) {
+  console.log("menuUpdate::",JSON.stringify(obj));
   return request("menuService.update", JSON.stringify(obj), true);
+}
+
+function init() {
+  return request("menuService.init", JSON.stringify({}), true);
+}
+
+function deleteMenu(id) {
+  return request("menuService.delete", JSON.stringify(id), true);
 }
 
 export {
   listRoot,
   listChildren,
   update,
+  init,
+  deleteMenu,
 }

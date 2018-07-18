@@ -1,6 +1,7 @@
 import fetch from 'dva/fetch';
 import { message } from 'antd';
 import configApi from './configApi';
+import { toBase64 } from "./AesUtil";
 
 function parseJSON(response) {
   return response.json();
@@ -20,19 +21,18 @@ function checkDatas(data) {
   // console.log("checkDatas", data);
   if(data.errCode !== "0") {
     message.error(data.reason);
-    // const error = new Error(data.reason);
-    // error.response = data;
-    // throw error;
   } else {
-    // console.log("checkDatas result:", data.result);
     return data.result;
   }
-  //return data.result;
 }
 
 function catchError(error) {
-  console.log(error);
-  message.error("出现错误："+error, 6);
+  //console.log("name: "+error.name, "message: "+error.message);
+  if(error.message.search("Gateway Timeout")>=0) {
+    message.error("服务端网络异常", 6);
+  } else {
+    message.error("出现错误：" + error.message, 6);
+  }
 }
 
 /**
@@ -56,6 +56,8 @@ export default function request(apiCode, params, isBase, options) {
   // console.log("encode before", params);
   params = encodeURI(params);
   // console.log("encode after", params);
+  params = toBase64(params);
+  // console.log("encode after aes", params);
   return fetch(isBase?configApi.api.baseRequest+params : configApi.api.queryOrSubmit+params, options || defaultOption)
     .then(checkStatus)
     .then(parseJSON)

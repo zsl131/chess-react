@@ -6,6 +6,7 @@ import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import Operator from './components/Operator';
 import queryString from 'query-string'
+import MatchMenuModal from './components/MatchMenuModal';
 // import { Page } from 'components'
 import List from './components/List';
 import Filter from './components/Filter';
@@ -50,8 +51,11 @@ const Role = ({
       handleRefresh({page : page - 1});
     },
     onUpdate: (id) => {
-      console.log("update::", id);
+      // console.log("update::", id);
       dispatch({ type: 'role/update', payload: id });
+    },
+    onMatchMenu: (curRole) => {
+      dispatch({ type: 'role/queryMenus', payload: {rid: curRole.id}}).then(() => { dispatch({ type: 'role/setModalVisible', payload: {curRole: curRole} }) });
     }
   }
 
@@ -79,8 +83,8 @@ const Role = ({
       dispatch({ type: 'role/setModalVisible', payload: { updateVisible: false } });
       dispatch({ type: 'role/updateRole', payload: datas }).then(() => {handleRefresh()});
     },
-    onCancel() {
-      dispatch({ type: 'role/hideUpdateModal' });
+    onCancel: () => {
+      dispatch({ type: 'role/setModalVisible', payload: { updateVisible: false } });
     }
   }
 
@@ -88,6 +92,26 @@ const Role = ({
     onFilter(values) {
       handleRefresh({conditions: JSON.stringify(values)});
     }
+  }
+
+  const treeOpts = {
+    role: role,
+    onSelect: (key) => {
+      dispatch({ type: 'role/queryMenus', payload: { pid: key[0], rid: role.curRole.id } });
+    },
+    onCancel: ()=>{
+      dispatch({ type: 'role/setModalVisible', payload: { matchMenuVisible: false } });
+    },
+
+    onPageChange: (page) => {
+      // console.log("page::"+page);
+      dispatch({ type: 'role/queryMenus', payload: { page: page-1, rid: role.curRole.id } });
+    },
+    onSetMenu: (key) => {
+      // console.log("setMenu"+key, "roleId:"+role.curRole.id);
+      dispatch({ type: 'role/authMenu', payload: {rid: role.curRole.id, mid: key} });
+    },
+    loading: loading.effects.role
   }
 
   return(
@@ -106,6 +130,7 @@ const Role = ({
       </div>
       {role.addVisible && <AddModal {...addOpts}/>}
       {role.updateVisible && <UpdateModal {...updateOpts}/>}
+      {role.matchMenuVisible && <MatchMenuModal {...treeOpts}/>}
     </div>
   );
 }

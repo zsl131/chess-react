@@ -5,12 +5,18 @@ import styles from "./leftTree.css"
 const TreeNode = Tree.TreeNode;
 
 const LeftTree = ({
-    menuTree
+  menuTree,
+  onSelect,
 }) => {
+
+  const handlerSelect = (key, e) => {
+    // console.log("key:::"+key, e);
+    onSelect(key);
+  }
 
   const menus = menuTree.map((obj) => {
     return (
-      <TreeNode title={obj.menu.name} key={obj.menu.id}>
+      <TreeNode title={obj.menu.name} key={obj.menu.id} >
         {
           obj.children.map((sub)=> {return (<TreeNode title={sub.name} key={sub.id}/>);})
         }
@@ -18,7 +24,7 @@ const LeftTree = ({
     );
   });
   return(
-    <Tree className={styles.tree}>
+    <Tree className={styles.tree} onSelect={handlerSelect}>
       {menus}
     </Tree>
   );
