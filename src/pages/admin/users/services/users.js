@@ -35,6 +35,10 @@ function authRole(obj) {
   return request("userService.authRole", JSON.stringify(obj), true);
 }
 
+function updatePwd(obj) {
+  return request("userService.updatePwd", JSON.stringify(obj), true);
+}
+
 export {
   remoteUserList,
   remoteSaveUser,
@@ -42,4 +46,5 @@ export {
   loadOne,
   matchRole,
   authRole,
+  updatePwd
 }

@@ -36,7 +36,7 @@ export default class AdminHeader extends React.Component {
 
     const content = (
       <div>
-        <p><Link to="/admin/user/updatePwd"><Icon type="edit"/> 修改密码</Link></p>
+        <p><Link to="/admin/users/updatePwd"><Icon type="edit"/> 修改密码</Link></p>
         {/*<Divider></Divider>*/}
         <p><Popconfirm {...confirmOpts}><Icon type="logout"/> 退出登陆</Popconfirm></p>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Icon, Menu } from 'antd';
-import { routerRedux } from 'dva/router'
+import {connect} from 'dva';
+import {Icon} from 'antd';
+import {routerRedux} from 'dva/router'
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import RoleModal from './components/RoleModal';
