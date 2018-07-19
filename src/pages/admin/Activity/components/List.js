@@ -3,13 +3,14 @@ import {Menu, Pagination, Table, Icon} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 // import { ListOperator } from 'components';
 import queryString from 'query-string'
+import styles from './list.css';
 
 const List = ({
   onDelConfirm,
   onUpdate,
-  onMatchUser,
   onPageChange,
   location,
+  onShow,
   totalElement,
   ...listOpts
 }) => {
@@ -24,24 +25,30 @@ const List = ({
   }
 
   const columns = [{
-    title: '名称',
-    dataIndex: 'name'
+    title: '标题',
+    // dataIndex: 'title'
+    render: (text, record) => {
+      return (<a href="javascript:;" onClick={()=>{onShow(record.id)}}>{record.title}</a>);
+    }
+  }, {
+    title: '所属部门',
+    dataIndex: 'depName',
+  }, {
+    title: '状态',
+    render: (text, record) => {
+      return (record.status === '1'?<span className={styles.show}>显示</span>:<span className={styles.hidden}>隐藏</span>)
+    }
+  }, {
+    title: '创建时间',
+    dataIndex: 'createTime'
   }, {
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.name} {...delOpts}>
-          <Menu.Item>
-            <span onClick={()=>handleMatchUser(record)}><Icon type="user"/> 配置管理用户</span>
-          </Menu.Item>
-        </ListOperator>
+        <ListOperator id={record.id} delName={record.title} {...delOpts}/>
       );
     }
   }];
-
-  const handleMatchUser = (record) => {
-    onMatchUser(record);
-  }
 
   const handlePageChange = (pageNumber) => {
     onPageChange(pageNumber);

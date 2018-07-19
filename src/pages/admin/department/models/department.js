@@ -1,4 +1,5 @@
 import * as departmentService from '../services/departmentService';
+import { message } from 'antd';
 
 export default {
   namespace: 'department',
@@ -7,7 +8,10 @@ export default {
     totalElements: 0,
     item: [],
     addVisible: false,
-    updateVisible: false
+    updateVisible: false,
+    setUserVisible: false,
+    userList:[],
+    userIds:[],
   },
   reducers: {
     indexPage(state, { payload: data }) {
@@ -33,8 +37,17 @@ export default {
     },
     *onUpdate({ payload: id }, { call, put }) {
       const data = yield call(departmentService.loadOne, {id});
-      console.log(data);
+      // console.log(data);
       yield put({ type: 'updatePage', payload: data });
+    },
+    *onSetUser({ payload: obj }, { call, put }) {
+      const data = yield call(departmentService.loadAuthUser, {"depId": obj.id});
+      // console.log("setUser::", data);
+      yield put({ type: 'modifyState', payload: { setUserVisible: true,  userList: data.datas.userList, userIds: data.datas.userIds, item: obj} });
+    },
+    *setAuthUser({ payload: obj }, { call }) {
+      const data = yield call(departmentService.setDepUser, obj);
+      yield message.success(data.datas);
     }
   },
   subscriptions: {

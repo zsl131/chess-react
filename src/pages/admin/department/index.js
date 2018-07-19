@@ -8,6 +8,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
+import SetUserModal from './components/SetUserModal';
 
 const Department = ({
   dispatch,
@@ -54,8 +55,12 @@ const Department = ({
       handleRefresh({page : page - 1});
     },
     onUpdate: (id) => {
-      console.log("update::", id);
+      // console.log("update::", id);
       dispatch({ type: 'department/onUpdate', payload: id });
+    },
+    onMatchUser: (obj) => {
+      // console.log(obj);
+      dispatch({ type: 'department/onSetUser', payload: obj });
     },
   }
 
@@ -95,6 +100,21 @@ const Department = ({
     }
   }
 
+  const setUserOpts = {
+    visible: department.setUserVisible,
+    title: `为部门【${department.item.name}】设置管理用户`,
+    footer: false,
+    userList: department.userList,
+    userIds: department.userIds,
+    onCancel: () => {
+      dispatch({ type: 'department/modifyState', payload: { setUserVisible: false } });
+    },
+    onChange: (obj) =>  {
+      // console.log("setUserOpts:", obj);
+      dispatch({ type: 'department/setAuthUser', payload: { userId: obj.objId, depId: department.item.id } });
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -111,6 +131,7 @@ const Department = ({
       </div>
       {department.addVisible && <AddModal {...addOpts}/>}
       {department.updateVisible && <UpdateModal {...updateOpts}/>}
+      {department.setUserVisible && <SetUserModal {...setUserOpts}/>}
     </div>
   );
 }

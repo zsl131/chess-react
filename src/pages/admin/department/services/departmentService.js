@@ -16,9 +16,19 @@ function loadOne(id) {
   return request("departmentService.loadOne", JSON.stringify(id), true)
 }
 
+function loadAuthUser(id) {
+  return request("departmentService.loadAuthUser", JSON.stringify(id), true);
+}
+
+function setDepUser(obj) {
+  return request("departmentService.setDepUser", JSON.stringify(obj), true);
+}
+
 export {
   list,
   addOrUpdate,
   deleteObj,
   loadOne,
+  loadAuthUser,
+  setDepUser,
 }

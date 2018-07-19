@@ -11,14 +11,14 @@ export default class MyEditor extends React.Component {
         editorHtml: html,
         editorText: editor.txt.text()
       })
-      console.log("onChange", html, editor);
+      // console.log("onChange", html, editor);
       //将html值设为form表单的desc属性值
       /*this.props.form.setFieldsValue({
         'content': html
       });*/
       this.props.onChangeContent(html);
     }
-    console.log("editor", editor.customConfig);
+    // console.log("editor", editor.customConfig);
     // 上传图片（举例）
     editor.customConfig.uploadImgServer = '/api/upload/image';
     editor.customConfig.uploadFileName = 'files';
