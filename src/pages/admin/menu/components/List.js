@@ -13,6 +13,13 @@ const List = ({
     title: '序号',
     dataIndex: 'orderNum'
   }, {
+    title: '图标',
+    render: (text, record) => {
+      return (
+        record.icon ? <Icon type={record.icon}/>:<span>-</span>
+      );
+    }
+  }, {
     title: '菜单名称',
     dataIndex: 'name'
   }, {

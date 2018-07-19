@@ -20,7 +20,7 @@ export default class UpdateModal extends React.Component {
 
   render() {
 
-    const { getFieldDecorator, validateFieldsAndScroll, getFieldValue} = this.props.form;
+    const { getFieldDecorator, validateFieldsAndScroll} = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -46,7 +46,7 @@ export default class UpdateModal extends React.Component {
         <Form layout="horizontal">
           {getFieldDecorator("id")(<Input type="hidden"/>)}
           <FormItem {...formItemLayout} label="名称">
-            {getFieldDecorator('name', {rules: [{required: true, message: '角色名称不能为空'}]})(<Input placeholder="输入角色名称" />)}
+            {getFieldDecorator('name', {rules: [{required: true, message: '部门名称不能为空'}]})(<Input placeholder="输入部门名称" />)}
           </FormItem>
         </Form>
       </Modal>
