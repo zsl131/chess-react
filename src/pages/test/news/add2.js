@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form, Button, Input } from 'antd';
+import {Form, Input} from 'antd';
 import Editor from 'wangeditor2';
 
 const FormItem = Form.Item;

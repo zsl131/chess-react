@@ -53,6 +53,14 @@ export default function request(apiCode, params, isBase, options) {
       'api-code': apiCode
     }
   }
+
+  const paramsType = Object.prototype.toString.call(params);
+
+  // console.log("paramsType:::", paramsType);
+  if(paramsType !== '[object String]') {
+    params = JSON.stringify(params); //如果是对象则转换成字符串
+  }
+
   // console.log("encode before", params);
   params = encodeURI(params);
   // console.log("encode after", params);

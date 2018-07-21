@@ -15,7 +15,14 @@ export default function(props, { dispatch }) {
 
   const user = JSON.parse(sessionStorage.getItem("loginUser"));
   const pathname = props.location.pathname;
-  if((pathname !== '/login' && pathname !== '/init') && user === null) {
+
+  console.log(pathname, pathname.indexOf("/weixin"));
+
+  if(pathname.indexOf("/weixin") === 0) {
+    console.log("/weixin开头");
+  } else if(pathname.indexOf("/wx") === 0) {
+    console.log("/wx开头");
+  } else if((pathname !== '/login' && pathname !== '/init') && user === null) {
     console.log("loginUser is null", user);
     router.push("/login");
   }

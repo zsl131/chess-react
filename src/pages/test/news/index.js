@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Icon } from 'antd';
+import {connect} from 'dva';
+import {Icon} from 'antd';
 import List from "./components/List";
 
 const News = ({

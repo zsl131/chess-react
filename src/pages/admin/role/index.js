@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Icon } from 'antd';
+import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
+
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import Operator from './components/Operator';
-import queryString from 'query-string'
 import MatchMenuModal from './components/MatchMenuModal';
 // import { Page } from 'components'
 import List from './components/List';

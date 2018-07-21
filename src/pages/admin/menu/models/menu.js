@@ -1,4 +1,5 @@
 import * as menuService from '../services/menuService';
+import {message} from 'antd';
 
 export default {
   namespace: 'menu',
@@ -17,7 +18,7 @@ export default {
     setState(state, {payload: datas}) {
       // console.log("ddd", datas);
       return {...state, ...datas};
-    }
+    },
   },
   effects: {
     *index({ payload: query }, { put, call }) {
@@ -28,8 +29,9 @@ export default {
       const data = yield call(menuService.listChildren, {pid});
       yield put({ type: 'setState', payload: { datas: data.datas, totalElements: data.size } });
     },
-    *init({ payload: query }, { put, call }) {
-      yield call(menuService.init);
+    *init({ payload: query }, { call, put }) {
+      const data = yield call(menuService.init);
+      if(data) { message.success(data.datas);}
     },
     *update({ payload: obj }, { call, put }) {
       const data = yield call(menuService.update, obj);

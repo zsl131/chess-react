@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Input } from 'antd';
+import {Button, Form, Input} from 'antd';
 import MyEditor from '../../../components/Editor/MyEditor';
 
 const FormItem = Form.Item;
