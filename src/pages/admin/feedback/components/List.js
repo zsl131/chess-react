@@ -1,6 +1,5 @@
 import React from 'react';
 import {Icon, Pagination, Popconfirm, Table} from 'antd';
-import queryString from 'query-string'
 import styles from "./list.css";
 
 const List = ({
@@ -11,8 +10,6 @@ const List = ({
   totalElement,
   ...listOpts
 }) => {
-
-  location.query = queryString.parse(location.search)
 
   const columns = [{
     title: '昵称',

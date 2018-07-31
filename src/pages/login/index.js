@@ -14,10 +14,12 @@ const Login = ({
                  form: {
                    getFieldDecorator,
                    validateFieldsAndScroll,
-                 }
+                 },
                }) => {
 
   //console.log("Login", loading);
+
+  // console.log("loginAppConfig::"+interceptor.appConfig, "loginWxConfig::"+interceptor.wxConfig+"---interceptor:"+interceptor);
 
   function handleOk() {
     validateFieldsAndScroll((errors, values) => {
@@ -32,7 +34,7 @@ const Login = ({
   return (
     <div>
       <Card bordered={false} className={styles.loginCard}>
-        <h2 className={styles.title}>{interceptor.appObj.appName} - LOGIN</h2>
+        <h2 className={styles.title}>{interceptor.appConfig.appName} - LOGIN</h2>
         <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
           <FormItem>
             {getFieldDecorator('username', {rules:[{ required: true, message: '请输入用户名'}]})(<Input onPressEnter={handleOk} placeholder="用户名"/>)}

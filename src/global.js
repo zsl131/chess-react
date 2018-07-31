@@ -1,3 +1,2 @@
 import '@babel/polyfill'
-document.title = "奇思教育"
-
+window.routerBase = "/"; //手动刷新时才不会找不到页面

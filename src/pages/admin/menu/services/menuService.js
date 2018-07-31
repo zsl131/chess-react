@@ -9,7 +9,6 @@ function listChildren(pid) {
 }
 
 function update(obj) {
-  console.log("menuUpdate::",JSON.stringify(obj));
   return request("menuService.update", JSON.stringify(obj), true);
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Table, Pagination } from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
-import queryString from 'query-string';
 
 const List = ({
     onDelConfirm,
@@ -10,7 +9,6 @@ const List = ({
     totalElement,
     ...listOpts
 }) => {
-  location.query = queryString.parse(location.search)
   const delOpts = {
     okText: '确定删除',
     cancelText: '取消',

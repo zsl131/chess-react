@@ -2,13 +2,14 @@ import React from 'react';
 import {Icon, Menu, Button} from 'antd';
 import {Link} from 'react-router-dom';
 
+
 const SubMenu = Menu.SubMenu;
 
 class AdminSideMenu extends React.Component {
 
   state = {
     collapsed: false,
-    defaultKey: localStorage.getItem("menuKey") || '1',
+    defaultKey: sessionStorage.getItem("menuKey") || '1',
   }
 
   toggleCollapsed = () => {
@@ -19,7 +20,7 @@ class AdminSideMenu extends React.Component {
 
   handlerClick = ({item, key, keyPath}) => {
     //console.log(item, key, keyPath);
-    localStorage.setItem("menuKey", key+"");
+    sessionStorage.setItem("menuKey", key+"");
     this.setState({defaultKey: key});
   }
 
@@ -31,10 +32,6 @@ class AdminSideMenu extends React.Component {
     const menus = navMenus!==null?navMenus.map((item) => {
       return (
         <SubMenu key={item.menu.sn} title={<span><Icon type={item.menu.icon || "appstore"} /><span>{item.menu.name}</span></span>}>
-          {/*item.children.map( (subMenu) => {
-              <Link to={subMenu.href}><Menu.Item key={subMenu.sn}>{subMenu.name}</Menu.Item></Link>
-          });*/}
-
           {
             item.children.map((subMenu) => {
               return (<Menu.Item key={subMenu.id}><Link to={subMenu.href}>{subMenu.name}</Link></Menu.Item>)
@@ -46,9 +43,9 @@ class AdminSideMenu extends React.Component {
 
     return (
       <div>
-        <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
+        {/*<Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
           <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
-        </Button>
+        </Button>*/}
         <Menu
           defaultSelectedKeys={[this.state.defaultKey]}
           defaultOpenKeys={['sub1']}

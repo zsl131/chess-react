@@ -1,9 +1,7 @@
 import React from 'react';
 import { Menu, Icon, Table, Pagination } from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
-// import { ListOperator } from 'components';
 import styles from './list.css';
-import queryString from 'query-string'
 
 const List = ({
   onDelConfirm,
@@ -14,11 +12,6 @@ const List = ({
   onMatchRole,
   ...listOpts
 }) => {
-
-  location.query = queryString.parse(location.search)
-  // console.log("List", location.query);
-
-  // console.log("user->list", listOpts);
 
   const handleMatchRole = (id, nickname) => {
     // console.log("handleMatchRole", id);

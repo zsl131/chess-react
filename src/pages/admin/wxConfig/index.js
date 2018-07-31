@@ -9,16 +9,19 @@ const FormItem = Form.Item;
 @Form.create()
 class WxConfig extends React.Component {
 
+  state = {
+    item: this.props.wxConfig.item,
+  }
+
   componentDidMount() {
     const { setFieldsValue } = this.props.form;
     // console.log("didMount::", this.props.wxConfig.item);
-    setFieldsValue(this.props.wxConfig.item || {});
+    setFieldsValue(this.state.item || {});
   }
 
   render() {
 
-    const {getFieldValue, validateFieldsAndScroll, getFieldDecorator} = this.props.form;
-
+    const {validateFieldsAndScroll, getFieldDecorator} = this.props.form;
 
     const formItemLayout = {
       labelCol: {
@@ -47,7 +50,7 @@ class WxConfig extends React.Component {
         </div>
         <div className={styles.mainContainer}>
           <Card>
-            <Form onSubmit={handleOk} layout="horizontal">
+            <Form onSubmit={handleOk} layout="horizontal" loading={this.props.loading.effects["wxConfig/index"]}>
               {getFieldDecorator("id")(<Input type="hidden"/>)}
               <FormItem {...formItemLayout} label="URL">
                 {getFieldDecorator('url', {rules: [{required: true, message: 'URL不能为空'}]})(<Input placeholder="输入URL"/>)}

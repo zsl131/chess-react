@@ -22,10 +22,10 @@ const ListOperator = ({
   const dropdownMenu = (
     <Menu>
       {children}
-      <Menu.Item>
+      <Menu.Item key="0">
         <span onClick={handleUpdate}><Icon type="edit"/> 修改</span>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key="1">
         <Popconfirm okType="danger" onConfirm={handleConfirm} title={`确定删除[${delName}]？此操作不可逆！`} {...opts}><Icon type="close"/> 删除</Popconfirm>
       </Menu.Item>
     </Menu>

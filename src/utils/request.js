@@ -57,8 +57,10 @@ export default function request(apiCode, params, isBase, options) {
   const paramsType = Object.prototype.toString.call(params);
 
   // console.log("paramsType:::", paramsType);
-  if(paramsType !== '[object String]') {
+  if(paramsType === '[object Object]') {
+    // console.log("changeType:", params);
     params = JSON.stringify(params); //如果是对象则转换成字符串
+    // console.log("After changeType:", params);
   }
 
   // console.log("encode before", params);

@@ -4,27 +4,24 @@ import { Row, Col, Icon, Button, Popconfirm } from 'antd';
 import LeftTree from './components/LeftTree';
 import List from './components/List';
 import { routerRedux } from 'dva/router'
-import queryString from 'query-string'
 import UpdateModal from './components/UpdateModal';
 
-const Role = ({
+const Menu = ({
   loading,
   menu,
   location,
   dispatch
 }) => {
 
-  location.query = queryString.parse(location.search)
-
   const { query, pathname } = location;
 
   const handleRefresh = (newQuery) => {
     dispatch(routerRedux.push({
       pathname,
-      search: queryString.stringify({
+      query: {
         ...query,
         ...newQuery,
-      }),
+      },
     }));
   }
 
@@ -95,4 +92,4 @@ const Role = ({
   );
 }
 
-export default connect(({ loading, menu }) => ({ loading, menu }))(Role);
+export default connect(({ loading, menu }) => ({ loading, menu }))(Menu);

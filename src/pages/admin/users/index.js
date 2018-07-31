@@ -6,31 +6,29 @@ import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import RoleModal from './components/RoleModal';
 import Operator from './components/Operator';
-import queryString from 'query-string'
 import List from './components/List';
 import Filter from './components/Filter';
+import {Helmet} from 'react-helmet';
 
 const Users = ({ location, loading, users, dispatch }) => {
 
-  location.query = queryString.parse(location.search)
-
   const { query, pathname } = location;
+
+  const handleRefresh = (newQuery) => {
+    dispatch(routerRedux.push({
+      pathname,
+      query: {
+        ...query,
+        ...newQuery,
+      },
+    }));
+  }
 
   const operatorOpts = {
     onAdd() {
       // console.log("UserIndex operator");
       dispatch({ type: 'users/showModal', payload: 'abc123' });
     }
-  }
-
-  const handleRefresh = (newQuery) => {
-    dispatch(routerRedux.push({
-      pathname,
-      search: queryString.stringify({
-        ...query,
-        ...newQuery,
-      }),
-    }));
   }
 
   const listOpts = {
@@ -114,6 +112,9 @@ const Users = ({ location, loading, users, dispatch }) => {
 
   return (
     <div>
+      <Helmet>
+        <title>用户管理</title>
+      </Helmet>
       <div className="listHeader">
         <h3><Icon type="bars"/> 用户管理<b>（{users.totalElements}）</b></h3>
         {/*<div className="listOperator"><Button type="primary" icon="plus">添加用户</Button></div>*/}

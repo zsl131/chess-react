@@ -1,18 +1,14 @@
 import React from 'react';
 import {Pagination, Table, Menu, Dropdown, Icon, Popconfirm} from 'antd';
-import queryString from 'query-string'
 import styles from "./list.css";
 
 const List = ({
   onPageChange,
   onUpdateType,
   onSynch,
-  location,
   totalElement,
   ...listOpts
 }) => {
-
-  location.query = queryString.parse(location.search)
 
   const columns = [{
     title: '头像',
@@ -89,7 +85,7 @@ const List = ({
     const type = record.type;
     const nickname = record.nickname;
     return (
-      <Menu>
+      <Menu key="key">
         {type === '0'?'':
           <Menu.Item key="0">
             <Popconfirm title={`确定设置[${nickname}]为：游客 吗？`}

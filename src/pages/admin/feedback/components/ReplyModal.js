@@ -47,14 +47,14 @@ export default class UpdateModal extends React.Component {
       <Modal {...this.props} onOk={handleOk}>
         <Form layout="horizontal">
           {getFieldDecorator("id")(<Input type="hidden"/>)}
-          <FormItem {...formItemLayout} label="反馈者昵称">
-            {this.props.item.nickname}
+          <FormItem {...formItemLayout} label="反馈者">
+            <span>{this.props.item.nickname}（{this.props.item.createTime}）</span>
           </FormItem>
-          <FormItem {...formItemLayout} label="反馈时间">
-            {this.props.item.createTime}
+          <FormItem {...formItemLayout} label="反馈内容">
+            {this.props.item.content}
           </FormItem>
           <FormItem {...formItemLayout} label="回复内容">
-            {getFieldDecorator("reply")(<TextArea rows={4} placeholder="输入回复内容"/>)}
+            {getFieldDecorator("reply", {rules:[{required: true, message: '请输入回复信息'}]})(<TextArea rows={4} placeholder="输入回复内容"/>)}
           </FormItem>
         </Form>
       </Modal>

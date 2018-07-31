@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
 import {Icon} from 'antd';
-
-import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
 
 import Filter from './components/Filter';
@@ -16,15 +14,14 @@ const Feedback = ({
   dispatch,
 }) => {
 
-  location.query = queryString.parse(location.search);
   const { query, pathname } = location;
   const handleRefresh = (newQuery) => {
     dispatch(routerRedux.push({
       pathname,
-      search: queryString.stringify({
+      query: {
         ...query,
         ...newQuery,
-      }),
+      },
     }));
   }
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import {Menu, Pagination, Table, Icon} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
-// import { ListOperator } from 'components';
-import queryString from 'query-string'
 
 const List = ({
   onDelConfirm,
@@ -13,11 +11,6 @@ const List = ({
   totalElement,
   ...listOpts
 }) => {
-
-  location.query = queryString.parse(location.search)
-  // console.log("List", location.query);
-
-  // console.log("user->list", listOpts);
 
   const delOpts = {
     okText: '确定删除',

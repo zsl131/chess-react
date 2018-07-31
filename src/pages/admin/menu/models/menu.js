@@ -35,7 +35,7 @@ export default {
     },
     *update({ payload: obj }, { call, put }) {
       const data = yield call(menuService.update, obj);
-      console.log("update", data);
+      if(data) {message.success("保存成功");}
     },
     *deleteMenu({ payload: id }, { call }) {
       yield call(menuService.deleteMenu, {id});

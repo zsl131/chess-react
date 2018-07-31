@@ -5,19 +5,17 @@ import {Link} from 'react-router-dom';
 import router from 'umi/router';
 
 import styles from '../layout.css';
+import Helmet from 'react-helmet';
 
 const { Header } = Layout;
 
 export default class AdminHeader extends React.Component {
 
-  constructor() {
-    super();
-    state: {
-      loginUser:[]
-    }
+  state = {
+    loginUser:[]
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
     this.setState({loginUser: loginUser || []});
   }
@@ -44,6 +42,7 @@ export default class AdminHeader extends React.Component {
 
     return (
       <Header className={styles.adminHeader}>
+        <Helmet><title>后台管理</title></Helmet>
         <Row>
           <Col span={20}>
             <div className={styles.logo}></div>

@@ -19,7 +19,7 @@ export default class UpdateModal extends React.Component {
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
-    console.log("didMount", this.props.item);
+    // console.log("didMount", this.props.item);
     setFieldsValue(this.props.item);
   }
 

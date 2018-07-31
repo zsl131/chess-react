@@ -15,7 +15,7 @@ export default {
     }
   },
   effects: {
-    *load({}, { put, call }) {
+    *load({payload}, { put, call }) {
       const data = yield call(initService.remoteLoad);
       console.log(data);
       if(data.size===0 || data.datas.initFlag !== '1') {

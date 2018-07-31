@@ -1,7 +1,7 @@
 import request from '../../../../utils/request';
 
 function list(query) {
-  console.log("list query :", query);
+  //console.log("list query :", query);
   return request("roleService.list", JSON.stringify(query), true);
 }
 
