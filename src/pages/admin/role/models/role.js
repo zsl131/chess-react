@@ -42,24 +42,25 @@ export default {
     },
     *addRole({ payload: obj }, { call, put }) {
       const data = yield call(roleService.add, obj);
-      if(data.size) {
+      if(data) {
         yield put({ type: 'setModalVisible', payload: { addVisible: false } });
       }
     },
     *deleteObj({ payload: id }, { call, put }) {
-      yield call(roleService.deleteObj, {id});
+      const data = yield call(roleService.deleteObj, {id});
+      if(data) {message.success(data.message);}
     },
     *update({ payload: id }, { call, put }) {
-      // console.log("update---->", id);
       const data = yield call(roleService.loadOne, {id});
-      if(data.size) {
+      if(data) {
         yield put({ type: 'updateItem', payload: data.datas });
       } else {
         message.error("没有找到对应数据");
       }
     },
     *updateRole({ payload: obj }, { call, put }) {
-      yield call(roleService.update, obj);
+      const data = yield call(roleService.update, obj);
+      if(data) {message.success("修改成功");}
     },
     *queryMenus({ payload: query }, { put, call }) {
       // console.log("queryMenus::", query);
@@ -72,7 +73,7 @@ export default {
     },
     *authMenu({ payload: obj }, { call }) {
       const data = yield call(roleService.authMenu, obj);
-      message.success(data.datas);
+      message.success(data.message);
     }
   },
   subscriptions: {

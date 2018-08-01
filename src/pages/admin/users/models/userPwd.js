@@ -11,9 +11,9 @@ export default {
   effects: {
     *updatePwd({ payload: values }, { call }) {
       const data = yield call(updatePwd, values);
-      console.log(data);
+      // console.log(data);
       if(data) {
-        message.success(data.datas);
+        message.success(data.message);
       }
     }
   },

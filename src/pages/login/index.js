@@ -17,13 +17,9 @@ const Login = ({
                  },
                }) => {
 
-  //console.log("Login", loading);
-
-  // console.log("loginAppConfig::"+interceptor.appConfig, "loginWxConfig::"+interceptor.wxConfig+"---interceptor:"+interceptor);
-
   function handleOk() {
     validateFieldsAndScroll((errors, values) => {
-      console.log("handleOk", errors, values);
+      // console.log("handleOk", errors, values);
       if(!errors) {
         dispatch({ type: 'login/login', payload: values });
       }

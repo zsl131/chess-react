@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './header.css';
 import { NavBar, Icon } from 'antd-mobile';
 import WxLoginAccount from './WxLoginAccount';
+import configApi from "../../utils/configApi";
+import Helmet from 'react-helmet';
 
 export default class WxNormalHeader extends React.Component {
 
@@ -20,6 +22,8 @@ export default class WxNormalHeader extends React.Component {
           <Icon key="1" type="ellipsis" />,
         ]}
       >
+
+        <Helmet><title>{configApi.appName} - 微信平台</title></Helmet>
         <div className={styles.headerContent}>
           <img src={require("../../assets/wx-logo.png")} className={styles.wxLogo} alt="LOGO"/>
         </div>

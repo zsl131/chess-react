@@ -15,11 +15,11 @@ export default {
     *index({ payload }, { call, put }) {
       const data = yield call(wxConfigService.loadOne);
       console.log("wxConfig::", data);
-      yield put({ type: 'modifyState', payload: { item: data.datas } });
+      yield put({ type: 'modifyState', payload: { item: data.obj } });
     },
     *save({ payload: obj }, { call }) {
       const data = yield call(wxConfigService.save, obj);
-      if(data && data.size>=1) {
+      if(data) {
         message.success("保存数据成功");
       }
     }

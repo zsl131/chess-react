@@ -13,10 +13,6 @@ export default class UpdateModal extends React.Component {
     item:this.props.item,
   }
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
     setFieldsValue(this.props.item);
@@ -31,7 +27,7 @@ export default class UpdateModal extends React.Component {
       }]
       this.setState({fileList: fileList, imgUrl: curItem.imgUrl});
 
-      console.log(fileList);
+      // console.log(fileList);
     }
   }
 

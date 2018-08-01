@@ -6,6 +6,7 @@ import router from 'umi/router';
 
 import styles from '../layout.css';
 import Helmet from 'react-helmet';
+import configApi from '../../utils/configApi';
 
 const { Header } = Layout;
 
@@ -26,8 +27,8 @@ export default class AdminHeader extends React.Component {
       okText: '确定退出',
       cancelText: '取消操作',
       onConfirm: () => {
-        console.log("logout");
         sessionStorage.clear();
+        localStorage.clear();
         router.push("/login");
       }
     }
@@ -42,7 +43,7 @@ export default class AdminHeader extends React.Component {
 
     return (
       <Header className={styles.adminHeader}>
-        <Helmet><title>后台管理</title></Helmet>
+        <Helmet><title>{configApi.appName} - 后台管理</title></Helmet>
         <Row>
           <Col span={20}>
             <div className={styles.logo}></div>

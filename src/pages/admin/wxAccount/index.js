@@ -43,7 +43,7 @@ const WxAccount = ({
       handleRefresh({page : page - 1});
     },
     onUpdateType: (record, newType) => {
-      dispatch({ type: 'wxAccount/updateType', payload: { record: record, type: newType } });
+      dispatch({ type: 'wxAccount/updateType', payload: { record: record, type: newType } }).then(()=>{handleRefresh()});
     },
     onSynch: (record) => {
       dispatch({ type: 'wxAccount/onSynch', payload: record });

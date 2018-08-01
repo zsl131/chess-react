@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Form, Icon, Card, Button, Input } from 'antd';
+import { routerRedux } from 'dva/router';
 
 import styles from './index.css';
 
@@ -16,10 +17,24 @@ class WxConfig extends React.Component {
   componentDidMount() {
     const { setFieldsValue } = this.props.form;
     // console.log("didMount::", this.props.wxConfig.item);
-    setFieldsValue(this.state.item || {});
+    // setFieldsValue(this.state.item || {});
+    console.log(this.props.wxConfig.item);
+    setFieldsValue(this.props.wxConfig.item);
   }
 
   render() {
+
+    const { query, pathname } = this.props.location;
+
+    const handleRefresh = (newQuery) => {
+      this.props.dispatch(routerRedux.push({
+        pathname,
+        query: {
+          ...query,
+          ...newQuery,
+        },
+      }));
+    }
 
     const {validateFieldsAndScroll, getFieldDecorator} = this.props.form;
 
@@ -38,7 +53,7 @@ class WxConfig extends React.Component {
       e.preventDefault();
       validateFieldsAndScroll((errors, values) => {
         if(!errors) {
-          this.props.dispatch({ type: 'wxConfig/save', payload: values });
+          this.props.dispatch({ type: 'wxConfig/save', payload: values }).then(()=>{handleRefresh()});
         }
       });
     }
@@ -50,7 +65,7 @@ class WxConfig extends React.Component {
         </div>
         <div className={styles.mainContainer}>
           <Card>
-            <Form onSubmit={handleOk} layout="horizontal" loading={this.props.loading.effects["wxConfig/index"]}>
+            <Form onSubmit={handleOk} layout="horizontal" loading={this.props.loading.models.wxConfig}>
               {getFieldDecorator("id")(<Input type="hidden"/>)}
               <FormItem {...formItemLayout} label="URL">
                 {getFieldDecorator('url', {rules: [{required: true, message: 'URL不能为空'}]})(<Input placeholder="输入URL"/>)}
@@ -65,6 +80,9 @@ class WxConfig extends React.Component {
 
               <FormItem {...formItemLayout} label="appsecret">
                 {getFieldDecorator('secret', {rules: [{required: true, message: 'appsecret不能为空'}]})(<Input placeholder="输入appsecret"/>)}
+              </FormItem>
+              <FormItem {...formItemLayout} label="aesKey">
+                {getFieldDecorator('aeskey', {rules: [{required: true, message: 'aeskey不能为空'}]})(<Input placeholder="输入aeskey"/>)}
               </FormItem>
               <FormItem {...formItemLayout} label="事件模板ID">
                 {getFieldDecorator('eventTemp')(<Input placeholder="输入事件模板ID"/>)}

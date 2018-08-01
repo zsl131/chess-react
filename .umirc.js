@@ -15,7 +15,4 @@ export default {
   // hashHistory:true, //加上这个是在地址栏#
   publicPath: '/static',
   // exportStatic: {},
-  "pages": {
-    "/wx/activity": { document: "./src/pages/wx-document.ejs" }
-  },
 };

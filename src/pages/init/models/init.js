@@ -17,7 +17,6 @@ export default {
   effects: {
     *load({payload}, { put, call }) {
       const data = yield call(initService.remoteLoad);
-      console.log(data);
       if(data.size===0 || data.datas.initFlag !== '1') {
         yield put({ type: 'hideSpin' });
       } else {
@@ -26,11 +25,9 @@ export default {
     },
     *initSystem({ payload: values }, { put, call }) {
       const data = yield call(initService.initSystem, values);
-      console.log("initSystem", data);
-      if(data.size===1) {
+      if(data) {
         yield put({ type: 'showSpin' });
-        message.success("系统初始化成功", 3, (res) => {
-          console.log("callback", res);
+        message.success(data.message, 3, (res) => {
           router.push("/login");
         });
       }

@@ -5,10 +5,12 @@ import {decodeBase64, encodeBase64} from "../utils/Base64Utils";
 
 const curPathname = window.location.pathname;
 
-// console.log("wx-interceptor document ---- "+window.location.pathname, window.location.href);
+console.log("wx-interceptor document ---- "+window.location.pathname, window.location.href);
 
+///weixin/queryAccount此路由临时使用，用于缓存微信用户
+if(curPathname.startsWith("/wx") && curPathname !== '/weixin/queryAccount') {
 
-if(curPathname.startsWith("/wx")) {
+  sessionStorage.setItem("testSession1", "this is session value 111");
 
   const LOGIN_WX_ACCOUNT_SESSION_NAME = "wxLoginAccount";
 
@@ -38,8 +40,7 @@ if(curPathname.startsWith("/wx")) {
       }
       // window.location.href = targetUrl;
     } else {
-      // window.location.href = "/wxRemote/queryAccount?targetUrl=" + encodeBase64(encodeURIComponent(window.location.href));
-      // return null;
+      window.location.href = "/wxRemote/queryAccount?targetUrl=" + encodeBase64(encodeURIComponent(window.location.href));
     }
   }
 }

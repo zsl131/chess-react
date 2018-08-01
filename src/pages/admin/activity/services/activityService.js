@@ -24,10 +24,30 @@ function listDep() {
   return request("activityService.listDep", JSON.stringify({ userId: user.id }), true);
 }
 
+function listRecord(query) {
+  return request("activityRecordService.listRecord", query, true);
+}
+
+function addOrUpdateRecord(obj) {
+  return request("activityRecordService.addOrUpdate", obj, true);
+}
+
+function deleteRecord(id) {
+  return request("activityRecordService.deleteObj", id, true);
+}
+
+function loadOneRecord(id) {
+  return request("activityRecordService.loadOne", id, true);
+}
+
 export {
   list,
   loadOne,
   addOrUpdate,
   deleteObj,
   listDep,
+  listRecord,
+  addOrUpdateRecord,
+  deleteRecord,
+  loadOneRecord,
 }

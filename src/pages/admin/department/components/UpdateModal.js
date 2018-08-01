@@ -6,13 +6,6 @@ const FormItem = Form.Item;
 @Form.create()
 export default class UpdateModal extends React.Component {
 
-  constructor(props) {
-    super(props);
-    state: {
-      item:props.item
-    }
-  }
-
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
     setFieldsValue(this.props.item);

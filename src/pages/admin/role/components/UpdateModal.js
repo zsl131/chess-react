@@ -6,13 +6,6 @@ const FormItem = Form.Item;
 @Form.create()
 export default class UpdateModal extends React.Component {
 
-  constructor(props) {
-    super(props);
-    state: {
-      item:props.item
-    }
-  }
-
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
     setFieldsValue(this.props.item);
@@ -20,7 +13,7 @@ export default class UpdateModal extends React.Component {
 
   render() {
 
-    const { getFieldDecorator, validateFieldsAndScroll, getFieldValue} = this.props.form;
+    const { getFieldDecorator, validateFieldsAndScroll} = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },

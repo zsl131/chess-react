@@ -6,9 +6,9 @@ export default {
   state:{},
   reducers: {
     'cacheLogin'(state, { payload: datas }) {
-      const loginUser = datas.datas.user;
-      const navMenus = datas.datas.navMenus;
-      const authMenus = datas.datas.authMenus;
+      const loginUser = datas.obj.user;
+      const navMenus = datas.obj.navMenus;
+      const authMenus = datas.obj.authMenus;
       sessionStorage.setItem("loginUser", JSON.stringify(loginUser));
       sessionStorage.setItem("navMenus", JSON.stringify(navMenus));
       sessionStorage.setItem("authMenus", JSON.stringify(authMenus));
@@ -19,12 +19,12 @@ export default {
   effects: {
     *login({ payload: values }, { put, call }) {
       const data = yield call(remoteCheckLogin, values);
-      console.log("login", data);
+      // console.log("login", data);
 
       if(data) {
-        const loginUser = data.datas.user;
-        const navMenus = data.datas.navMenus;
-        const authMenus = data.datas.authMenus;
+        const loginUser = data.obj.user;
+        const navMenus = data.obj.navMenus;
+        const authMenus = data.obj.authMenus;
         sessionStorage.setItem("loginUser", JSON.stringify(loginUser));
         sessionStorage.setItem("navMenus", JSON.stringify(navMenus));
         sessionStorage.setItem("authMenus", JSON.stringify(authMenus));

@@ -1,4 +1,5 @@
 import * as ageDicService from '../services/ageDicService';
+import {message} from 'antd';
 
 export default {
   namespace: 'ageDic',
@@ -14,7 +15,7 @@ export default {
       return {...state, ...options};
     },
     updatePage(state, { payload: obj }) {
-      return {...state, item: obj.datas, updateVisible: true};
+      return {...state, item: obj.obj, updateVisible: true};
     }
   },
   effects: {
@@ -26,7 +27,8 @@ export default {
       yield call(ageDicService.addOrUpdate, obj);
     },
     *deleteObj({ payload: id }, { call }) {
-      yield call(ageDicService.deleteObj, { id });
+      const data = yield call(ageDicService.deleteObj, { id });
+      if(data) {message.success(data.message);}
     },
     *onUpdate({ payload: id }, { call, put }) {
       const data = yield call(ageDicService.loadOne, {id});

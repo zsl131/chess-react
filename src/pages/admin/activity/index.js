@@ -84,7 +84,6 @@ const Activity = ({
     visible: activity.updateVisible,
     title: `修改活动[${activity.item.title}]`,
     okText:'确认提交',
-    cancelText: '取消',
     item: activity.item,
     maskClosable: false,
     confirmLoading: loading.effects['activity/addOrUpdate'],
@@ -112,7 +111,7 @@ const Activity = ({
   return (
     <div>
       <div className="listHeader">
-        <h3><Icon type="bars"/> 活动管理<b>（{activity.totalElements}）</b></h3>
+        <h3><Icon type="bars"/> 活动内容管理<b>（{activity.totalElements}）</b></h3>
         <Operator {...operatorOpts}/>
       </div>
       <div className="listFilter">

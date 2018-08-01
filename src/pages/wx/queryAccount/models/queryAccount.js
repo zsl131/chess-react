@@ -7,6 +7,8 @@ export default {
   reducers: {
     setAccount(state, {payload: data}) {
       localStorage.setItem("wxLoginAccount", data.datas);
+      console.log("set session value");
+      sessionStorage.setItem("abcSession", "this is abc session");
 
       return {...state, datas: data.datas};
     }
@@ -20,7 +22,7 @@ export default {
   subscriptions: {
     setup({history,dispatch}) {
       return history.listen((location) => {
-        if(location.pathname === '/weixin/queryAccount') {
+        if(location.pathname === '/wx/queryAccount') {
           dispatch({type:'queryAccount', payload: location.query});
         }
       });

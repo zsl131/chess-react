@@ -7,6 +7,7 @@ import {Helmet} from 'react-helmet';
 const ActivityShow = ({
   wxActivity
 }) => {
+  console.log("session::", sessionStorage.getItem("abcSession"));
   const item = wxActivity.item;
   return (
     <div>

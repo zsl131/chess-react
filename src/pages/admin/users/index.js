@@ -27,7 +27,7 @@ const Users = ({ location, loading, users, dispatch }) => {
   const operatorOpts = {
     onAdd() {
       // console.log("UserIndex operator");
-      dispatch({ type: 'users/showModal', payload: 'abc123' });
+      dispatch({ type: 'users/showModal'});
     }
   }
 

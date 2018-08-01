@@ -21,7 +21,7 @@ export default {
       return {...state, ...options};
     },
     updatePage(state, { payload: obj }) {
-      return {...state, item: obj.datas, updateVisible: true};
+      return {...state, item: obj.obj, updateVisible: true};
     }
   },
   effects: {
@@ -33,7 +33,8 @@ export default {
       yield call(departmentService.addOrUpdate, obj);
     },
     *deleteObj({ payload: id }, { call }) {
-      yield call(departmentService.deleteObj, { id });
+      const data = yield call(departmentService.deleteObj, { id });
+      if(data) {message.success(data.message)}
     },
     *onUpdate({ payload: id }, { call, put }) {
       const data = yield call(departmentService.loadOne, {id});
@@ -43,11 +44,11 @@ export default {
     *onSetUser({ payload: obj }, { call, put }) {
       const data = yield call(departmentService.loadAuthUser, {"depId": obj.id});
       // console.log("setUser::", data);
-      yield put({ type: 'modifyState', payload: { setUserVisible: true,  userList: data.datas.userList, userIds: data.datas.userIds, item: obj} });
+      yield put({ type: 'modifyState', payload: { setUserVisible: true,  userList: data.obj.userList, userIds: data.obj.userIds, item: obj} });
     },
     *setAuthUser({ payload: obj }, { call }) {
       const data = yield call(departmentService.setDepUser, obj);
-      yield message.success(data.datas);
+      yield message.success(data.message);
     }
   },
   subscriptions: {

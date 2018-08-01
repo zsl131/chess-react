@@ -8,13 +8,6 @@ const FormItem = Form.Item;
 @Form.create()
 class UpdatePwd extends React.Component {
 
-  constructor(props) {
-    super(props);
-    state: {
-      loginUser:[]
-    }
-  }
-
   UNSAFE_componentWillMount() {
     const loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
     this.setState({
@@ -31,8 +24,6 @@ class UpdatePwd extends React.Component {
   render() {
 
     const {getFieldValue, validateFieldsAndScroll, getFieldDecorator} = this.props.form;
-
-    // setFieldsValue({"nickname": loginUser.nickname});
 
     const formItemLayout = {
       labelCol: {

@@ -27,7 +27,6 @@ export default {
       return {...state, item: user, updateModalVisible: true};
     },
     showModal(state, { payload }) {
-      console.log("showModal", payload);
       return {...state, modalVisible: true}
     },
     hideModal(state) {
@@ -44,7 +43,6 @@ export default {
       return {...state, ...options};
     },
     showRoleModal(state, { payload: datas }) {
-      console.log(datas);
       return {...state, roleVisible: true, authRoleIds: datas.authIds, roleList: datas.roleList};
     }
   },
@@ -55,24 +53,28 @@ export default {
     },
     *saveUser({payload}, { put, call }) {
       const data = yield call(userService.remoteSaveUser, payload);
-      if(data.size) {
+      if(data) {
         yield put({ type: 'hideModal' })
       }
     },
-    *delete({ payload: id }, { put, call }) {
-      yield call(userService.remoteDelete, {id});
+    *delete({ payload: id }, { call }) {
+      const data = yield call(userService.remoteDelete, {id});
+      if(data) {
+        message.success(data.message);
+      }
     },
     *update({ payload: id }, { put, call }) {
       const data = yield call(userService.loadOne, {id});
-      if(data.size) {
-        yield put({ type: 'updateUser', payload: data.datas });
+      console.log(data);
+      if(data) {
+        yield put({ type: 'updateUser', payload: data.obj });
       } else {
         message.warning("没有对应数据");
       }
     },
     *onMatchRole({ payload: id }, { put, call }) {
       const data = yield call(userService.matchRole, {id});
-      yield put({ type: 'showRoleModal', payload: data.datas });
+      yield put({ type: 'showRoleModal', payload: data.obj });
     },
     *setRoles({ payload: obj }, { put, call }) {
       yield call(userService.authRole, obj);

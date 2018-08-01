@@ -40,7 +40,10 @@ const Feedback = ({
       handleRefresh({page : page - 1});
     },
     onSetStatus: (record) => {
-      dispatch({ type: 'feedback/setStatus', payload: record });
+      dispatch({ type: 'feedback/setStatus', payload: record }).then(()=>{
+        dispatch({ type: 'feedback/modifyState', payload: {replyVisible: false} });
+        handleRefresh();
+      });
     },
     onReply: (record) => {
       dispatch({ type: 'feedback/modifyState', payload: {item: record, replyVisible: true} });
@@ -58,7 +61,10 @@ const Feedback = ({
       dispatch({type: 'feedback/modifyState', payload: {replyVisible:false}});
     },
     onOk: (values) => {
-      dispatch({ type: 'feedback/onReply', payload: values });
+      dispatch({ type: 'feedback/onReply', payload: values }).then(()=>{
+        dispatch({ type: 'feedback/modifyState', payload: {replyVisible: false} });
+        handleRefresh();
+      });
     }
   }
 

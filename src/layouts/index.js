@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout,Affix } from 'antd';
+import {LocaleProvider,Affix, Layout} from 'antd';
 import {connect} from 'dva';
 import withRouter from 'umi/withRouter';
 
@@ -11,9 +11,13 @@ import styles from './layout.css';
 
 import WxNormalHeader from './wx/WxNormalHeader';
 import WxNormalFooter from './wx/WxNormalFooter';
-
 // import { base64ToString,toBase64 } from "../utils/AesUtil";
-import {decodeBase64, encodeBase64} from "../utils/Base64Utils";
+
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+moment.locale('zh-cn');
 
 const { Sider, Content } = Layout;
 
@@ -38,33 +42,6 @@ class MainLayout extends React.Component {
       console.log("/weixin开头");
     } else if (isWx) {
 
-      /*const laStr = sessionStorage.getItem(LOGIN_WX_ACCOUNT_SESSION_NAME);
-
-      if (laStr === null) { //表示没有Account
-        const query = props.location.query;
-
-        const account = query.account; //检测参数中是有account
-
-        if(account !== null && account !== undefined) {
-          const targetUrl = decodeBase64(query.targetUrl);
-          console.log("targetUrl::"+account);
-          console.log("targetUrl::"+decodeBase64(account));
-          const loadAccount = JSON.parse(decodeBase64(account));
-          // console.log("loadAccount:"+loadAccount)
-          if(loadAccount.size===1) {
-            sessionStorage.setItem(LOGIN_WX_ACCOUNT_SESSION_NAME, JSON.stringify(loadAccount.datas));
-            console.log(loadAccount);
-            // window.location.href = targetUrl;
-          } else {
-            console.log("没有获取微信用户，需要跳转到关注页面");
-          }
-          // window.location.href = targetUrl;
-        } else {
-          window.location.href = "/wxRemote/queryAccount?targetUrl="+encodeBase64(encodeURIComponent(window.location.href));
-          return null;
-        }
-      }*/
-
     } else if ((pathname !== '/login' && pathname !== '/init') && user === null) {
       // console.log("loginUser is null", user);
       router.push("/login");
@@ -77,17 +54,21 @@ class MainLayout extends React.Component {
 
     if (pathname === '/login' || pathname === '/init') {
       return (
+        <LocaleProvider locale={zhCN}>
         <Layout>
           <Content>{props.children}</Content>
         </Layout>
+        </LocaleProvider>
       );
     } else if (isWx) {
       return (
+        <LocaleProvider locale={zhCN}>
         <div style={{"background":"#FFFFFF"}}>
           <WxNormalHeader/>
           {props.children}
           <WxNormalFooter/>
         </div>
+        </LocaleProvider>
       );
     } else if (pathname === '/weixin/root' || pathname === '/weixin/public/loadLoginAccount') {
       return (<p>{props.children}</p>);
@@ -95,6 +76,7 @@ class MainLayout extends React.Component {
 
 
     return (
+      <LocaleProvider locale={zhCN}>
       <Layout className={styles.adminLayout}>
         <Affix>
           <AdminHeader/>
@@ -111,6 +93,7 @@ class MainLayout extends React.Component {
         </Layout>
 
       </Layout>
+      </LocaleProvider>
     );
   }
 }

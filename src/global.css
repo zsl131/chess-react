@@ -3,6 +3,13 @@ html, body, :global(#root) {
   height: 100%;
 }
 
+.blue {
+  color:#0000ff;
+}
+.red {
+  color:#FF0000;
+}
+
 /*后台管理部份的样式*/
 
 .listHeader {
@@ -28,3 +35,5 @@ html, body, :global(#root) {
 }
 
 /*微信管理部份的样式*/
+
+

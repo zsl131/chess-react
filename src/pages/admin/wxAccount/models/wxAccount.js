@@ -12,15 +12,17 @@ export default {
     modifyState(state, { payload: options }) {
       return {...state, ...options};
     },
-    updateTypePage(state, { payload: obj }) {
+    /*updateTypePage(state, { payload: obj }) {
+      console.log(obj);
       const datas = state.datas.map((item)=> {
+        // console.log(item.id, obj.record);
         if(item.id === obj.record.id) {
           item.type = obj.type;
         }
         return item;
       })
       return {...state, datas: datas};
-    },
+    },*/
     onSynchPage (state, { payload: obj }) {
       const datas = state.datas.map((item)=> {
         if(item.id === obj.id) {
@@ -39,8 +41,8 @@ export default {
     *updateType ({ payload: obj }, { call, put }) {
       const record = obj.record; const type = obj.type;
       const data = yield call(accountService.updateType, {id: record.id, type: type});
-      yield put({ type: 'updateTypePage', payload: obj });
-      if(data) {message.success(data.datas);}
+      // yield put({ type: 'updateTypePage', payload: obj });
+      if(data) {message.success(data.message);}
     },
     *onSynch ({ payload: obj }, { call, put }) {
       const data = yield call(accountService.onSynch, {id: obj.id});
