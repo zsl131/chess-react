@@ -3,12 +3,19 @@ import {connect} from 'dva';
 import styles from './show.css';
 import IconText from '../../../components/IconText';
 import {Helmet} from 'react-helmet';
+import AddComment from '../../../components/AddComment';
 
 const ActivityShow = ({
-  wxActivity
+  wxActivity,
+  dispatch
 }) => {
-  console.log("session::", sessionStorage.getItem("abcSession"));
   const item = wxActivity.item;
+
+  const handleSubmit = (comment) => {
+    console.log(comment);
+    dispatch({type: 'wxActivity/onComment', payload: comment});
+  }
+
   return (
     <div>
       <Helmet><title>{item.title}</title></Helmet>
@@ -18,9 +25,11 @@ const ActivityShow = ({
         ｜{item.createDate}
       </p>
 
-      {item.guide && <div className={styles.guide}>{item.guide}</div>}
+      {item.guide && <div className={styles.guide}><b>导读：</b>{item.guide}</div>}
 
       <div className={styles.content} dangerouslySetInnerHTML={{__html: item.content}}></div>
+
+      <AddComment objId={item.id} onSubmit={handleSubmit}/>
     </div>
   );
 }

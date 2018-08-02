@@ -15,7 +15,7 @@ const WxActivity = ({
         <title>活动精选</title>
       </Helmet>
       <div className="listPageHeader">
-        <h3>活动精选</h3>
+        <h3>活动精选<small>（{wxActivity.totalElements}）</small></h3>
       </div>
       <MyCard dataSource={wxActivity.datas} loading={loading.models.activity}/>
     </div>

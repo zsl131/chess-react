@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './header.css'
+import {getLoginAccount} from '../../utils/loginAccountUtils';
 
 export default class WxLoginAccount extends React.Component {
 
@@ -13,7 +14,8 @@ export default class WxLoginAccount extends React.Component {
 
   componentWillMount() {
     try {
-      const loginAccountStr = localStorage.getItem("wxLoginAccount");
+      // const loginAccountStr = localStorage.getItem(configApi.accountSessionName);
+      const loginAccountStr = getLoginAccount();
       // console.log("loginAccountStr::", loginAccountStr);
       const loginAccount = JSON.parse(loginAccountStr);
       this.setState({account: loginAccount || {}});

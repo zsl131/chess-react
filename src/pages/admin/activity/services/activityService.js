@@ -11,7 +11,7 @@ function loadOne(id) {
 function addOrUpdate(obj) {
   obj.status = (obj.status && obj.status !== undefined)?"1":"0";
   // console.log("service:::", obj);
-  return request("activityService.addOrUpdate", JSON.stringify(obj), true);
+  return request("activityService.addOrUpdate", JSON.stringify(obj), true, {method: "POST"});
 }
 
 function deleteObj(id) {

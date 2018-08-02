@@ -2,19 +2,17 @@
 
 // 此文件主要功能是解决无微信用户登录的问题
 import {decodeBase64, encodeBase64} from "../utils/Base64Utils";
+import {getLoginAccount, setLoginAccount} from '../utils/loginAccountUtils';
 
 const curPathname = window.location.pathname;
 
-console.log("wx-interceptor document ---- "+window.location.pathname, window.location.href);
+// console.log("wx-interceptor document ---- "+window.location.pathname, window.location.href);
 
 ///weixin/queryAccount此路由临时使用，用于缓存微信用户
 if(curPathname.startsWith("/wx") && curPathname !== '/weixin/queryAccount') {
 
-  sessionStorage.setItem("testSession1", "this is session value 111");
-
-  const LOGIN_WX_ACCOUNT_SESSION_NAME = "wxLoginAccount";
-
-  const laStr = localStorage.getItem(LOGIN_WX_ACCOUNT_SESSION_NAME);
+  // const laStr = localStorage.getItem(LOGIN_WX_ACCOUNT_SESSION_NAME);
+  const laStr = getLoginAccount();
 
   // console.log("loginAccountStr session:::", laStr);
 
@@ -32,7 +30,8 @@ if(curPathname.startsWith("/wx") && curPathname !== '/weixin/queryAccount') {
       const loadAccount = JSON.parse(decodeBase64(account));
       // console.log("loadAccount:"+loadAccount)
       if (loadAccount.size === 1) {
-        localStorage.setItem(LOGIN_WX_ACCOUNT_SESSION_NAME, JSON.stringify(loadAccount.datas));
+        // localStorage.setItem(LOGIN_WX_ACCOUNT_SESSION_NAME, JSON.stringify(loadAccount.datas));
+        setLoginAccount(JSON.stringify(loadAccount.datas));
         // console.log(loadAccount);
         window.location.href = targetUrl;
       } else {

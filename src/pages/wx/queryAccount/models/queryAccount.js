@@ -1,4 +1,5 @@
 import * as queryAccountService from '../services/queryAccountService';
+import {setLoginAccount} from '../../../../utils/loginAccountUtils';
 
 export default {
   state:{
@@ -6,11 +7,12 @@ export default {
   },
   reducers: {
     setAccount(state, {payload: data}) {
-      localStorage.setItem("wxLoginAccount", data.datas);
-      console.log("set session value");
-      sessionStorage.setItem("abcSession", "this is abc session");
+      // console.log(data);
+      // localStorage.setItem(configApi.accountSessionName, data.message);
+      setLoginAccount(data.message);
+      // console.log("set session value");
 
-      return {...state, datas: data.datas};
+      return {...state, datas: data.message};
     }
   },
   effects: {

@@ -14,7 +14,12 @@ function loadOne(query) {
   return request("activityService.loadOne", query, true);
 }
 
+function addComment(comment) {
+  return request("activityCommentService.add", comment, true);
+}
+
 export {
   list,
   loadOne,
+  addComment,
 }

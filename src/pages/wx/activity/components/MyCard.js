@@ -15,10 +15,12 @@ const MyCard = ({
       <Card className={styles.singleObj}>
         <Card.Header title={<Link to={`/wx/activity/show?id=${item.id}`} className={styles.titleHref}>{item.title}</Link>}/>
         <Card.Body>
-          <Link to={`/wx/activity/show?id=${item.id}`}>
-            <img alt={item.id} src={item.imgUrl} className={styles.listImg}/>
-          </Link>
-          <p className={styles.guide}>{item.guide}</p>
+          {item.imgUrl &&
+            <Link to={`/wx/activity/show?id=${item.id}`}>
+              <img alt={item.title} src={item.imgUrl} className={styles.listImg}/>
+            </Link>
+          }
+          {item.guide && <p className={styles.guide}>{item.guide}</p>}
         </Card.Body>
         <Card.Footer content={<div><IconText type="eye-o" text={item.readCount}/>，<IconText type="like-o" text={item.goodCount} />，<IconText type="message" text={item.commentCount} /></div>}/>
       </Card>

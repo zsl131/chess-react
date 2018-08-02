@@ -13,7 +13,8 @@ const Show = ({
         <h2>{item.title}</h2>
         <p>{item.depName} | {item.createTime}</p>
       </div>
-      <div dangerouslySetInnerHTML={{__html: item.content}}>
+      {item.guide && <div className={styles.guide}><b>导读：</b>{item.guide}</div>}
+      <div className={styles.content} dangerouslySetInnerHTML={{__html: item.content}}>
       </div>
     </Modal>
   );

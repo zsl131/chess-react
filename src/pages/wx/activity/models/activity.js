@@ -1,4 +1,5 @@
 import * as activityService from '../services/activityService';
+import {Toast} from 'antd-mobile';
 
 export default {
   namespace: 'wxActivity',
@@ -22,8 +23,12 @@ export default {
     },
     *show({payload: query}, {call,put}) {
       const data = yield call(activityService.loadOne, query);
-      console.log(data);
-      yield put({type:"modifyState", payload: {item: data.datas}});
+      // console.log(data);
+      yield put({type:"modifyState", payload: {item: data.obj}});
+    },
+    *onComment({payload: comment}, {call,put}) {
+      const data = yield call(activityService.addComment, comment);
+      if(data) {Toast.success(data.message);}
     }
   },
   subscriptions: {

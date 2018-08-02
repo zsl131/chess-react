@@ -55,10 +55,6 @@ export default class UpdateRecordModal extends React.Component {
       setFieldsValue({holdTime: dateString});
     }
 
-    const onOk = (value) => {
-      console.log("-->", value);
-    }
-
     const disabledDate = (current) => {
       // Can not select days before today and today
       // return current && current < moment().endOf('day');
@@ -105,13 +101,12 @@ export default class UpdateRecordModal extends React.Component {
               format="YYYY-MM-DD HH:mm:ss"
               placeholder={['报名开始时间', '报名截止时间']}
               onChange={onChange}
-              onOk={onOk}
             />
 
           </FormItem>
 
           <FormItem {...formItemLayout} label="显示状态">
-            {getFieldDecorator("status")(<Switch checkedChildren="可报名" unCheckedChildren="不可报名" defaultChecked={this.state.record.status === "1"}/>)}
+            {getFieldDecorator("status")(<Switch checkedChildren="可报名" unCheckedChildren="不可报名" defaultChecked={this.state.record.status === "0" || this.state.record.status === "1"}/>)}
           </FormItem>
         </Form>
       </Modal>

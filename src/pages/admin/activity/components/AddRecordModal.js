@@ -55,10 +55,6 @@ export default class AddRecordModal extends React.Component {
       setFieldsValue({holdTime: dateString});
     }
 
-    const onOk = (value) => {
-      console.log("-->", value);
-    }
-
     const disabledDate = (current) => {
       // Can not select days before today and today
       // return current && current < moment().endOf('day');
@@ -107,7 +103,6 @@ export default class AddRecordModal extends React.Component {
               format="YYYY-MM-DD HH:mm:ss"
               placeholder={['报名开始时间', '报名截止时间']}
               onChange={onChange}
-              onOk={onOk}
             />
 
           </FormItem>

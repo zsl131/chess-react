@@ -49,6 +49,9 @@ const List = ({
     title: '流量',
     dataIndex: 'readCount'
   }, {
+    title: '开展',
+    dataIndex: 'recordCount'
+  }, {
     title: '点赞',
     dataIndex: 'goodCount'
   }, {

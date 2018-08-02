@@ -46,13 +46,17 @@ export default function request(apiCode, params, isBase, options) {
 
   // console.log("configApi", configApi);
 
-  const defaultOption = {
+  let defaultOption = {
     method: 'GET',
     headers: {
       'auth-token': configApi.authToken,
       'api-code': apiCode
     }
   }
+
+  Object.assign(defaultOption, options || {});
+
+  // console.log("option", defaultOption)
 
   const paramsType = Object.prototype.toString.call(params);
 
@@ -68,7 +72,7 @@ export default function request(apiCode, params, isBase, options) {
   // console.log("encode after", params);
   params = toBase64(params);
   // console.log("encode after aes", params);
-  return fetch(isBase?configApi.api.baseRequest+params : configApi.api.queryOrSubmit+params, options || defaultOption)
+  return fetch(isBase?configApi.api.baseRequest+params : configApi.api.queryOrSubmit+params, defaultOption)
     .then(checkStatus)
     .then(parseJSON)
     .then(checkDatas)
