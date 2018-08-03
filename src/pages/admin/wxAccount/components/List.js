@@ -14,7 +14,7 @@ const List = ({
     title: '头像',
     render: (text, record) => {
       return (
-        <a href={record.avatarUrl} target="_blank"><img src={record.avatarUrl} alt={record.nickname} className={styles.avatarImg}/></a>
+        <a href={record.avatarUrl} target="_blank" rel="noopener noreferrer"><img src={record.avatarUrl} alt={record.nickname} className={styles.avatarImg}/></a>
       )
     }
   }, {

@@ -23,7 +23,7 @@ const List = ({
     title: '标题',
     // dataIndex: 'title'
     render: (text, record) => {
-      return (<a href="javascript:;" onClick={()=>{onShow(record.id)}}>{record.title}</a>);
+      return (<a href="###" onClick={()=>{onShow(record.id)}}>{record.title}</a>);
       // return (<span>-</span>);
     }
   }, {

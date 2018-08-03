@@ -3,7 +3,6 @@ import {connect} from 'dva';
 import {Icon} from 'antd';
 import { routerRedux } from 'dva/router'
 
-/*import Operator from './components/Operator';*/
 import Filter from './components/Filter';
 import List from './components/List';
 
@@ -25,9 +24,6 @@ const WxAccount = ({
     }));
   }
 
-  const operatorOpts = {
-
-  }
   const filterOpts = {
     onFilter(values) {
       handleRefresh({conditions: JSON.stringify(values)});

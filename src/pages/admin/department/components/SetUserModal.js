@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Modal} from 'antd';
+import {Form, Modal} from 'antd';
 
 import UserTag from './UserTag';
 

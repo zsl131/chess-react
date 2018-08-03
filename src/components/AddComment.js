@@ -3,6 +3,7 @@ import {TextareaItem, Card, Button, Toast, NoticeBar} from 'antd-mobile';
 import {createForm} from 'rc-form';
 import {getLoginAccount} from '../utils/loginAccountUtils';
 import styles from './addComment.css';
+import activityComment from "../pages/admin/activityComment/models/activityComment";
 
 /**
  * 此组件用于发表评论
@@ -16,13 +17,15 @@ export default class AddComment extends React.Component {
   state = {
     objId: this.props.objId,
     loginAccount: {},
+    content:'',
   }
 
   UNSAFE_componentWillMount() {
     const loginAccountStr = getLoginAccount();
     const loginAccount = loginAccountStr?JSON.parse(loginAccountStr):{};
 
-    this.state.loginAccount = loginAccount;
+    // this.state.loginAccount = loginAccount;
+    this.setState({loginAccount: loginAccount});
   }
 
   render() {
@@ -32,7 +35,7 @@ export default class AddComment extends React.Component {
       count: 200,
     }
 
-    const { getFieldProps, validateFields } = this.props.form;
+    const { getFieldProps, validateFields, setFieldsValue } = this.props.form;
 
     Object.assign(opts, this.props.opts || {});
 
@@ -43,6 +46,8 @@ export default class AddComment extends React.Component {
           values.openid = this.state.loginAccount.openid;
           values.objId = this.props.objId; //TODO 需要父组件提供objId属性
           this.props.onSubmit(values); //TODO 提交，需要父组件提供onSubmit方法
+          setFieldsValue({content: ''});
+          this.setState({content: ''});
         } else {
           Toast.fail("请认真输入评论内容");
         }
@@ -57,6 +62,11 @@ export default class AddComment extends React.Component {
       )
     }
 
+    const handleChange = (val) => {
+      setFieldsValue({content: val});
+      this.setState({content: val});
+    }
+
     return (
       <div>
         {this.state.loginAccount?
@@ -66,9 +76,10 @@ export default class AddComment extends React.Component {
               <TextareaItem
                 {...getFieldProps('content', {rules: [{required: true, message: '请认真输入评论内容'}]})}
                 autoHeight
-                labelNumber={4} {...opts}/>
+                labelNumber={4} {...opts}
+                onChange={handleChange}/>
             </Card.Body>
-            <Card.Footer extra={<Button type="primary" size="small" onClick={handleSubmit} inline>提交评论</Button>}/>
+            <Card.Footer extra={<Button type="primary" size="small" onClick={handleSubmit} disabled={this.state.content===''} inline>提交评论</Button>}/>
           </Card>:
           <NoticeBar>未检测到登陆用户，不可评论</NoticeBar>
         }

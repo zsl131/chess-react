@@ -7,3 +7,12 @@ export function setLoginAccount(loginAccountStr) {
 export function getLoginAccount() {
   return localStorage.getItem(configApi.accountSessionName);
 }
+
+export function getOpenid() {
+  try {
+    const loginAccount = JSON.parse(getLoginAccount());
+    return loginAccount.openid;
+  } catch (e) {
+    return '';
+  }
+}

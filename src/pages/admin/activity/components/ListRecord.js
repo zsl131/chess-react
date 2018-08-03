@@ -1,15 +1,11 @@
 import React from 'react';
-import {Menu, Pagination, Table, Icon} from 'antd';
+import {Pagination, Table} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
-// import { ListOperator } from 'components';
-import {Link} from 'react-router-dom';
-import styles from './list.css';
 
 const ListRecord = ({
   onDelConfirm,
   onUpdate,
   onPageChange,
-  onShow,
   totalElement,
   ...listOpts
 }) => {

@@ -7,7 +7,6 @@ const List = ({
   onUpdate,
   onPageChange,
   onMatchMenu,
-  location,
   totalElement,
   ...listOpts
 }) => {

@@ -1,4 +1,5 @@
 import request from '../../../../utils/request';
+import {getOpenid} from '../../../../utils/loginAccountUtils';
 
 function list(query) {
   const con = {"status": "1"};
@@ -11,15 +12,26 @@ function list(query) {
 }
 
 function loadOne(query) {
-  return request("activityService.loadOne", query, true);
+  query.openid = getOpenid();
+  return request("activityService.loadOne4Wx", query, true);
 }
 
 function addComment(comment) {
   return request("activityCommentService.add", comment, true);
 }
 
+function onCommentGood(id) {
+  return request("activityCommentService.onGood", id, true);
+}
+
+function listComment(param) {
+  return request("activityCommentService.list4Wx", param, true);
+}
+
 export {
   list,
   loadOne,
   addComment,
+  onCommentGood,
+  listComment,
 }

@@ -1,7 +1,7 @@
-import React from  'react';
-import {Card, Icon} from 'antd';
+import React from 'react';
+import {Icon} from 'antd';
 import {connect} from 'dva';
-import { routerRedux } from 'dva/router'
+import {routerRedux} from 'dva/router'
 
 import ListRecord from './components/ListRecord';
 import RecordOperator from './components/RecordOperator';
@@ -105,7 +105,7 @@ const Record = ({
     <div>
       <div className="listHeader">
         <h3><Icon type="bars"/> 活动开展记录<b>（{activity.recordList.length}）</b>
-          <a href="javascript:;" onClick={()=>{onShow(activity.item.id)}}>{activity.item.title}</a>
+          <a href="###" onClick={()=>{onShow(activity.item.id)}}>{activity.item.title}</a>
         </h3>
 
         <RecordOperator {...operatorOpts}/>

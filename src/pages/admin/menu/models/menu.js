@@ -31,7 +31,7 @@ export default {
     },
     *init({ payload: query }, { call, put }) {
       const data = yield call(menuService.init);
-      if(data) { message.success(data.datas);}
+      if(data) { message.success(data.message);}
     },
     *update({ payload: obj }, { call, put }) {
       const data = yield call(menuService.update, obj);

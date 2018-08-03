@@ -1,12 +1,11 @@
 import React from 'react';
-import {Menu, Pagination, Table, Icon} from 'antd';
+import {Pagination, Table} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
   onDelConfirm,
   onUpdate,
   onPageChange,
-  location,
   totalElement,
   ...listOpts
 }) => {

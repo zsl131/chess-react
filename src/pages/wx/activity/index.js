@@ -9,7 +9,6 @@ const WxActivity = ({
 }) => {
 
   return (
-
     <div>
       <Helmet>
         <title>活动精选</title>

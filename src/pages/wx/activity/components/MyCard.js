@@ -6,7 +6,7 @@ import IconText from '../../../../components/IconText';
 
 const MyCard = ({
   dataSource,
-  loading
+  loading,
 }) => {
 
   const SingleObj = (({item}) => {
