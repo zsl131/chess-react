@@ -20,6 +20,10 @@ function addComment(comment) {
   return request("activityCommentService.add", comment, true);
 }
 
+function onGood(id) {
+  return request("activityService.onGood", id, true);
+}
+
 function onCommentGood(id) {
   return request("activityCommentService.onGood", id, true);
 }
@@ -32,6 +36,7 @@ export {
   list,
   loadOne,
   addComment,
+  onGood,
   onCommentGood,
   listComment,
 }

@@ -9,6 +9,12 @@ html, body, :global(#root) {
 .red {
   color:#FF0000;
 }
+.yellow {
+  color: #fa541c;
+}
+.green {
+  color: #999999;
+}
 
 /*后台管理部份的样式*/
 

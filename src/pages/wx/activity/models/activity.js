@@ -11,6 +11,8 @@ export default {
     commentPage: 0,
     commentElements:0,
     curCommentPage: 1,
+    recordList:[],
+    recordSize:0,
   },
   reducers: {
     modifyState(state, {payload: options}) {
@@ -23,6 +25,9 @@ export default {
         }
         return item;
       });
+    },
+    onGoodPage(state, {payload: id}) {
+      state.item.goodCount += 1;
     }
   },
   effects: {
@@ -35,7 +40,7 @@ export default {
     },
     *show({payload: query}, {call,put}) {
       const data = yield call(activityService.loadOne, query);
-      yield put({type:"modifyState", payload: {item: data.obj, commentList: data.commentList, commentPage: data.totalPage, commentElements: data.commentSize}});
+      yield put({type:"modifyState", payload: {item: data.obj, commentList: data.commentList, commentPage: data.totalPage, commentElements: data.commentSize, recordList: data.recordList, recordSize: data.recordSize}});
     },
     *onComment({payload: comment}, {call,put}) {
       const data = yield call(activityService.addComment, comment);
@@ -45,6 +50,11 @@ export default {
     *listComment({payload: params}, {call,put}) {
       const data = yield call(activityService.listComment, params);
       yield put({type: "modifyState", payload: {commentList: data.commentList, commentPage: data.totalPage, commentElements: data.size}});
+    },
+    *onGood({payload: id}, {call,put}) {
+      const data = yield call(activityService.onGood, {id});
+      if(data) {Toast.success(data.message+" +1");}
+      yield put({type: 'onGoodPage', payload: id});
     },
     *onCommentGood({payload: id}, {call,put}) {
       const data = yield call(activityService.onCommentGood, {id});
