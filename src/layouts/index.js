@@ -1,5 +1,5 @@
 import React from 'react';
-import {LocaleProvider,Affix, Layout} from 'antd';
+import {Affix, Layout, LocaleProvider} from 'antd';
 import {connect} from 'dva';
 import withRouter from 'umi/withRouter';
 
@@ -11,11 +11,10 @@ import styles from './layout.css';
 
 import WxNormalHeader from './wx/WxNormalHeader';
 import WxNormalFooter from './wx/WxNormalFooter';
-// import { base64ToString,toBase64 } from "../utils/AesUtil";
-
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+// import { base64ToString,toBase64 } from "../utils/AesUtil";
 
 moment.locale('zh-cn');
 
@@ -27,8 +26,6 @@ class MainLayout extends React.Component {
   // console.log("layoutIndex->path::", props);
   render() {
 
-    const LOGIN_WX_ACCOUNT_SESSION_NAME = "wxLoginAccount";
-
     const props = this.props;
 
     const pathname = props.location.pathname;
@@ -38,7 +35,9 @@ class MainLayout extends React.Component {
 
     const user = JSON.parse(sessionStorage.getItem("loginUser"));
 
-    if (isWeixin) {
+    if (pathname.indexOf("/assets")>=0) {
+      console.log("assets files")
+    } else if (isWeixin) {
       console.log("/weixin开头");
     } else if (isWx) {
 

@@ -1,9 +1,7 @@
 import React from 'react';
-import {Form, Modal} from 'antd';
+import {Modal} from 'antd';
 
 import UserTag from './UserTag';
-
-const FormItem = Form.Item;
 
 const SetUserModal = ({
   onChange,

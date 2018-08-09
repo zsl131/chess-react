@@ -1,9 +1,8 @@
 import React from 'react';
-import {TextareaItem, Card, Button, Toast, NoticeBar} from 'antd-mobile';
+import {Button, Card, NoticeBar, TextareaItem, Toast} from 'antd-mobile';
 import {createForm} from 'rc-form';
 import {getLoginAccount} from '../utils/loginAccountUtils';
 import styles from './addComment.css';
-import activityComment from "../pages/admin/activityComment/models/activityComment";
 
 /**
  * 此组件用于发表评论

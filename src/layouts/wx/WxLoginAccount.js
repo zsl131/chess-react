@@ -8,11 +8,7 @@ export default class WxLoginAccount extends React.Component {
     account:{}
   }
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     try {
       // const loginAccountStr = localStorage.getItem(configApi.accountSessionName);
       const loginAccountStr = getLoginAccount();

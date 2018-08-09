@@ -1,8 +1,7 @@
 import React from 'react';
-import { Form, Input, Select, Button } from 'antd';
+import {Button, Form, Input} from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 const Filter = ({
   onFilter,
   form: {

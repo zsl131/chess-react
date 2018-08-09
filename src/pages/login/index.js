@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Card, Form, Input, Button, Row } from 'antd';
 import styles from './index.css';
+import Helmet from 'react-helmet';
 
 const FormItem = Form.Item;
 
@@ -29,6 +30,7 @@ const Login = ({
   // const { getFieldDecorator } = this.props.form;
   return (
     <div>
+      <Helmet><title>用户登陆</title></Helmet>
       <Card bordered={false} className={styles.loginCard}>
         <h2 className={styles.title}>{interceptor.appConfig.appName} - LOGIN</h2>
         <Form onSubmit={this.handleSubmit} className={styles.loginForm}>

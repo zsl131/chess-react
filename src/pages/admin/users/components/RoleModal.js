@@ -3,13 +3,6 @@ import {Modal, Table} from 'antd';
 
 export default class RoleModal extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-  }
-
   render() {
 
     const handleOk = (e) => {

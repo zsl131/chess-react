@@ -32,7 +32,7 @@ const RecordList = ({
               <p>报名时间：{singleItem.startTime}</p>
               <p>报名截止：{singleItem.deadline}</p>
               <p>家庭数量：最多可【<b className="blue">{singleItem.maxCount}</b>】个家庭参与</p>
-              <p><Link to={`/wx/activity/signUp?recordId=${singleItem.id}`}><Button type="primary" size="small">我要报名</Button></Link></p>
+              <p><Link to={`/wx/signUp?recordId=${singleItem.id}`}><Button type="primary" size="small">我要报名</Button></Link></p>
             </Card.Body>
           </Card>
           :

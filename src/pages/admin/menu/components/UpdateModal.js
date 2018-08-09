@@ -6,11 +6,7 @@ const FormItem = Form.Item;
 @Form.create()
 export default class UpdateModal extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setState({
       item: this.props.item,
       curIcon: this.props.item.icon

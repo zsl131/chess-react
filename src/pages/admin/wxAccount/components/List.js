@@ -43,7 +43,7 @@ const List = ({
     render: (text, record) => {
       return (
         <Popconfirm title={`确定将[${record.nickname}]与微信端同步吗？`} onConfirm={() => handleSynch(record)} cancelText="取消" okText="确定">
-          <a href="javascript:;"><Icon type="reload"/> 同步</a>
+          <a href="###"><Icon type="reload"/> 同步</a>
         </Popconfirm>
       );
     }
@@ -57,7 +57,7 @@ const List = ({
     const menus = menu(record);
     return (
       <Dropdown overlay={menus}>
-        <a className="ant-dropdown-link" href="javascript:;">
+        <a className="ant-dropdown-link" href="###">
           {typeStr(record.type)}
            <Icon type="down" />
         </a>

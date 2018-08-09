@@ -1,0 +1,9 @@
+.mainContainer {
+  border: 1px #e5e5e5 solid; border-radius: 8px; box-shadow: 4px 4px 2px #dfdfdf; margin-top: 10px;
+}
+.optDiv {
+  width:100%; padding: 10px 0px; background: #f4f4f4;
+}
+.optBtn {
+  width:46%; margin: 0px 2%;
+}

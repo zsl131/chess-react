@@ -6,7 +6,6 @@ const List = ({
   onPageChange,
   onSetStatus,
   onReply,
-  location,
   totalElement,
   ...listOpts
 }) => {
@@ -45,7 +44,7 @@ const List = ({
     title: '操作',
     render: (text, record) => {
       return (
-          <a href="javascript:;" onClick={()=>onReply(record)}><Icon type="export"/> 回复</a>
+          <a href="###" onClick={()=>onReply(record)}><Icon type="export"/> 回复</a>
       );
     }
   }];

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Dropdown, Icon, Menu, Popconfirm} from 'antd';
-import { Link } from 'react-router-dom';
 
 const ListOperator = ({
   id,
