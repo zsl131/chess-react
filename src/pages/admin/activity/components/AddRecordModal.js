@@ -14,7 +14,7 @@ export default class AddRecordModal extends React.Component {
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
-    setFieldsValue({"actId": this.state.activity.id, "actTitle": this.state.activity.title});
+    setFieldsValue({"actId": this.state.activity.id, "actTitle": this.state.activity.title, "depId": this.state.activity.depId, "depName": this.state.activity.depName});
   }
 
   render() {
@@ -66,6 +66,8 @@ export default class AddRecordModal extends React.Component {
         <Form layout="horizontal">
           {getFieldDecorator('actId')(<Input type="hidden" />)}
           {getFieldDecorator('actTitle')(<Input type="hidden" />)}
+          {getFieldDecorator('depId')(<Input type="hidden" />)}
+          {getFieldDecorator('depName')(<Input type="hidden" />)}
           {getFieldDecorator('startTime')(<Input type="hidden" />)}
           {getFieldDecorator('deadline')(<Input type="hidden" />)}
           {getFieldDecorator('holdTime')(<Input type="hidden" />)}

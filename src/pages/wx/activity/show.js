@@ -50,15 +50,15 @@ const ActivityShow = ({
       <div className={styles.content} dangerouslySetInnerHTML={{__html: item.content}}></div>
 
       <AddComment objId={item.id} onSubmit={handleSubmit}/>
-      <Tabs tabs={[{title: '相关推荐'}, {title: <Badge text={wxActivity.commentElements}>评论信息</Badge>}, {title:<Badge text={wxActivity.recordSize}>开展记录</Badge>}]} >
+      <Tabs tabs={[{title:<Badge text={wxActivity.recordSize}>开展记录</Badge>}, {title: '相关推荐'}, {title: <Badge text={wxActivity.commentElements}>评论信息</Badge>}]} >
+        <div className={styles.tabDiv}>
+          <RecordList dataSource={wxActivity.recordList}/>
+        </div>
         <div className={styles.tabDiv}>
           <RecommendActivity/>
         </div>
         <div className={styles.tabDiv}>
           <ListComment curPage={wxActivity.curCommentPage} onChangePage={handleChangePage} title="活动评论信息" totalElements={wxActivity.commentElements} dataSource={wxActivity.commentList} totalPage={wxActivity.commentPage} onGood={handleOnGood}/>
-        </div>
-        <div className={styles.tabDiv}>
-          <RecordList dataSource={wxActivity.recordList}/>
         </div>
       </Tabs>
       <BackTop visibilityHeight={100}/>

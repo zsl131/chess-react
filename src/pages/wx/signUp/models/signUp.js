@@ -23,7 +23,6 @@ export default {
   effects: {
     *index({payload: query}, {call, put}) {
       const data = yield call(signUpService.loadActivityRecord, query);
-      console.log(data);
       yield put({type: 'modifyState', payload: {account: data.account, stuList: data.stuList, record: data.record, applyList: data.applyList, ageList: data.ageList, schoolList: data.schoolList}});
     },
     *onDeleteApply({payload: id}, {call,put}) {
@@ -41,6 +40,11 @@ export default {
     },
     *deleteBatch({payload: objIds}, {call}) {
       const data = yield call(signUpService.deleteBatch, {objIds});
+      if(data) {Toast.success(data.message);}
+    },
+    *applyBatch({payload: params}, {call}) {
+      const data = yield call(signUpService.applyBatch, params);
+      if(data) {Toast.success(data.message);}
     }
   },
   subscriptions: {

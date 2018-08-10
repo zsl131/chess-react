@@ -24,7 +24,7 @@ export default {
   subscriptions: {
     setup({history,dispatch}) {
       return history.listen((location) => {
-        if(location.pathname === '/wx/queryAccount') {
+        if(location.pathname === '/weixin/queryAccount') {
           dispatch({type:'queryAccount', payload: location.query});
         }
       });

@@ -1,7 +1,8 @@
 import fetch from 'dva/fetch';
 import { message } from 'antd';
 import configApi from './configApi';
-import { toBase64 } from "./AesUtil";
+import {getDepIds, getLoginUser} from "./authUtils";
+import {encodeBase64} from "./Base64Utils";
 
 function parseJSON(response) {
   return response.json();
@@ -18,7 +19,6 @@ function checkStatus(response) {
 }
 
 function checkDatas(data) {
-  // console.log("checkDatas", data);
   if(data.errCode !== "0") {
     message.error(data.reason);
   } else {
@@ -27,7 +27,6 @@ function checkDatas(data) {
 }
 
 function catchError(error) {
-  //console.log("name: "+error.name, "message: "+error.message);
   if(error.message.search("Gateway Timeout")>=0) {
     message.error("服务端网络异常", 6);
   } else {
@@ -43,35 +42,36 @@ function catchError(error) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(apiCode, params, isBase, options) {
+  let headers = {
+    'auth-token': configApi.authToken,
+    'api-code': apiCode
+  }
 
-  // console.log("configApi", configApi);
+  const loginUser = getLoginUser();
+  if(loginUser) {
+    headers.userId = loginUser.id;
+    headers.username = loginUser.username;
+    headers.isAdminUser = loginUser.isAdmin;
+    headers.depids = getDepIds()
+  }
 
   let defaultOption = {
     method: 'GET',
-    headers: {
-      'auth-token': configApi.authToken,
-      'api-code': apiCode
-    }
+    headers: headers
   }
 
   Object.assign(defaultOption, options || {});
 
-  // console.log("option", defaultOption)
-
   const paramsType = Object.prototype.toString.call(params);
 
-  // console.log("paramsType:::", paramsType);
   if(paramsType === '[object Object]') {
-    // console.log("changeType:", params);
+    // params.loginUser = getLoginUser(); //强行加上登陆用户
     params = JSON.stringify(params); //如果是对象则转换成字符串
-    // console.log("After changeType:", params);
   }
 
-  // console.log("encode before", params);
   params = encodeURI(params);
-  // console.log("encode after", params);
-  params = toBase64(params);
-  // console.log("encode after aes", params);
+  // params = toBase64(params);
+  params = encodeBase64(params);
   return fetch(isBase?configApi.api.baseRequest+params : configApi.api.queryOrSubmit+params, defaultOption)
     .then(checkStatus)
     .then(parseJSON)

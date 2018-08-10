@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Form, Icon, Input, Card, Button } from 'antd';
 import styles from './index.css';
+import {getLoginUser} from '../../../utils/authUtils';
 
 const FormItem = Form.Item;
 
@@ -9,7 +10,7 @@ const FormItem = Form.Item;
 class UpdatePwd extends React.Component {
 
   UNSAFE_componentWillMount() {
-    const loginUser = JSON.parse(sessionStorage.getItem("loginUser"));
+    const loginUser = getLoginUser();
     this.setState({
       loginUser: loginUser
     })
