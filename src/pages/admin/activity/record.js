@@ -103,19 +103,26 @@ const Record = ({
 
   return (
     <div>
-      <div className="listHeader">
-        <h3><Icon type="bars"/> 活动开展记录<b>（{activity.recordList.length}）</b>
-          <a href="###" onClick={()=>{onShow(activity.item.id)}}>{activity.item.title}</a>
-        </h3>
+      { (activity.item && activity.item.hasOwnProperty("id"))  ?
+        <div>
+          <div className="listHeader">
+            <h3><Icon type="bars"/> 活动开展记录<b>（{activity.recordList.length}）</b>
+              <a href="###" onClick={() => {
+                onShow(activity.item.id)
+              }}>{activity.item.title}</a>
+            </h3>
 
-        <RecordOperator {...operatorOpts}/>
-      </div>
+            <RecordOperator {...operatorOpts}/>
+          </div>
 
-      <ListRecord {...listOpts}/>
+          <ListRecord {...listOpts}/>
 
-      {activity.showVisible && <Show {...showOpts}/>}
-      {activity.addRecordVisible && <AddRecordModal {...addRecordOpts}/>}
-      {activity.updateRecordVisible && <UpdateRecordModal {...updateRecordOpts}/>}
+          {activity.showVisible && <Show {...showOpts}/>}
+          {activity.addRecordVisible && <AddRecordModal {...addRecordOpts}/>}
+          {activity.updateRecordVisible && <UpdateRecordModal {...updateRecordOpts}/>}
+        </div>:
+        <h2 className="red" style={{"textAlign":"center"}}>没有权限访问！</h2>
+      }
     </div>
   );
 }

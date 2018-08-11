@@ -32,6 +32,14 @@ html, body, :global(#root) {
   margin:10px; background:#FFF;
 }
 
+.filterSelect {
+  width:110px;
+}
+.avatarImg {
+  width:80px;
+}
+
+
 /*后台管理部份的样式*/
 
 /*微信管理部份的样式*/

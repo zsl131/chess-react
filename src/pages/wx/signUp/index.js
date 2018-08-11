@@ -14,6 +14,8 @@ class SignUp extends React.Component {
 
     const { query, pathname } = this.props.location;
 
+    const signUp = this.props.signUp;
+
     const handleRefresh = (newQuery) => {
       this.props.dispatch(routerRedux.push({
         pathname,
@@ -39,15 +41,14 @@ class SignUp extends React.Component {
     }
 
     const handleDeleteBatch = (objIds) => {
-      this.props.dispatch({type: "signUp/deleteBatch", payload: objIds});
-      console.log("delete", objIds);
+      this.props.dispatch({type: "signUp/deleteBatch", payload: objIds}).then(()=>handleRefresh());
     }
 
     const handleApplyBatch = (objIds) => {
-      console.log("apply", objIds);
+      this.props.dispatch({type: "signUp/applyBatch", payload: {objIds: objIds, recordId: signUp.record.id}}).then(()=>handleRefresh());
     }
 
-    const signUp = this.props.signUp;
+
 
     const stuList = this.props.signUp.stuList;
     const needAdd = stuList == null || stuList.length<=0;

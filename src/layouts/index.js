@@ -1,11 +1,11 @@
 import React from 'react';
 import {Affix, Layout, LocaleProvider} from 'antd';
 import {connect} from 'dva';
-import withRouter from 'umi/withRouter';
 
 import AdminHeader from './admin/AdminHeader';
 import AdminFooter from './admin/AdminFooter';
 import AdminSideMenu from './admin/AdminSideMenu';
+import ErrorModel from './errors/ErrorModel';
 import router from 'umi/router';
 import styles from './layout.css';
 
@@ -14,7 +14,8 @@ import WxNormalFooter from './wx/WxNormalFooter';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
-// import { base64ToString,toBase64 } from "../utils/AesUtil";
+
+import {checkAuthByUrl} from '../utils/authUtils';
 
 moment.locale('zh-cn');
 
@@ -35,15 +36,27 @@ class MainLayout extends React.Component {
 
     const user = JSON.parse(sessionStorage.getItem("loginUser"));
 
-    if (pathname.indexOf("/assets")>=0) {
-      console.log("assets files")
-    } else if (isWeixin) {
+    if (isWeixin) {
       console.log("/weixin开头");
     } else if (isWx) {
 
+    } else if(pathname.indexOf("/public")===0) {
+      return (
+        <LocaleProvider locale={zhCN}>
+          <ErrorModel>
+            {props.children}
+          </ErrorModel>
+        </LocaleProvider>
+      );
     } else if ((pathname !== '/login' && pathname !== '/init') && user === null) {
       // console.log("loginUser is null", user);
       router.push("/login");
+    } else if(pathname.indexOf("/admin")===0) {
+      const hasAuth = checkAuthByUrl(pathname); //通过url检测权限
+      // console.log(hasAuth);
+      if(!hasAuth) { //无权限
+        router.push("/public/noAuth");
+      }
     }
 
     // console.log("layout::", props, dispatch);
@@ -97,4 +110,4 @@ class MainLayout extends React.Component {
   }
 }
 
-export default withRouter(connect()(MainLayout));
+export default connect()(MainLayout);

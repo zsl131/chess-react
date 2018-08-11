@@ -33,7 +33,7 @@ export default {
   effects: {
     *list({payload: query}, {call,put}) {
       const data = yield call(activityService.list, query);
-      // console.log(data);
+      console.log(data);
       if(data) {
         yield put({type:'modifyState', payload: {datas: data.datas, totalElements: data.size}});
       }

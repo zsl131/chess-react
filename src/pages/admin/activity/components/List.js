@@ -34,12 +34,12 @@ const List = ({
     render: (text, record) => {
       return (record.status === '1'?<span className={styles.show}>显示</span>:<span className={styles.hidden}>隐藏</span>)
     }
-  }, {
+  }/*, {
     title: '报名',
     render: (text, record) => {
       return (record.canJoin === '1'?<span className={styles.show}>可报名</span>:<span className={styles.hidden}>不可报名</span>)
     }
-  }, {
+  }*/, {
     title: '创建时间',
     // dataIndex: 'createTime'
     render: (record) => {

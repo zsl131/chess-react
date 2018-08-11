@@ -24,11 +24,12 @@ function deleteApply(query) {
 function deleteBatch(objIds) {
   objIds.openid = getOpenid();
   console.log(objIds);
+  return request("studentService.deleteBatch", objIds, true);
 }
 
-function applyBatch(objIds) {
-  objIds.openid = getOpenid();
-  console.log(objIds);
+function applyBatch(params) {
+  params.openid = getOpenid();
+  return request("studentService.applyBatch", params, true);
 }
 
 export {
@@ -37,4 +38,5 @@ export {
   addStudentOnly,
   deleteApply,
   deleteBatch,
+  applyBatch,
 }
