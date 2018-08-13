@@ -25,9 +25,11 @@ const Question = ({
   }
   const listOpts = {
     dataSource:question.datas,
-    onDel: (record) => {
-      console.log(record);
-      dispatch({type: 'question/deleteObj', payload: record.id}).then(()=> {handleRefresh();});
+    loading: loading.models.question,
+    location,
+    totalElements: question.totalElements,
+    onDelConfirm: (id) => {
+      dispatch({type: 'question/deleteObj', payload: id}).then(()=> {handleRefresh();});
     },
     onButto: (record) => {
       console.log(record);
@@ -44,7 +46,16 @@ const Question = ({
     onBu: (record) => {
       console.log(record);
       dispatch({type:"question/showwww",payload:record.id}).then(()=> {handleRefresh()});
-    }
+    },
+    onUpdate: (id) => {
+      dispatch({ type: 'question/onUpdate', payload: id });
+    },
+    onAdd: (record) => {
+      dispatch({type:'question/modifyState',payload:{it:record,update:true}});
+    },
+    onPageChange: (page) => {
+      handleRefresh({page : page - 1});
+    },
   }
   const addOpts = {
       visible:question.addVisible,
@@ -82,10 +93,10 @@ const Question = ({
     onUpdate:(values) => {
       dispatch({type:'question/addOrUpdateAnswer',payload:values}).then(() =>{
         dispatch({type:'question/modifyState',payload:{update:false}});
-        handleRefresh();
-      });
+      });        handleRefresh();
+
     }
-  }
+}
   const handler = () => {
     dispatch({type:'question/modifyState',payload:{addVisible:true}});
   }

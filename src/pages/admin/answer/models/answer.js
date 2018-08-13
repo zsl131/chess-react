@@ -1,5 +1,7 @@
 import * as answerService from '../services/answerService';
 import { message } from 'antd';
+import * as ageDicService from "../../ageDic/services/ageDicService";
+import * as activityCommentService from "../../activityComment/services/activityCommentService";
 
 export default {
   state: {
@@ -11,6 +13,9 @@ export default {
   reducers: {
     modifyState(state,{payload:options}) {
       return {...state,...options};
+    },
+    updatePage(state, { payload: obj }) {
+      return {...state, item: obj.obj, updateVisible: true};
     }
   },
   effects: {
@@ -32,6 +37,12 @@ export default {
       console.log(data);
       if(data) {
         message.success(data.message);
+      }
+    },
+    *onUpdate({payload: id}, {call,put}) {
+      const data = yield call(answerService.loadOne, {id});
+      if(data) {
+        yield put({type:'modifyState', payload: {item: data.obj, updateVisible: true}});
       }
     },
   },

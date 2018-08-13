@@ -10,9 +10,12 @@ function list(query) {
 function deleteObj(obj) {
   return new request("answerService.delete",obj,true);
 }
-
+function loadOne(id) {
+  return request("answerService.loadOne", id, true);
+}
 export {
   addOrUpdate,
   list,
   deleteObj,
+  loadOne,
 }

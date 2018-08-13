@@ -1,20 +1,25 @@
 import React from 'react';
-import {Table,Button,Icon,Popconfirm,Radio} from 'antd';
-import {connect} from 'dva';
+import {Table,Button,Icon,Popconfirm,Radio,Menu,Pagination} from 'antd';
+import ListOperator from '../../../../components/ListOperator';
 
 const ListQuestion = ({
-  loading,
-  location,
-  question,
-  dispatch,
-  onDel,
+  totalElements,
+  onDelConfirm,
   onButto,
   onButt,
   onBut,
   onBu,
+  onUpdate,
+  onAdd,
+  onPageChange,
   ...listOpts,
 }) => {
   const RadioGroup = Radio.Group;
+  const delOpts = {
+    okText: '确定删除',
+    onDelConfirm: onDelConfirm,
+    onUpdate: onUpdate,
+  }
   const columns = [{
     title: '题目内容',
     dataIndex: 'content'
@@ -48,26 +53,16 @@ const ListQuestion = ({
     title:'选项',
     render:(record) => {
       return (
-        <span>
-         <Button icon="edit" onClick={() => handle(record)} type="primary">修改</Button>
-          <Popconfirm title={'是否删除'} onConfirm={() => handleDel(record)}>
-            <Button icon="close" type="danger">删除</Button>
-          </Popconfirm>
-           <Button icon="edit" onClick={() => handler(record)} type="primary">答案</Button>
-        </span>
+        <ListOperator id={record.id} delName={record.reply} {...delOpts}>
+          <Menu.Item>
+            <span onClick={() => handler(record)}><Icon type="rocket" />答案</span>
+          </Menu.Item>
+        </ListOperator>
       );
     }
   }];
-  const handleDel = (record) => {
-    onDel(record);
-  }
-  const handle = (record) => {
-    console.log(record);
-    dispatch({type:'question/modifyState',payload:{item:record,updateVisible:true}});
-  }
   const handler = (record) => {
-    console.log(record);
-    dispatch({type:'question/modifyState',payload:{it:record,update:true}});
+    onAdd(record);
   }
   const handl = (record) => {
     onButto(record);
@@ -81,9 +76,18 @@ const ListQuestion = ({
   const ha = (record) => {
     onBu(record);
   }
+  const handlePageChange = (pageNumber) => {
+    onPageChange(pageNumber);
+  }
+
+  const pager = () => {
+    return (
+      <Pagination showQuickJumper defaultPageSize={15} total={totalElements} onChange={handlePageChange}/>
+    );
+  }
   return (
-    <Table {...listOpts} columns={columns} rowKey="id"/>
+    <Table {...listOpts} columns={columns} rowKey="id" pagination={false} footer={pager}/>
   );
 }
 
-export default connect(({ListQuestion,loading}) => ({ListQuestion,loading}))(ListQuestion);
+export default ListQuestion;

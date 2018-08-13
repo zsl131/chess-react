@@ -4,7 +4,7 @@ import {routerRedux} from 'dva/router';
 import {connect} from 'dva';
 import ListAnswer from './components/ListAnswer';
 import Update from './components/Update';
-
+import Filter from './components/Filter';
 
 const Answer = ({
   loading,
@@ -24,13 +24,22 @@ const Answer = ({
   }
   const listOpts = {
     dataSource:answer.datas,
-    onDel: (record) =>{
-      console.log(record);
-      dispatch({type:"answer/deleteObj",payload:record.id}).then(() =>{handleRefresh()});
+    loading: loading.models.answer,
+    location,
+    totalElement: answer.totalElements,
+    onDelConfirm: (id) =>{
+      dispatch({type:"answer/deleteObj",payload:id}).then(() =>{handleRefresh()});
+    },
+    onPageChange: (page) => {
+      handleRefresh({page : page - 1});
+    },
+    onUpdate: (id) => {
+      // console.log("update::", id);
+      dispatch({ type: 'answer/onUpdate', payload: id });
     },
   }
   const updateOpts = {
-    visible:answer.item,
+    visible:answer.updateVisible,
     title:"修改答案",
     answer:answer.item,
     onCancel:() => {
@@ -43,13 +52,27 @@ const Answer = ({
         handleRefresh()});
     }
   }
+  const filterOpts = {
+    onFilter: (params) => {
+      // console.log(params, JSON.stringify(params));
+      handleRefresh({conditions: JSON.stringify(params)});
+    },
+    onPageChange: (page) => {
+      handleRefresh({page : page - 1});
+    },
+  }
   return(
     <div>
       <div className="listHeader">
         <h3><Icon type="bars"/> 题库答案管理<b>（{answer.totalElements}）</b></h3>
       </div>
-      <div>
+      <div className="listFilter">
+        <Filter {...filterOpts}/>
+      </div>
+      <div className="listContent">
         <ListAnswer {...listOpts}/>
+      </div>
+      <div>
         {answer.updateVisible && <Update {...updateOpts}/>}
       </div>
     </div>

@@ -28,7 +28,9 @@ function showww(id) {
 function showwww(id) {
   return new request("questionService.showwww",id,true);
 }
-
+function loadOne(id) {
+  return request("questionService.loadOne", id, true);
+}
 export {
   list,
   addOrUpdate,
@@ -38,4 +40,5 @@ export {
   showw,
   showww,
   showwww,
+  loadOne,
 }

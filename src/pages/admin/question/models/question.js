@@ -1,5 +1,6 @@
 import * as questionService from '../services/questionService';
 import { message } from 'antd';
+import * as answerService from "../../answer/services/answerService";
 
 export default {
   state: {
@@ -74,6 +75,12 @@ export default {
       console.log(data);
       if(data){
         message.success(data.message);
+      }
+    },
+    *onUpdate({payload: id}, {call,put}) {
+      const data = yield call(questionService.loadOne, {id});
+      if(data) {
+        yield put({type:'modifyState', payload: {item: data.obj, updateVisible: true}});
       }
     },
   },

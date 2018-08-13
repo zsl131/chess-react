@@ -28,14 +28,24 @@ export default class Update extends React.Component {
         }
       });
     }
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 17 },
+      },
+    };
     return (
       <Modal {...this.props} onOk={handleOk}>
         <Form >
           {getFieldDecorator("questionId")(<Input type="hidden"/>)}
-          <FormItem>
+          <FormItem >
             {getFieldDecorator("questionContent")(<Input type="hidden"/>)}
           </FormItem>
-          <FormItem>
+          <FormItem {...formItemLayout} label="请输入正确答案:">
             {getFieldDecorator("options", {rules: [{required: true, message: "请输入答案"}]})(<Input placeholder="输入答案"/>)}
           </FormItem>
         </Form>

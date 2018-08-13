@@ -1,15 +1,19 @@
 import React from 'react';
-import {Table,Button,Icon,Popconfirm} from 'antd';
-import {connect} from 'dva';
+import {Pagination,Table,Button,Icon,Popconfirm,Menu} from 'antd';
+import ListOperator from '../../../../components/ListOperator';
 
 const ListAnswer = ({
-  loading,
-  answer,
-  dispatch,
-  location,
-  onDel,
+  totalElement,
+  onPageChange,
+  onDelConfirm,
+  onUpdate,
   ...listOpts,
 }) => {
+  const delOpts = {
+    okText: '确定删除',
+    onDelConfirm: onDelConfirm,
+    onUpdate: onUpdate,
+  }
   const columns = [{
     title: '题目',
     dataIndex: 'questionContent'
@@ -21,24 +25,22 @@ const ListAnswer = ({
     dataIndex: 'reply'
   }, {
     title:'操作',
-    render:(record) => {
+    render:(text,record) => {
       return(
-        <div>
-          <Button type="primary" onClick={() =>handle(record)}>修改</Button>
-          <Popconfirm title={'是否删除'} onConfirm={() => handleDel(record)}>
-            <Button icon="close" type="danger">删除</Button>
-          </Popconfirm>
-        </div>
+        <ListOperator id={record.id} delName={record.reply} {...delOpts}/>
       );
   }
   }];
-  const handleDel=(record) => {
-    onDel(record);
+
+  const handlePageChange = (pageNumber) => {
+    onPageChange(pageNumber);
   }
-  const handle=(record) => {
-    console.log(record);
-    dispatch({type:"answer/modifyState",payload:{item:record,updateVisible:true}});
+
+  const pager = () => {
+    return (
+      <Pagination showQuickJumper defaultPageSize={15} total={totalElement} onChange={handlePageChange}/>
+    );
   }
-  return <Table {...listOpts} columns={columns} rowKey="id"/>
+  return <Table {...listOpts} columns={columns} rowKey="id" pagination={false} footer={pager}/>
 }
-export default connect(({ListAnswer,loading}) =>({ListAnswer,loading}))(ListAnswer);
+export default ListAnswer;
