@@ -41,6 +41,7 @@ const SchoolDic = ({
 
   const listOpts = {
     dataSource: schoolDic.datas,
+
     loading: loading.models.schoolDic,
     location,
     totalElement: schoolDic.totalElements,

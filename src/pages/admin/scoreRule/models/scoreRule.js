@@ -11,6 +11,10 @@ export default {
   reducers:{
     modifyState(state,{payload:options}){
       return{...state,...options};
+    },
+    updatePage(state,{payload:obj}){
+      return{...state, item: obj.obj, updateVisible: true};
+
     }
   },
   effects:{

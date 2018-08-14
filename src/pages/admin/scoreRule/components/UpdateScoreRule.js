@@ -19,20 +19,29 @@ export default class UpdateScoreRule extends React.Component{
           this.props.onUpdate(values);
         }
       });
-
+    }
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 17 },
+      },
     }
     return (
       <div>
         <Modal {...this.props} onOk={handleOk}>
-          <Form >
+          <Form layout="horizontal">
             {getFieldDecorator("id")(<Input type="hidden"/>)}
-            <FormItem>
-              {getFieldDecorator("ruleCode", {rules:[{required: true, message: "积分代码"}]})(<Input placeholder="输入积分代码"/>)}
+            <FormItem {...formItemLayout} label="积分代码">
+              {getFieldDecorator("ruleCode")(<Input disabled={true}/>)}
             </FormItem>
-            <FormItem>
+            <FormItem {...formItemLayout}label="积分规则">
               {getFieldDecorator("scoreRule", {rules:[{required: true, message: "请输入积分规则"}]})(<Input placeholder="输入积分规则"/>)}
             </FormItem>
-            <FormItem>
+            <FormItem {...formItemLayout} label="积分数">
               {getFieldDecorator("addScore", {rules:[{required: true, message: "请输入积分数"}]})(<Input placeholder="输入积分数"/>)}
             </FormItem>
           </Form>

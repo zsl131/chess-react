@@ -6,7 +6,6 @@ function list(query){
 function addOrUpdate(obj){
   return request("scoreRuleService.addOrUpdate",JSON.stringify(obj),true);
 }
-
 function deleteObj(id){
   return request("scoreRuleService.delete",JSON.stringify(id),true);
 }

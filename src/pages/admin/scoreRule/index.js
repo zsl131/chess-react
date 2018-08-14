@@ -1,9 +1,11 @@
 import React from 'react';
-import {Icon,Button} from 'antd';
+import {Icon} from 'antd';
 import {connect} from 'dva';
 import List from './components/List';
 import AddRule from './components/AddRule';
+import Operator from './components/Operator';
 import UpdateScoreRule from './components/UpdateScoreRule';
+import Filter from './components/Filter';
 import {routerRedux} from 'dva/router';
 const ScoreRule=({
   loading,
@@ -11,16 +13,19 @@ const ScoreRule=({
   scoreRule,
   dispatch,
 })=>{
-  const listOpts={
-    dataSource:scoreRule.datas,
-    onDel:(record)=>{
-      dispatch({type:'scoreRule/delete',payload:record.id}).then(()=>{
-        handleRefresh();
-      })
-    }
+  const operatorOpts={
+    onAdd:()=>{
+    dispatch({type:'scoreRule/modifyState',payload:{addVisible:true}});
   }
-  const handleAdd=()=>{
-    dispatch({type:'scoreRule/modifyState',payload:{addVisible:true}})
+  }
+  const listOpts={
+    location,
+    dataSource:scoreRule.datas,
+    onDelConfirm: (record) => {
+      dispatch({ type: 'scoreRule/delete', payload: record}).then(()=> {
+        handleRefresh();
+      });
+    },
   }
   const addOpts={
     visible:scoreRule.addVisible,
@@ -37,16 +42,24 @@ const ScoreRule=({
   const updateOpts = {
     visible:scoreRule.updateVisible,
     title: "修改规则[" + scoreRule.item.ruleCode + "]",
+    okText:'确认提交',
+    cancelText: '取消',
+    confirmLoading: loading.effects['scoreRule/addOrUpdate'],
     scoreRule:scoreRule.item,
     onCancel: () => {
       dispatch({type: 'scoreRule/modifyState', payload: {updateVisible: false}});
     },
-    onUpdate: (values) => {
-      console.log(values);
-      dispatch({type: 'scoreRule/addOrUpdate', payload: values}).then(()=>{
+   onUpdate(values) {
+      dispatch({type: 'scoreRule/addOrUpdate', payload: values}).then(() => {
+        dispatch({type: 'scoreRule/modifyState', payload: {updateVisible: false}});
         handleRefresh();
-        dispatch({type:'scoreRule/modifyState',payload:{updateVisible:false}});
-      })
+      });
+    }
+  }
+  const filterOpts = {
+    onFilter: (params) => {
+      //console.log(params, JSON.stringify(params));
+      handleRefresh({conditions: JSON.stringify(params)});
     }
   }
   const {query,pathname} =location;
@@ -63,9 +76,14 @@ const ScoreRule=({
     <div>
       <div className="listHeader">
         <h3><Icon type="bars"/>积分规则管理<b>({scoreRule.totalElements})</b></h3>
+        <Operator {...operatorOpts}/>
       </div>
-      <Button type="primary" icon="plus"onClick={handleAdd}>增加积分规则</Button>
-      <List {...listOpts}/>
+      <div className="listFilter">
+        <Filter {...filterOpts}/>
+      </div>
+      <div className="listContent">
+        <List {...listOpts}/>
+      </div>
       {scoreRule.addVisible &&<AddRule{...addOpts}/>}
       {scoreRule.updateVisible &&<UpdateScoreRule{...updateOpts}/>}
     </div>
