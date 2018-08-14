@@ -1,5 +1,6 @@
 import * as ageDicService from '../services/ageDicService';
 import {message} from 'antd';
+import * as activityCommentService from "../../activityComment/services/activityCommentService";
 
 export default {
   namespace: 'ageDic',
@@ -13,9 +14,6 @@ export default {
   reducers: {
     modifyState(state, { payload: options }) {
       return {...state, ...options};
-    },
-    updatePage(state, { payload: obj }) {
-      return {...state, item: obj.obj, updateVisible: true};
     }
   },
   effects: {
@@ -30,10 +28,11 @@ export default {
       const data = yield call(ageDicService.deleteObj, { id });
       if(data) {message.success(data.message);}
     },
-    *onUpdate({ payload: id }, { call, put }) {
-      const data = yield call(ageDicService.loadOne, {id});
-      // console.log(data);
-      yield put({ type: 'updatePage', payload: data });
+    *onUpdate({payload: id}, {call,put}) {
+      const data = yield call(activityCommentService.loadOne, {id});
+      if(data) {
+        yield put({type:'modifyState', payload: {item: data.obj, updateVisible: true}});
+      }
     },
   },
   subscriptions: {
