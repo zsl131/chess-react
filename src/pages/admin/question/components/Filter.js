@@ -20,10 +20,10 @@ const Filter = ({
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
       <FormItem>
-        {getFieldDecorator("reply_like")(<Input placeholder="学生答案"/>)}
-      </FormItem>
+      {getFieldDecorator("type_like")(<Input placeholder="题目类型"/>)}
+    </FormItem>
       <FormItem>
-        {getFieldDecorator("options_like")(<Input placeholder="正确答案"/>)}
+        {getFieldDecorator("reply_like")(<Input placeholder="正确答案"/>)}
       </FormItem>
       <FormItem>
         <Button type="dashed" htmlType="submit">筛选</Button>

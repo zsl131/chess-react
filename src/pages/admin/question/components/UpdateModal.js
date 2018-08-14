@@ -41,19 +41,25 @@ export default class UpdateModal extends React.Component {
         <Form >
           {getFieldDecorator("id")(<Input type="hidden"/>)}
           <FormItem {...formItemLayout} label="题目内容">
-            {getFieldDecorator("content", {rules: [{required: true, message: "请输入题目内容"}]})(<Input placeholder="输入内容"/>)}
-          </FormItem>
+          {getFieldDecorator("content", {rules: [{required: true, message: "请输入题目内容"}]})(<Input placeholder="输入内容"/>)}
+        </FormItem>
+          <FormItem {...formItemLayout} label="题目类型">
+          {getFieldDecorator("type", {rules: [{required: true, message: "请选择题目类型"}]})(<Input placeholder="输入类型"/>)}
+        </FormItem>
           <FormItem {...formItemLayout} label="答案A:">
-            {getFieldDecorator("a", {rules: [{required: true, message: "输入A答案"}]})(<Input placeholder="输入答案"/>)}
+            {getFieldDecorator("a", {rules: [{message: "输入A答案"}]})(<Input placeholder="输入答案"/>)}
           </FormItem>
           <FormItem {...formItemLayout} label="答案B:">
-            {getFieldDecorator("b", {rules: [{required: true, message: "输入B答案"}]})(<Input placeholder="输入答案"/>)}
+            {getFieldDecorator("b", {rules: [{ message: "输入B答案"}]})(<Input placeholder="输入答案"/>)}
           </FormItem>
           <FormItem {...formItemLayout} label="答案C:">
-            {getFieldDecorator("c", {rules: [{required: true, message: "输入C答案"}]})(<Input placeholder="输入答案"/>)}
+            {getFieldDecorator("c", {rules: [{ message: "输入C答案"}]})(<Input placeholder="输入答案"/>)}
           </FormItem>
           <FormItem {...formItemLayout} label="答案D:">
-            {getFieldDecorator("d", {rules: [{required: true, message: "输入D答案"}]})(<Input placeholder="输入答案"/>)}
+            {getFieldDecorator("d", {rules: [{ message: "输入D答案"}]})(<Input placeholder="输入答案"/>)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="正确答案:">
+            {getFieldDecorator("reply", {rules: [{required: true, message: "输入正确答案"}]})(<Input placeholder="输入答案"/>)}
           </FormItem>
         </Form>
       </Modal>
