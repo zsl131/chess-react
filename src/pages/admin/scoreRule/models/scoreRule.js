@@ -1,4 +1,4 @@
-import * as scoreRuleServce from '../services/scoreRuleService';
+import * as scoreRuleService from '../services/scoreRuleService';
 import {message} from 'antd';
 export default {
   state:{
@@ -19,17 +19,17 @@ export default {
   },
   effects:{
     *listObj({payload:query},{call,put}){
-      const data = yield call(scoreRuleServce.list,query);
+      const data = yield call(scoreRuleService.list,query);
       yield put({type:'modifyState',payload:{datas:data.datas,totalElements:data.size}});
     },
     *delete({payload:id},{call}){
-      const data = yield call(scoreRuleServce.deleteObj,{id});
+      const data = yield call(scoreRuleService.deleteObj,{id});
       if(data){
         message.success(data.message);
       }
     },
     *addOrUpdate({payload:obj},{call,put}){
-      const data = yield call(scoreRuleServce.addOrUpdate,obj);
+      const data = yield call(scoreRuleService.addOrUpdate,obj);
       if(data){
         message.success("保存成功");
         yield put({type: 'modifyState', payload:{addVisible:false}});
