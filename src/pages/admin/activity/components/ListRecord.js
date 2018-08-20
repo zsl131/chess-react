@@ -1,6 +1,8 @@
 import React from 'react';
 import {Pagination, Table} from 'antd';
+import QRCode from 'qrcode.react';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
+import configApi from "../../../../utils/configApi";
 
 const ListRecord = ({
   onDelConfirm,
@@ -17,6 +19,13 @@ const ListRecord = ({
   }
 
   const columns = [{
+    title: '二维码',
+    render: (record) => {
+      return (
+        <QRCode value={`${configApi.baseUrl}/wx/activitySignIn?recordId=${record.id}`} />
+      );
+    }
+  }, {
     title: '活动时间',
     dataIndex: 'holdTime'
   }, {
