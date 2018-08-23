@@ -14,7 +14,6 @@ export default {
     },
     updatePage(state,{payload:obj}){
       return{...state, item: obj.obj, updateVisible: true};
-
     }
   },
   effects:{

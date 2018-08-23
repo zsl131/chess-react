@@ -5,7 +5,6 @@ import {connect} from 'dva';
 const List = ({
   loading,
   onDelConfirm,
-  onDel,
   scoreRule,
   ...listOpts
 })=> {
