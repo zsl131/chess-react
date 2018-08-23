@@ -41,7 +41,7 @@ const Login = ({
             {getFieldDecorator("password", {rules:[{ required: true, message: '请输入密码'}]})(<Input onPressEnter={handleOk} type="password" placeholder="密码"/>)}
           </FormItem>
           <Row>
-            <Button className={styles.loginBtn} type="primary" onClick={handleOk} loading={loading.models.login}>登   陆</Button>
+            <Button className={styles.loginBtn} type="primary" onClick={handleOk} loading={loading.models.login}>登陆</Button>
           </Row>
           <Row className={styles.infoRow}>
             &copy; 2018 Created By zsl
