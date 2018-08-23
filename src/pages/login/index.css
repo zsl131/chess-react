@@ -1,9 +1,16 @@
 html, body {
-  background: #f8f8f8;
+  background: #f0f2f5;
 }
 
+.mainRow {
+  height: 100%; background:#f8f8f8; overflow: hidden;
+}
+
+/*.loginCard {
+  width:50%; position:absolute; left:50%; top:18%;
+}*/
 .loginCard {
-  width:460px; position:absolute; left:50%; top:18%; margin-left: -230px;
+  margin-top: 16%;
 }
 .title {
   text-align:center; border-bottom: 1px #f7f7f7 solid; padding-bottom:12px;

@@ -3,6 +3,7 @@ import { message } from 'antd';
 import configApi from './configApi';
 import {getDepIds, getLoginUser} from "./authUtils";
 import {encodeBase64} from "./Base64Utils";
+import {getOpenid} from "./loginAccountUtils";
 
 function parseJSON(response) {
   return response.json();
@@ -66,6 +67,8 @@ export default function request(apiCode, params, isBase, options) {
 
   if(paramsType === '[object Object]') {
     // params.loginUser = getLoginUser(); //强行加上登陆用户
+    const openid = getOpenid();
+    if(openid) {params.openid = openid;} //微信端的操作自动加入Openid
     params = JSON.stringify(params); //如果是对象则转换成字符串
   }
 

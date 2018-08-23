@@ -115,7 +115,7 @@ const Department = ({
   return(
     <div>
       <div className="listHeader">
-        <h3><Icon type="bars"/> 用户管理<b>（{department.totalElements}）</b></h3>
+        <h3><Icon type="bars"/> 部门管理<b>（{department.totalElements}）</b></h3>
         {/*<div className="listOperator"><Button type="primary" icon="plus">添加用户</Button></div>*/}
         <Operator {...operatorOpts}/>
       </div>
