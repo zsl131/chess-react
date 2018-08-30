@@ -14,7 +14,7 @@ export default {
   effects: {
     *index({ payload }, { call, put }) {
       const data = yield call(wxConfigService.loadOne);
-      console.log("wxConfig::", data);
+      // console.log("wxConfig::", data);
       yield put({ type: 'modifyState', payload: { item: data.obj } });
     },
     *save({ payload: obj }, { call }) {
