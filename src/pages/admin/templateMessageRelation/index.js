@@ -25,13 +25,9 @@ const TemplateMessageRelation = ({
         ...newQuery,
       },
     }));
-  }
+  };
 
-  const filterOpts = {
-    onFilter: (params) => {
-      handleRefresh({conditions: JSON.stringify(params)});
-    }
-  }
+  console.log(templateMessageRelation);
 
   const listConfigedOpts = {
     dataSource: templateMessageRelation.configed,

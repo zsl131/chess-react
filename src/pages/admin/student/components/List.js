@@ -21,12 +21,23 @@ const List = ({
     title: '头像',
     render: (text, record) => {
       return (
-        <a href={record.avatarUrl} target="_blank" rel="noopener noreferrer"><img src={record.avatarUrl} alt={record.nickname} className="avatarImg"/></a>
+        <span>
+        {
+          record.avatarUrl ? <a href={record.avatarUrl} target="_blank" rel="noopener noreferrer"><img src={record.avatarUrl} alt={record.nickname} className="avatarImg"/></a>:"-"
+        }
+        </span>
       )
     }
   }, {
     title: '姓名',
     dataIndex: 'name'
+  }, {
+    title: "性别",
+    render:(record)=> {
+      return (
+        <div>{record.sex === '1' ? "男":"女"}</div>
+      )
+    }
   }, {
     title: '年龄',
     dataIndex: "ageName"

@@ -2,6 +2,7 @@ import * as objectService from '../services/objectService';
 import {message} from 'antd';
 
 export default {
+  namespace: 'templateMessageRelation',
   state: {
     configed: [],
     noConfig: [],
@@ -17,7 +18,7 @@ export default {
     *findData({payload: query}, {call,put}) {
       const data = yield call(objectService.findAllConfig, query);
       if(data) {
-        yield put({type: "modifyState", payload: {noConfig: data.noConfig, configed: data.configed}});
+        yield put({type: "modifyState", payload: {noConfig: data.noConfig || [], configed: data.configed || []}});
       }
     },
     *config({payload: obj}, {call}) {
