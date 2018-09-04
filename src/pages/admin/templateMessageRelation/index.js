@@ -27,8 +27,6 @@ const TemplateMessageRelation = ({
     }));
   };
 
-  console.log(templateMessageRelation);
-
   const listConfigedOpts = {
     dataSource: templateMessageRelation.configed,
     loading: loading.models.templateMessageRelation,

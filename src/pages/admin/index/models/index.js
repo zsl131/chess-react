@@ -3,7 +3,8 @@ import * as objectService from '../services/objectService';
 export default {
   namespace: 'adminIndex',
   state : {
-    noConfigTemplateMessage:[]
+    noConfigTemplateMessage:[],
+    noConfigScore:[]
   },
   reducers: {
     modifyState(state, { payload: options }) {
@@ -15,7 +16,7 @@ export default {
       const data = yield call(objectService.findNoConfigTemplateMessage, query);
       console.log(data);
       if(data) {
-        yield put({type: "modifyState", payload: {noConfigTemplateMessage: data.list}});
+        yield put({type: "modifyState", payload: {noConfigTemplateMessage: data.templateMessage, noConfigScore: data.score}});
       }
     }
   },
