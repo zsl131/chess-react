@@ -75,6 +75,7 @@ export default function request(apiCode, params, isBase, options) {
   params = encodeURI(params);
   // params = toBase64(params);
   params = encodeBase64(params);
+
   return fetch(isBase?configApi.api.baseRequest+params : configApi.api.queryOrSubmit+params, defaultOption)
     .then(checkStatus)
     .then(parseJSON)

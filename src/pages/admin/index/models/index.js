@@ -14,7 +14,6 @@ export default {
   effects: {
     *findNoConfigTemplateMessage({payload: query}, {call,put}) {
       const data = yield call(objectService.findNoConfigTemplateMessage, query);
-      console.log(data);
       if(data) {
         yield put({type: "modifyState", payload: {noConfigTemplateMessage: data.templateMessage, noConfigScore: data.score}});
       }

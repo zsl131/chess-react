@@ -21,7 +21,7 @@ const ListNoConfig = ({
   }];
 
   return (
-    <Table {...listOpts} columns={columns} rowKey="id" pagination={false} />
+    <Table {...listOpts} columns={columns} rowKey={(record)=>(record)} pagination={false} />
   );
 }
 

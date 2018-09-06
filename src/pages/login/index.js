@@ -35,7 +35,7 @@ const Login = ({
         <Col xs={22} sm={16} md={12} lg={10} xl={8}>
           <Card bordered={false} className={styles.loginCard}>
             <h2 className={styles.title}>{interceptor.appConfig.appName} - LOGIN</h2>
-            <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
+            <Form onSubmit={handleOk} className={styles.loginForm}>
               <FormItem>
                 {getFieldDecorator('username', {rules:[{ required: true, message: '请输入用户名'}]})(<Input onPressEnter={handleOk} placeholder="用户名"/>)}
               </FormItem>
