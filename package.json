@@ -3,7 +3,7 @@
   "scripts": {
     "start": "umi dev",
     "build": "roadhog build",
-    "lint": "eslint --ext .js src test",
+    "lint": "eslint --ext .js src test"
   },
   "dependencies": {
     "@babel/helper-module-imports": "^7.0.0",
