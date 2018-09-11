@@ -51,7 +51,7 @@ class MainLayout extends React.Component {
     } else if ((pathname !== '/login' && pathname !== '/init') && user === null) {
       // console.log("loginUser is null", user);
       router.push("/login");
-    } else if(pathname.indexOf("/admin")===0) {
+    } else if(pathname.indexOf("/admin")===0 || pathname.indexOf("/yard")===0) { //需要进行登陆验证
       const hasAuth = checkAuthByUrl(pathname); //通过url检测权限
       // console.log(hasAuth);
       if(!hasAuth) { //无权限
