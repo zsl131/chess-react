@@ -7,6 +7,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
+import ImportModal from './components/ImportModal';
 
 const AgeDic = ({
                   dispatch,
@@ -54,6 +55,10 @@ const AgeDic = ({
       // console.log("update::", id);
       dispatch({ type: 'school/onUpdate', payload: id });
     },
+    handleImport:(school) => {
+      console.log(school)
+      dispatch({type: 'school/modifyState', payload: {item: school, importVisible: true}});
+    }
   }
 
   const addOpts = {
@@ -92,6 +97,22 @@ const AgeDic = ({
     }
   }
 
+  const importOpts = {
+    maskClosable: false,
+    visible: school.importVisible,
+    title: `批量导入教师到[${school.item.name}]`,
+    okText:'关闭窗口',
+    cancelText: '取消',
+    item: school.item,
+    confirmLoading: loading.effects['school/addOrUpdate'],
+    onOk: () => {
+      dispatch({ type: 'school/modifyState', payload: { importVisible: false } });
+    },
+    onCancel: () => {
+      dispatch({ type: 'school/modifyState', payload: { importVisible: false } });
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -106,6 +127,7 @@ const AgeDic = ({
       </div>
       {school.addVisible && <AddModal {...addOpts}/>}
       {school.updateVisible && <UpdateModal {...updateOpts}/>}
+      {school.importVisible && <ImportModal {...importOpts}/>}
     </div>
   );
 }

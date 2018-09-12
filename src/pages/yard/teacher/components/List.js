@@ -1,11 +1,10 @@
 import React from 'react';
-import {Pagination, Table, Menu, Icon} from 'antd';
+import {Pagination, Table} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
                 onDelConfirm,
                 onUpdate,
-                handleImport,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -19,22 +18,23 @@ const List = ({
   }
 
   const columns = [{
-    title: '学校名称',
-    dataIndex: 'name'
+    title: '所在学校',
+    dataIndex: 'schoolName'
   }, {
-    title: '联系人',
-    dataIndex: 'contacts'
-  }, {
-    title: '联系电话',
-    dataIndex: 'phone'
-  }, {
-    title: '学校地址',
-    dataIndex: 'address'
-  }, {
-    title: "状态",
-    render:(record)=> {
+    title: '姓名',
+    render:(record) => {
       return (
-        <div>{record.status === '1' ? "在合作":"未使用"}</div>
+        <p>{record.name}[{record.sex === '1'?'男':'女'}]</p>
+      )
+    }
+  }, {
+    title: '联系方式',
+    render:(record) => {
+      return (
+        <div>
+          <p>{record.phone}[{record.hasBind === '0'?<span className="red">未绑定</span>:<span className="blue">已绑定</span>}]</p>
+          <p>{record.identity}</p>
+        </div>
       )
     }
   }, {
@@ -44,11 +44,7 @@ const List = ({
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.name} {...delOpts}>
-          <Menu.Item key={record.id}>
-            <span onClick={()=>handleImport(record)}><Icon type="plus"/> 导入教师</span>
-          </Menu.Item>
-        </ListOperator>
+        <ListOperator id={record.id} delName={record.name} {...delOpts}/>
       );
     }
   }];
