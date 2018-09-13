@@ -1,92 +1,81 @@
 import React from 'react';
-import {Icon} from 'antd';
 import {connect} from 'dva';
-import List from './components/List';
-import AddRule from './components/AddRule';
-import Operator from './components/Operator';
-import UpdateScoreRule from './components/UpdateScoreRule';
-import Filter from './components/Filter';
-import {routerRedux} from 'dva/router';
-const ScoreRule=({
-  loading,
-  location,
-  scoreRule,
-  dispatch,
-})=>{
-  const operatorOpts={
-    onAdd:()=>{
-    dispatch({type:'scoreRule/modifyState',payload:{addVisible:true}});
-  }
-  }
-  const listOpts={
-    location,
-    dataSource:scoreRule.datas,
-    onDelConfirm: (record) => {
-      dispatch({ type: 'scoreRule/delete', payload: record}).then(()=> {
-        handleRefresh();
-      });
-    },
-  }
-  const addOpts={
-    visible:scoreRule.addVisible,
-    title:'增加规则',
-    onCancel:()=>{
-      dispatch({type:'scoreRule/modifyState',payload:{addVisible:false}});
-    },
-    onAdd: (values)=>{
-      dispatch({type:'scoreRule/addOrUpdate', payload: values}).then(()=> {
-        handleRefresh();
-      });
-    }
-  }
-  const updateOpts = {
-    visible:scoreRule.updateVisible,
-    title: "修改规则[" + scoreRule.item.ruleCode + "]",
-    okText:'确认提交',
-    cancelText: '取消',
-    confirmLoading: loading.effects['scoreRule/addOrUpdate'],
-    scoreRule:scoreRule.item,
-    onCancel: () => {
-      dispatch({type: 'scoreRule/modifyState', payload: {updateVisible: false}});
-    },
-   onUpdate(values) {
-      dispatch({type: 'scoreRule/addOrUpdate', payload: values}).then(() => {
-        dispatch({type: 'scoreRule/modifyState', payload: {updateVisible: false}});
-        handleRefresh();
-      });
-    }
-  }
-  const filterOpts = {
-    onFilter: (params) => {
-      //console.log(params, JSON.stringify(params));
-      handleRefresh({conditions: JSON.stringify(params)});
-    }
-  }
-  const {query,pathname} =location;
-  const handleRefresh = (newQuery)=>{
+import {Icon, Tabs,Badge} from 'antd';
+import {routerRedux} from 'dva/router'
+import ListNoConfig from "./components/ListNoConfig";
+import ConfigModal from './components/ConfigModal';
+import ListConfiged from './components/ListConfiged';
+
+const TabPane = Tabs.TabPane;
+
+const ScoreRule = ({
+dispatch,
+loading,
+scoreRule,
+location
+}) => {
+
+  const { query, pathname } = location;
+
+  const handleRefresh = (newQuery) => {
     dispatch(routerRedux.push({
       pathname,
-      query:{
+      query: {
         ...query,
         ...newQuery,
       },
     }));
+  };
+
+  const listConfigedOpts = {
+    dataSource: scoreRule.configed,
+    loading: loading.models.templateMessageRelation,
+    location,
+    onDelConfirm: (record) => {
+      console.log(record);
+      dispatch({type: "scoreRule/deleteObj", payload: record.id}).then(()=>handleRefresh());
+    }
   }
+
+  const listNoConfigOpts = {
+    dataSource: scoreRule.noConfig,
+    loading: loading.models.scoreRule,
+    location,
+    onConfig: (record) => {
+      dispatch({type: "scoreRule/modifyState", payload: {configVisible: true, item: record}});
+    }
+  }
+
+  const modalProps = {
+    visible: scoreRule.configVisible,
+    title: '配置积分规则【'+scoreRule.item+'】',
+    item: scoreRule.item,
+    onCancel: () => {dispatch({type: "scoreRule/modifyState", payload: {configVisible: false}})},
+    onOk: (values) => {
+      dispatch({type: "scoreRule/addOrUpdate", payload: values}).then(()=>{dispatch({type: "scoreRule/modifyState", payload: {configVisible: false}}); handleRefresh()});
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
-        <h3><Icon type="bars"/>积分规则管理<b>({scoreRule.totalElements})</b></h3>
-        <Operator {...operatorOpts}/>
-      </div>
-      <div className="listFilter">
-        <Filter {...filterOpts}/>
+        <h3><Icon type="bars"/> 积分规则管理<b></b></h3>
       </div>
       <div className="listContent">
-        <List {...listOpts}/>
+        <div className="card-container">
+          <Tabs type="card" style={{"padding":"10px"}}>
+            <TabPane tab={<Badge count={scoreRule.configed.length} showZero>已配置规则&nbsp;&nbsp;&nbsp;</Badge>} key="1">
+              <ListConfiged {...listConfigedOpts}/>
+            </TabPane>
+            <TabPane tab={<Badge count={scoreRule.noConfig.length} showZero>未配置规则&nbsp;&nbsp;&nbsp;</Badge>} key="2">
+              <ListNoConfig {...listNoConfigOpts}/>
+              {scoreRule.configVisible && <ConfigModal {...modalProps}/>}
+            </TabPane>
+          </Tabs>
+        </div>
       </div>
-      {scoreRule.addVisible &&<AddRule{...addOpts}/>}
-      {scoreRule.updateVisible &&<UpdateScoreRule{...updateOpts}/>}
     </div>
   );
 }
-export default connect(({loading,scoreRule})=>({loading,scoreRule}))(ScoreRule);
+
+export default connect(({ loading, scoreRule }) => ({ loading, scoreRule }))(ScoreRule);

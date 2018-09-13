@@ -45,8 +45,7 @@ export default {
     },
     *synchMenu({ payload }, {call}) {
       const data = yield call(menuService.synchMenu);
-      console.log(data);
-      if(data) { message.success(data.datas); }
+      if(data) { message.success(data.message); }
     }
   },
   subscriptions: {

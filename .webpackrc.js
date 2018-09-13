@@ -33,6 +33,7 @@ export default {
     //   "pathRewrite": { "^/api/v2" : "/api/v2" }
     // }
   },
+
   "extraBabelPlugins": [
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
   ]

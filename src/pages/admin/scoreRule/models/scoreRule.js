@@ -1,27 +1,26 @@
 import * as scoreRuleService from '../services/scoreRuleService';
 import {message} from 'antd';
+
 export default {
   state:{
-    totalElements:0,
-    datas:[],
-    item:[],
-    updateVisible:false,
-    addVisible:false
+    configed: [],
+    noConfig: [],
+    item: "",
+    configVisible: false,
   },
   reducers:{
     modifyState(state,{payload:options}){
       return{...state,...options};
     },
-    updatePage(state,{payload:obj}){
-      return{...state, item: obj.obj, updateVisible: true};
-    }
   },
   effects:{
-    *listObj({payload:query},{call,put}){
-      const data = yield call(scoreRuleService.list,query);
-      yield put({type:'modifyState',payload:{datas:data.datas,totalElements:data.size}});
+    *findData({payload: query}, {call,put}) {
+      const data = yield call(scoreRuleService.list, query);
+      if(data) {
+        yield put({type: "modifyState", payload: {noConfig: data.noConfig || [], configed: data.configed || []}});
+      }
     },
-    *delete({payload:id},{call}){
+    *deleteObj({payload:id},{call}){
       const data = yield call(scoreRuleService.deleteObj,{id});
       if(data){
         message.success(data.message);
@@ -39,7 +38,7 @@ export default {
     setup({history,dispatch}){
       return history.listen((location)=>{
         if(location.pathname==='/admin/scoreRule'){
-          dispatch({type:'listObj',payload:location.query});
+          dispatch({type:'findData',payload:location.query});
         }
       })
     }

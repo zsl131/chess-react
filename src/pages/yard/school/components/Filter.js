@@ -3,16 +3,17 @@ import {Button, Form, Input} from 'antd';
 
 const FormItem = Form.Item;
 const Filter = ({
-                  onFilter,
-                  form: {
-                    getFieldDecorator,
-                    validateFields,
-                  }
-                }) => {
+  onFilter,
+  form: {
+    getFieldDecorator,
+    validateFields,
+  }
+}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((errors, values) => {
+      // console.log("filter", errors, values);
       onFilter(values);
     });
   }
@@ -20,7 +21,7 @@ const Filter = ({
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
       <FormItem>
-        {getFieldDecorator("ruleCode_like")(<Input placeholder="积分代码"/>)}
+        {getFieldDecorator("name_like")(<Input placeholder="学校名称"/>)}
       </FormItem>
       <FormItem>
         <Button type="dashed" htmlType="submit">筛选</Button>

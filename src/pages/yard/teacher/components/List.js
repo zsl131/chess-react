@@ -3,12 +3,12 @@ import {Pagination, Table} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
-  onDelConfirm,
-  onUpdate,
-  onPageChange,
-  totalElement,
-  ...listOpts
-}) => {
+                onDelConfirm,
+                onUpdate,
+                onPageChange,
+                totalElement,
+                ...listOpts
+              }) => {
 
   const delOpts = {
     okText: '确定删除',
@@ -18,35 +18,28 @@ const List = ({
   }
 
   const columns = [{
-    title: '头像',
-    render: (text, record) => {
-      return (
-        <span>
-        {
-          record.avatarUrl ? <a href={record.avatarUrl} target="_blank" rel="noopener noreferrer"><img src={record.avatarUrl} alt={record.nickname} className="avatarImg"/></a>:"-"
-        }
-        </span>
-      )
-    }
+    title: '所在学校',
+    dataIndex: 'schoolName'
   }, {
     title: '姓名',
-    dataIndex: 'name'
-  }, {
-    title: "性别",
-    render:(record)=> {
+    render:(record) => {
       return (
-        <div>{record.sex === '1' ? "男":"女"}</div>
+        <p>{record.name}[{record.sex === '1'?'男':'女'}]</p>
       )
     }
   }, {
-    title: '年龄',
-    dataIndex: "ageName"
+    title: '联系方式',
+    render:(record) => {
+      return (
+        <div>
+          <p>{record.phone}[{record.hasBind === '0'?<span className="red">未绑定</span>:<span className="blue">已绑定</span>}]</p>
+          <p>{record.identity}</p>
+        </div>
+      )
+    }
   }, {
-    title: "学校",
-    dataIndex: "schoolName"
-  }, {
-    title: "联系电话",
-    dataIndex: "phone",
+    title: "备注",
+    dataIndex: "remark",
   }, {
     title: '操作',
     render: (text, record) => {
