@@ -7,7 +7,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
-import ImportModal from './components/ImportModal';
+import PlayVideoModal from './components/PlayVideoModal';
 
 const AgeDic = ({
                   dispatch,
@@ -29,6 +29,7 @@ const AgeDic = ({
   }
 
   const operatorOpts = {
+    msg:'添加课程',
     onAdd: () => {
       dispatch({ type: 'classCourse/modifyState', payload: {addVisible: true}});
     }
@@ -55,9 +56,8 @@ const AgeDic = ({
       // console.log("update::", id);
       dispatch({ type: 'classCourse/onUpdate', payload: id });
     },
-    handleImport:(school) => {
-      console.log(school)
-      dispatch({type: 'classCourse/modifyState', payload: {item: school, importVisible: true}});
+    handlePlayVideo:(record) => {
+      dispatch({type: 'classCourse/onPlayVideo', payload: record.videoId})
     }
   }
 
@@ -82,7 +82,7 @@ const AgeDic = ({
   const updateOpts = {
     maskClosable: false,
     visible: classCourse.updateVisible,
-    title: `修改数据[${classCourse.item.name}]`,
+    title: `修改数据[${classCourse.item.title}]`,
     okText:'确认提交',
     cancelText: '取消',
     item: classCourse.item,
@@ -96,6 +96,21 @@ const AgeDic = ({
     },
     onCancel: () => {
       dispatch({ type: 'classCourse/modifyState', payload: { updateVisible: false } });
+    }
+  }
+
+  const playVideoOpts = {
+    maskClosable: false,
+    visible: classCourse.playVideoVisible,
+    title: `播放视频`,
+    okText:'关闭窗口',
+    cancelText: '取消',
+    video: classCourse.video,
+    onOk:()=> {
+      dispatch({ type: 'classCourse/modifyState', payload: { playVideoVisible: false } });
+    },
+    onCancel: () => {
+      dispatch({ type: 'classCourse/modifyState', payload: { playVideoVisible: false } });
     }
   }
 
@@ -113,6 +128,7 @@ const AgeDic = ({
       </div>
       {classCourse.addVisible && <AddModal {...addOpts}/>}
       {classCourse.updateVisible && <UpdateModal {...updateOpts}/>}
+      {classCourse.playVideoVisible && <PlayVideoModal {...playVideoOpts}/>}
     </div>
   );
 }

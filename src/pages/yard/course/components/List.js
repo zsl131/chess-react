@@ -1,11 +1,11 @@
 import React from 'react';
-import {Pagination, Table} from 'antd';
+import {Pagination, Table, Button} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
                 onDelConfirm,
                 onUpdate,
-                handleImport,
+                handlePlayVideo,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -34,7 +34,7 @@ const List = ({
     }
   }, {
     title: '视频',
-    render:(record)=>{return (record.videoId?<span className="blue">已上传</span>:<span className="red">未上传</span>)}
+    render:(record)=>{return (record.videoId?<Button icon="play-circle" onClick={()=>handlePlayVideo(record)} type="dashed">已上传</Button>:<span className="red">未上传</span>)}
   }, {
     title: 'PPT',
     render:(record)=>{return record.pptId?<span className="blue">已上传</span>:<span className="red">未上传</span>}

@@ -21,7 +21,13 @@ const Filter = ({
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
       <FormItem>
-        {getFieldDecorator("name_like")(<Input placeholder="学校名称"/>)}
+        {getFieldDecorator("title_like")(<Input placeholder="课程标题"/>)}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("grade_eq")(<Input placeholder="年级"/>)}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("age_eq")(<Input placeholder="年龄"/>)}
       </FormItem>
       <FormItem>
         <Button type="dashed" htmlType="submit">筛选</Button>

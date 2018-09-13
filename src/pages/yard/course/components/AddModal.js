@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Form, Input, message, Modal, Radio, Row, Tooltip, Upload, Button, Icon} from 'antd';
+import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Tooltip, Upload} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import request from "../../../../utils/request";
 

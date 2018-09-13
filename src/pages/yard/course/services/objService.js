@@ -20,9 +20,15 @@ function deleteObj(obj) {
   return request(baseService+".delete", obj, true);
 }
 
+//传Attachment的主键ID
+function loadAttachment(obj) {
+  return request("attachmentService.loadOne", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
   deleteObj,
-  loadOne
+  loadOne,
+  loadAttachment,
 }
