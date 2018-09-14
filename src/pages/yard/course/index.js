@@ -8,8 +8,9 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import PlayVideoModal from './components/PlayVideoModal';
+import ShowPDFModal from './components/ShowPDFModal';
 
-const AgeDic = ({
+const ClassCourse = ({
                   dispatch,
                   loading,
                   classCourse,
@@ -58,6 +59,9 @@ const AgeDic = ({
     },
     handlePlayVideo:(record) => {
       dispatch({type: 'classCourse/onPlayVideo', payload: record.videoId})
+    },
+    handleShowPDF:(objId) => {
+      dispatch({type: 'classCourse/onShowPDF', payload: objId})
     }
   }
 
@@ -114,6 +118,21 @@ const AgeDic = ({
     }
   }
 
+  const showPDFOpts = {
+    maskClosable: false,
+    visible: classCourse.showPDFVisible,
+    title: `PDF预览`,
+    okText:'关闭窗口',
+    cancelText: '取消',
+    pdf: classCourse.pdf,
+    onOk:()=> {
+      dispatch({ type: 'classCourse/modifyState', payload: { showPDFVisible: false } });
+    },
+    onCancel: () => {
+      dispatch({ type: 'classCourse/modifyState', payload: { showPDFVisible: false } });
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -129,8 +148,9 @@ const AgeDic = ({
       {classCourse.addVisible && <AddModal {...addOpts}/>}
       {classCourse.updateVisible && <UpdateModal {...updateOpts}/>}
       {classCourse.playVideoVisible && <PlayVideoModal {...playVideoOpts}/>}
+      {classCourse.showPDFVisible && <ShowPDFModal {...showPDFOpts}/>}
     </div>
   );
 }
 
-export default connect(({ loading, classCourse }) => ({ loading, classCourse }))(AgeDic);
+export default connect(({ loading, classCourse }) => ({ loading, classCourse }))(ClassCourse);

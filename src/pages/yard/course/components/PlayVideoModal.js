@@ -13,7 +13,7 @@ export default class PlayVideoModal extends React.Component {
   }
 
   render() {
-    console.log(this.props.video);
+    // console.log(this.props.video);
     return(
       <Modal {...this.props} style={{ "minWidth": '70%', top: 20 , "padding":"0px"}}>
         <Player>

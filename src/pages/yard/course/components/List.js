@@ -6,6 +6,7 @@ const List = ({
                 onDelConfirm,
                 onUpdate,
                 handlePlayVideo,
+                handleShowPDF,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -37,10 +38,10 @@ const List = ({
     render:(record)=>{return (record.videoId?<Button icon="play-circle" onClick={()=>handlePlayVideo(record)} type="dashed">已上传</Button>:<span className="red">未上传</span>)}
   }, {
     title: 'PPT',
-    render:(record)=>{return record.pptId?<span className="blue">已上传</span>:<span className="red">未上传</span>}
+    render:(record)=>{return record.pptId?<Button icon="download" onClick={()=>handleShowPDF(record.pptId)}>已上传</Button>:<span className="red">未上传</span>}
   }, {
     title: '学习单',
-    render:(record)=>{return record.learnId?<span className="blue">已上传</span>:<span className="red">未上传</span>}
+    render:(record)=>{return record.learnId?<Button icon="eye" onClick={()=>handleShowPDF(record.learnId)}>已上传</Button>:<span className="red">未上传</span>}
   }, {
     title: '操作',
     render: (text, record) => {

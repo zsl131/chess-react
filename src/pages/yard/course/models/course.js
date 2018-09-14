@@ -8,10 +8,12 @@ export default {
     totalElements: 0,
     item:{},
     video:{},
+    pdf:{},
     addVisible: false,
     updateVisible: false,
     importVisible: false,
     playVideoVisible: false,
+    showPDFVisible: false,
   },
   reducers: {
     modifyState(state, {payload: options}) {
@@ -34,12 +36,15 @@ export default {
       item.learn = data.learn;
       item.video = data.video;
       item.ppt = data.ppt;
-      console.log(item, '-----')
       yield put({type: 'modifyState', payload: {item: item, updateVisible: true}})
     },
     *onPlayVideo({payload: id}, {call,put}) {
       const data = yield call(objService.loadAttachment, {id});
       yield put({type: "modifyState", payload: {video: data.obj, playVideoVisible: true}});
+    },
+    *onShowPDF({payload: id}, {call,put}) {
+      const data = yield call(objService.loadAttachment, {id});
+      yield put({type: 'modifyState', payload: {pdf: data.obj, showPDFVisible: true}});
     },
     *deleteObj({payload: id}, {call}) {
       const data = yield call(objService.deleteObj, {id});
