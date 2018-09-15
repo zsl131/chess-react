@@ -7,6 +7,7 @@ export default class PictureWall extends React.Component {
     previewImage: '',
     fileList: this.props.fileList || [],
     fileListLength: this.props.fileListLength || 1,
+    showMsg: this.props.showMsg || "选择文件",
   };
 
   handleCancel = () => this.setState({ previewVisible: false })
@@ -28,15 +29,16 @@ export default class PictureWall extends React.Component {
 
   handleBeforeUpload = (file) => {
     // console.log(file);
+    if(!this.props.onBeforeUpload) {return true}
     return this.props.onBeforeUpload(file);
   }
 
   render() {
-    const { previewVisible, previewImage, fileList, fileListLength } = this.state;
+    const { previewVisible, previewImage, fileList, fileListLength,showMsg } = this.state;
     const uploadButton = (
       <div>
         <Icon type="plus" />
-        <div className="ant-upload-text">选择文件</div>
+        <div className="ant-upload-text">{showMsg}</div>
       </div>
     );
     return (
