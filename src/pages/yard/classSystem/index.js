@@ -8,7 +8,7 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 
-const AgeDic = ({
+const ClassSystem = ({
                   dispatch,
                   loading,
                   classSystem,
@@ -114,4 +114,4 @@ const AgeDic = ({
   );
 }
 
-export default connect(({ loading, classSystem }) => ({ loading, classSystem }))(AgeDic);
+export default connect(({ loading, classSystem }) => ({ loading, classSystem }))(ClassSystem);

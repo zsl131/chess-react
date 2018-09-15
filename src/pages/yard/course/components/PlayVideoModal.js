@@ -15,7 +15,7 @@ export default class PlayVideoModal extends React.Component {
   render() {
     // console.log(this.props.video);
     return(
-      <Modal {...this.props} style={{ "minWidth": '70%', top: 20 , "padding":"0px"}}>
+      <Modal {...this.props} style={{ "minWidth": '85%', top: 20 , "padding":"0px"}}>
         <Player>
           <source src={this.props.video.url} />
         </Player>

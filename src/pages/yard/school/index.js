@@ -9,7 +9,7 @@ import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import ImportModal from './components/ImportModal';
 
-const AgeDic = ({
+const School = ({
                   dispatch,
                   loading,
                   school,
@@ -132,4 +132,4 @@ const AgeDic = ({
   );
 }
 
-export default connect(({ loading, school }) => ({ loading, school }))(AgeDic);
+export default connect(({ loading, school }) => ({ loading, school }))(School);

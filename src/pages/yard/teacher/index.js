@@ -8,7 +8,7 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 
-const AgeDic = ({
+const Teacher = ({
                   dispatch,
                   loading,
                   teacher,
@@ -112,4 +112,4 @@ const AgeDic = ({
   );
 }
 
-export default connect(({ loading, teacher }) => ({ loading, teacher }))(AgeDic);
+export default connect(({ loading, teacher }) => ({ loading, teacher }))(Teacher);
