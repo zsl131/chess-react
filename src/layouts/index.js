@@ -37,7 +37,7 @@ class MainLayout extends React.Component {
     const user = JSON.parse(sessionStorage.getItem("loginUser"));
 
     if (isWeixin) {
-      console.log("/weixin开头");
+      // console.log("/weixin开头");
     } else if (isWx) {
 
     } else if(pathname.indexOf("/public")===0) {
@@ -72,7 +72,7 @@ class MainLayout extends React.Component {
         </Layout>
         </LocaleProvider>
       );
-    } else if (isWx) {
+    } else if (isWx || isWeixin) {
       return (
         <LocaleProvider locale={zhCN}>
         <div style={{"background":"#FFFFFF"}}>

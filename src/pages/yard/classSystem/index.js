@@ -54,9 +54,9 @@ const ClassSystem = ({
       // console.log("update::", id);
       dispatch({ type: 'classSystem/onUpdate', payload: id });
     },
-    handleImport:(school) => {
-      console.log(school)
-      dispatch({type: 'classSystem/modifyState', payload: {item: school, importVisible: true}});
+    handleSettingContent:(obj) => {
+      console.log(obj)
+      // dispatch({type: 'classSystem/modifyState', payload: {item: school, importVisible: true}});
     }
   }
 

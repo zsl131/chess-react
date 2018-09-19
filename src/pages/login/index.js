@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Card, Form, Input, Button, Row, Col } from 'antd';
+import { Card, Form, Input, Button, Row, Col,Tabs } from 'antd';
 import styles from './index.css';
 import Helmet from 'react-helmet';
 
 const FormItem = Form.Item;
+const TabPane = Tabs.TabPane;
 
 // @Form.create()
 // export default class Login extends React.Component
@@ -35,20 +36,28 @@ const Login = ({
         <Col xs={22} sm={16} md={12} lg={10} xl={8}>
           <Card bordered={false} className={styles.loginCard}>
             <h2 className={styles.title}>{interceptor.appConfig.appName} - LOGIN</h2>
-            <Form onSubmit={handleOk} className={styles.loginForm}>
-              <FormItem>
-                {getFieldDecorator('username', {rules:[{ required: true, message: '请输入用户名'}]})(<Input onPressEnter={handleOk} placeholder="用户名"/>)}
-              </FormItem>
-              <FormItem>
-                {getFieldDecorator("password", {rules:[{ required: true, message: '请输入密码'}]})(<Input onPressEnter={handleOk} type="password" placeholder="密码"/>)}
-              </FormItem>
-              <Row>
-                <Button className={styles.loginBtn} type="primary" onClick={handleOk} loading={loading.models.login}>登   陆</Button>
-              </Row>
-              <Row className={styles.infoRow}>
-                &copy; 2018 Created By zsl
-              </Row>
-            </Form>
+
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="用户名密码登陆" key="1">
+                <Form onSubmit={handleOk} className={styles.loginForm}>
+                  <FormItem>
+                    {getFieldDecorator('username', {rules:[{ required: true, message: '请输入用户名'}]})(<Input onPressEnter={handleOk} placeholder="用户名"/>)}
+                  </FormItem>
+                  <FormItem>
+                    {getFieldDecorator("password", {rules:[{ required: true, message: '请输入密码'}]})(<Input onPressEnter={handleOk} type="password" placeholder="密码"/>)}
+                  </FormItem>
+                  <Row>
+                    <Button className={styles.loginBtn} type="primary" onClick={handleOk} loading={loading.models.login}>登   陆</Button>
+                  </Row>
+                  <Row className={styles.infoRow}>
+                    &copy; 2018 Created By zsl
+                  </Row>
+                </Form>
+              </TabPane>
+              <TabPane tab="微信扫码登陆" key="2">
+                --
+              </TabPane>
+            </Tabs>
           </Card>
         </Col>
       </Row>

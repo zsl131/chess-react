@@ -1,11 +1,11 @@
 import React from 'react';
-import {Pagination, Table} from 'antd';
+import {Icon, Menu, Pagination, Table} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
                 onDelConfirm,
                 onUpdate,
-                handleImport,
+                handleSettingContent,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -28,7 +28,11 @@ const List = ({
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.name} {...delOpts}/>
+        <ListOperator id={record.id} delName={record.name} {...delOpts}>
+          <Menu.Item key={record.id}>
+            <span onClick={()=>handleSettingContent(record)}><Icon type="plus"/> 设置课程内容</span>
+          </Menu.Item>
+        </ListOperator>
       );
     }
   }];

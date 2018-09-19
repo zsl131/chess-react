@@ -19,7 +19,6 @@ export default class WxNormalHeader extends React.Component {
         className={styles.templateNavBar}
         rightContent={[
           <WxLoginAccount key="0" style={{ marginRight: '16px' }} />,
-          <Icon key="1" type="ellipsis" />,
         ]}
       >
 
