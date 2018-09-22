@@ -1,7 +1,8 @@
 import React from 'react';
-import {Form, Input, Modal, Select, Switch, message, Row, Col} from 'antd';
+import {Col, Form, Input, Modal, Row, Select, Switch, Spin} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
+import request from "../../../../utils/request";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -11,11 +12,27 @@ const Option = Select.Option;
 export default class AddModal extends React.Component {
 
   state = {
+    cateList: [],
+    fetching: true,
+  }
 
+  fetchCate = ()=> {
+    if(this.state.cateList<=0) {
+      request("noticeCategoryService.list", {}, true).then((response) => {
+        let data = [];
+        data.push( ...response.data.map((item) => ({
+          value: ""+item.id,
+          text: item.name,
+        })));
+
+        this.setState({cateList: data, fetching: false});
+      });
+    }
   }
 
   render() {
     const {getFieldDecorator, setFieldsValue, validateFieldsAndScroll} = this.props.form;
+    const {cateList, fetching} = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -35,7 +52,7 @@ export default class AddModal extends React.Component {
         values.isTop = values.isTop ? "1":"0";
         values.status = values.status ? "1":"0";
         values.needSend = values.needSend ? "1":"0";
-        // console.log(values)
+        console.log(values)
         if(!errors) {
           this.props.onOk(values);
         }
@@ -72,13 +89,32 @@ export default class AddModal extends React.Component {
       }
     }
 
+    const onCateChange = (value, e) => {
+      // console.log(value, e.props.children)
+      setFieldsValue({"cateName": e.props.children});
+    }
+
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
         <Form layout="horizontal">
           {getFieldDecorator('picPath')(<Input type="hidden" />)}
+          {getFieldDecorator('cateName')(<Input type="hidden" />)}
           <FormItem>
             <Row>
-              <Col span={24}>
+              <Col span={4}>
+                {getFieldDecorator('cateId', {rules: [{required: true, message: '请选择所在分类'}]})(
+                  <Select
+                    placeholder="选择分类"
+                    notFoundContent={fetching ? <Spin size="small" /> : null}
+                    onFocus={this.fetchCate}
+                    style={{ width: '100%' }}
+                    onChange={onCateChange}
+                  >
+                    {cateList.map(d => <Option key={d.value}>{d.text}</Option>)}
+                  </Select>
+                )}
+              </Col>
+              <Col span={20}>
                 {getFieldDecorator('title', {rules: [{required: true, message: '通知公告标题不能为空'}]})(<Input placeholder="输入通知公告标题"/>)}
               </Col>
             </Row>

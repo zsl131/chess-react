@@ -50,12 +50,12 @@ const Login = ({
                     <Button className={styles.loginBtn} type="primary" onClick={handleOk} loading={loading.models.login}>登   陆</Button>
                   </Row>
                   <Row className={styles.infoRow}>
-                    &copy; 2018 Created By zsl
+                    &copy; 2018-2020 Created By zsl
                   </Row>
                 </Form>
               </TabPane>
               <TabPane tab="微信扫码登陆" key="2">
-                --
+                提示：正在开发…
               </TabPane>
             </Tabs>
           </Card>

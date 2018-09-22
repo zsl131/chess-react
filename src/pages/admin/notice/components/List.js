@@ -27,7 +27,7 @@ const List = ({
     title: '图片',
     render: (text, record) => {
       return (
-        <a href={record.picPath} target="_blank" rel="noopener noreferrer"><img src={record.picPath} alt={record.title} className={styles.avatarImg}/></a>
+        <a key={record.id} href={record.picPath} target="_blank" rel="noopener noreferrer"><img src={record.picPath} alt={record.title} className={styles.avatarImg}/></a>
       )
     }
   }, {
@@ -35,8 +35,8 @@ const List = ({
     // dataIndex: 'title'
     render:(record) => {
       return (
-        <div>
-          <p>{record.title}</p>
+        <div key={record.id}>
+          <p>[{record.cateName}]{record.title}</p>
           <p>{record.createTime}</p>
         </div>
       )
@@ -45,7 +45,7 @@ const List = ({
     title: '属性',
     render:(record) => {
       return (
-        <p>
+        <p key={record.id}>
           <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "status", record.status==='1'?"0":"1")} title={`确定设置状态为[${record.status==='1'?"隐藏":"显示"}]吗？`}>{record.status==='1'?<Button type="primary">显示</Button>:<Button>隐藏</Button>}</Popconfirm>
           <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "isTop", record.isTop==='1'?"0":"1")} title={`确定设置为[${record.isTop==='1'?"不置顶":"置顶"}]吗？`}>{record.isTop==='1'?<Button type="primary">置顶</Button>:<Button>不置顶</Button>}</Popconfirm>
             <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "needSend", record.needSend==='1'?"0":"1")} title={`确定设置为[${record.needSend==='1'?"关注不推送":"关注推送"}]吗？`}>{record.needSend==='1'?<Button type="primary">关注推送</Button>:<Button>关注不推送</Button>}</Popconfirm>
@@ -56,7 +56,7 @@ const List = ({
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.title} {...delOpts}/>
+        <ListOperator key={record.id} id={record.id} delName={record.title} {...delOpts}/>
       );
     }
   }];

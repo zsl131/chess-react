@@ -11,5 +11,5 @@ export default class AdminFooter extends React.Component {
 }
 
 AdminFooter.defaultProps = {
-  message: '&copy; 2018 Created By zsl'
+  message: '&copy; 2018-2020 Created By zsl'
 }

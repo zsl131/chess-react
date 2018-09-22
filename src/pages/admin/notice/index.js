@@ -7,6 +7,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
+import Categorys from './components/categorys';
 
 const Notice = ({
                   dispatch,
@@ -31,6 +32,9 @@ const Notice = ({
     msg: '添加通知公告',
     onAdd: () => {
       dispatch({ type: 'notice/onAdd', payload: {}});
+    },
+    onCategory: () => {
+      dispatch({type: "notice/onCategory", payload: {}});
     }
   }
 
@@ -61,6 +65,7 @@ const Notice = ({
   }
 
   const addOpts = {
+    maskClosable: false,
     visible: notice.addVisible,
     title: "添加通知公告",
     okText:'确认提交',
@@ -78,11 +83,13 @@ const Notice = ({
   }
 
   const updateOpts = {
+    maskClosable: false,
     visible: notice.updateVisible,
     title: `修改数据[${notice.item.title}]`,
     okText:'确认提交',
     cancelText: '取消',
     item: notice.item,
+    cateList: notice.categoryList,
     confirmLoading: loading.effects['notice/addOrUpdate'],
     onOk:(datas) => {
       // dispatch({ type: 'department/modifyState', payload: { updateVisible: false } });
@@ -93,6 +100,24 @@ const Notice = ({
     },
     onCancel: () => {
       dispatch({ type: 'notice/modifyState', payload: { updateVisible: false } });
+    }
+  }
+
+  const cateOpts = {
+    maskClosable: false,
+    visible: notice.showCategory,
+    title: "分类管理",
+    confirmLoading: loading.effects['notice/addOrUpdate'],
+    footer: null,
+    categoryList: notice.categoryList,
+    saveCategory:(obj) => {
+      dispatch({type: "notice/onSaveCategory", payload: obj});
+    },
+    onCancel: () => {
+      dispatch({ type: 'notice/modifyState', payload: { showCategory: false } });
+    },
+    deleteCate:(id) => {
+      dispatch({type: "notice/deleteCate", payload: {id}});
     }
   }
 
@@ -110,6 +135,7 @@ const Notice = ({
       </div>
       {notice.addVisible && <AddModal {...addOpts}/>}
       {notice.updateVisible && <UpdateModal {...updateOpts}/>}
+      {notice.showCategory && <Categorys {...cateOpts}/>}
     </div>
   );
 }

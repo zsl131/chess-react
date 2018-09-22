@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Modal, Select, Switch, message, Row, Col} from 'antd';
+import {Col, Form, Input, Modal, Row, Select, Switch} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
 
@@ -21,6 +21,7 @@ export default class UpdateModal extends React.Component {
     const {setFieldsValue} = this.props.form;
     setFieldsValue(this.props.item);
     const curItem = this.props.item;
+    setFieldsValue({cateId:''+curItem.cateId})
     this.setState({status: curItem.status === '1', isTop: curItem.isTop==='1', needSend: curItem.needSend==='1'})
     if(curItem.picPath) {
       const fileList = [{
@@ -51,9 +52,11 @@ export default class UpdateModal extends React.Component {
     const handleOk = (e) => {
       e.preventDefault();
       validateFieldsAndScroll((errors, values) => {
+        // console.log(values);
         values.isTop = values.isTop ? "1":"0";
         values.status = values.status ? "1":"0";
         values.needSend = values.needSend ? "1":"0";
+        // console.log(values)
         if(!errors) {
          this.props.onOk(values);
         }
@@ -84,6 +87,11 @@ export default class UpdateModal extends React.Component {
       }
     }
 
+    const onCateChange = (value, e) => {
+      // console.log(value, e.props.children)
+      setFieldsValue({"cateName": e.props.children});
+    }
+
     const modalOpts = {
       ...this.props,
       onOk: handleOk
@@ -94,9 +102,21 @@ export default class UpdateModal extends React.Component {
         <Form layout="horizontal">
           {getFieldDecorator('picPath')(<Input type="hidden" />)}
           {getFieldDecorator('id')(<Input type="hidden" />)}
+          {getFieldDecorator('cateName')(<Input type="hidden" />)}
           <FormItem>
             <Row>
-              <Col span={24}>
+              <Col span={4}>
+                {getFieldDecorator('cateId', {rules: [{required: true, message: '请选择所在分类'}]})(
+                  <Select
+                    placeholder="选择分类"
+                    style={{ width: '100%' }}
+                    onChange={onCateChange}
+                  >
+                    {this.props.cateList.map(d => <Option key={d.id} initialValue={d.id===2}>{d.name}</Option>)}
+                  </Select>
+                )}
+              </Col>
+              <Col span={20}>
                 {getFieldDecorator('title', {rules: [{required: true, message: '通知公告标题不能为空'}]})(<Input placeholder="输入通知公告标题"/>)}
               </Col>
             </Row>

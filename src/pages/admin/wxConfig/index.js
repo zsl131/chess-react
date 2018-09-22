@@ -18,7 +18,7 @@ class WxConfig extends React.Component {
     const { setFieldsValue } = this.props.form;
     // console.log("didMount::", this.props.wxConfig.item);
     // setFieldsValue(this.state.item || {});
-    console.log(this.props.wxConfig.item);
+    // console.log(this.props.wxConfig.item);
     setFieldsValue(this.props.wxConfig.item);
   }
 
