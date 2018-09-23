@@ -63,26 +63,34 @@ const ShowNotice = ({
 
       {/*<div style={{"height":"600px"}}>--</div>*/}
 
-      <Affix offsetBottom={0} className={styles.commentAffix} style={{"position":"fixed", "bottom":"0px", "zIndex":2}}>
-      <div className={styles.comments}>
-        <Row>
-          <Col span={20}>
-            {/*<Input placeholder="写评论..." disabled={true} onClick={onFocusComment}/>*/}
-            <Button style={{"width":"100%", "textAlign":"left"}} onClick={onFocusComment}>写评论...</Button>
-          </Col>
-          <Col span={4} style={{"textAlign":"center"}}><Badge count={wxNotice.commentCount} showZero><Button icon="message" shape="circle"/></Badge></Col>
-        </Row>
-      </div>
-      </Affix>
+      { item.canComment === '1' &&
+        <Affix offsetBottom={0} className={styles.commentAffix}
+               style={{"position": "fixed", "bottom": "0px", "zIndex": 2}}>
+          <div className={styles.comments}>
+            <Row>
+              <Col span={20}>
+                {/*<Input placeholder="写评论..." disabled={true} onClick={onFocusComment}/>*/}
+                <Button style={{"width": "100%", "textAlign": "left"}} onClick={onFocusComment}>写评论...</Button>
+              </Col>
+              <Col span={4} style={{"textAlign": "center"}}><Badge count={wxNotice.commentCount} showZero><Button
+                icon="message" shape="circle"/></Badge></Col>
+            </Row>
+          </div>
+        </Affix>
+      }
 
-      <Tabs tabs={[{title: <Badge text={wxNotice.commentCount}>评论信息</Badge>}]} >
-        <div className={styles.tabDiv}>
-          <ListComment curPage={wxNotice.curCommentPage} onChangePage={handleChangePage} title="活动评论信息" totalElements={wxNotice.commentCount} dataSource={wxNotice.commentList} totalPage={wxNotice.commentPage} onGood={handleOnGood}/>
-        </div>
-      </Tabs>
+      { wxNotice.commentCount>0 &&
+        <Tabs tabs={[{title: <Badge text={wxNotice.commentCount}>评论信息</Badge>}]}>
+          <div className={styles.tabDiv}>
+            <ListComment curPage={wxNotice.curCommentPage} onChangePage={handleChangePage} title="活动评论信息"
+                         totalElements={wxNotice.commentCount} dataSource={wxNotice.commentList}
+                         totalPage={wxNotice.commentPage} onGood={handleOnGood}/>
+          </div>
+        </Tabs>
+      }
 
       <BackTop visibilityHeight={100}/>
-      {wxNotice.addCommentVisible && <AddComment {...addCommentOpts}/>}
+      {wxNotice.addCommentVisible && item.canComment === '1' && <AddComment {...addCommentOpts}/>}
     </div>
   );
 }
