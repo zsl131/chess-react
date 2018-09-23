@@ -8,6 +8,7 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import Categorys from './components/categorys';
+import PlayVideoModal from "../../../components/PlayVideoModal";
 
 const Notice = ({
                   dispatch,
@@ -61,6 +62,10 @@ const Notice = ({
     },
     updateProperty: (id, field, value) => {
       dispatch({type: 'notice/updateProperty', payload: {id: id, field: field, value: value}}).then(() => {handleRefresh()});
+    },
+    onPlayVideo:(id) => {
+      // console.log(id)
+      dispatch({type: "notice/onPlayVideo", payload: id});
     }
   }
 
@@ -121,6 +126,21 @@ const Notice = ({
     }
   }
 
+  const playVideoOpts = {
+    maskClosable: false,
+    visible: notice.playVideoVisible,
+    title: `播放视频`,
+    okText:'关闭窗口',
+    cancelText: '取消',
+    video: notice.video,
+    onOk:()=> {
+      dispatch({ type: 'notice/modifyState', payload: { playVideoVisible: false } });
+    },
+    onCancel: () => {
+      dispatch({ type: 'notice/modifyState', payload: { playVideoVisible: false } });
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -136,6 +156,7 @@ const Notice = ({
       {notice.addVisible && <AddModal {...addOpts}/>}
       {notice.updateVisible && <UpdateModal {...updateOpts}/>}
       {notice.showCategory && <Categorys {...cateOpts}/>}
+      {notice.playVideoVisible && <PlayVideoModal {...playVideoOpts}/>}
     </div>
   );
 }

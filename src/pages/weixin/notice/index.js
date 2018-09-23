@@ -30,7 +30,7 @@ class Index extends React.Component {
         notice.loaded?
         <div>
           <Helmet><title>通知公告</title></Helmet>
-          <List renderHeader={() => '最新通知公告（' + notice.totalElements + '）'}>
+          <List renderHeader={() => (notice.category?notice.category.name:'最新通知公告')+"（" + notice.totalElements + '）'}>
             {list}
           </List>
           <WeixinPage {...this.props} totalPage={notice.totalPage}/>

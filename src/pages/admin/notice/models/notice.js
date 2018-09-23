@@ -9,6 +9,8 @@ export default {
     addVisible: false,
     updateVisible: false,
     categoryList:[],
+    playVideoVisible:false,
+    video:{},
     showCategory: false,
   },
   reducers: {
@@ -67,6 +69,10 @@ export default {
       const data = yield call(objService.saveCategory, obj);
       yield put({type: 'addCategory', payload: {obj: data.obj, isAdd: obj.id?false: true}});
       // message.success(data.message);
+    },
+    *onPlayVideo({payload: id}, {call,put}) {
+      const data = yield call(objService.loadAttachment, {id});
+      yield put({type: "modifyState", payload: {video: data.obj, playVideoVisible: true}});
     },
     *deleteCate({payload: id}, {call,put}) {
       const data = yield call(objService.deleteCate, id);

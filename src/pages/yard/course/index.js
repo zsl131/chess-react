@@ -7,8 +7,8 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
-import PlayVideoModal from './components/PlayVideoModal';
 import ShowPDFModal from './components/ShowPDFModal';
+import PlayVideoModal from "../../../components/PlayVideoModal";
 
 const ClassCourse = ({
                   dispatch,

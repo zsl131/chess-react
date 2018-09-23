@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pagination, Table, Button,Popconfirm} from 'antd';
+import {Pagination, Table, Button,Popconfirm,Tooltip} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 import styles from "./list.css";
 
@@ -7,6 +7,7 @@ const List = ({
                 onDelConfirm,
                 onUpdate,
                 updateProperty,
+                onPlayVideo,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -36,7 +37,10 @@ const List = ({
     render:(record) => {
       return (
         <div key={record.id}>
-          <p>[{record.cateName}]{record.title}</p>
+          <p>
+            {record.videoId && <Tooltip placement="top" title="播放视频"><Button onClick={()=>onPlayVideo(record.videoId)} size="small" icon="play-circle"/></Tooltip>}
+            [{record.cateName}]{record.title}
+            </p>
           <p>{record.createTime}</p>
         </div>
       )
@@ -46,9 +50,19 @@ const List = ({
     render:(record) => {
       return (
         <p key={record.id}>
-          <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "status", record.status==='1'?"0":"1")} title={`确定设置状态为[${record.status==='1'?"隐藏":"显示"}]吗？`}>{record.status==='1'?<Button type="primary">显示</Button>:<Button>隐藏</Button>}</Popconfirm>
-          <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "isTop", record.isTop==='1'?"0":"1")} title={`确定设置为[${record.isTop==='1'?"不置顶":"置顶"}]吗？`}>{record.isTop==='1'?<Button type="primary">置顶</Button>:<Button>不置顶</Button>}</Popconfirm>
-            <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "needSend", record.needSend==='1'?"0":"1")} title={`确定设置为[${record.needSend==='1'?"关注不推送":"关注推送"}]吗？`}>{record.needSend==='1'?<Button type="primary">关注推送</Button>:<Button>关注不推送</Button>}</Popconfirm>
+          <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "status", record.status==='1'?"0":"1")} title={`确定设置状态为[${record.status==='1'?"隐藏":"显示"}]吗？`}>
+            {/*{record.status==='1'?<Button type="primary">显示</Button>:<Button>隐藏</Button>}*/}
+            <Tooltip title={record.status==='1'?"显示":"隐藏"}><Button type={record.status==='1'?'primary':null} shape="circle" icon="eye"/></Tooltip>
+          </Popconfirm>
+          <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "isTop", record.isTop==='1'?"0":"1")} title={`确定设置为[${record.isTop==='1'?"不置顶":"置顶"}]吗？`}>
+            <Tooltip title={record.isTop==='1'?"置顶":"未置顶"}><Button type={record.isTop==='1'?'primary':null} shape="circle" icon="to-top"/></Tooltip>
+          </Popconfirm>
+          <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "needSend", record.needSend==='1'?"0":"1")} title={`确定设置为[${record.needSend==='1'?"关注不推送":"关注推送"}]吗？`}>
+            <Tooltip title={record.needSend==='1'?"关注时推送":"关注时不推送"}><Button type={record.needSend==='1'?'primary':null} shape="circle" icon="arrow-up"/></Tooltip>
+          </Popconfirm>
+          <Popconfirm okType="danger" onConfirm={()=>handleProperty(record.id, "canComment", record.canComment==='1'?"0":"1")} title={`确定设置为[${record.canComment==='1'?"不可评论":"可评论"}]吗？`}>
+            <Tooltip title={record.canComment==='1'?"可评论":"不可评论"}><Button type={record.canComment==='1'?'primary':null} shape="circle" icon="message"/></Tooltip>
+          </Popconfirm>
         </p>
       )
     }

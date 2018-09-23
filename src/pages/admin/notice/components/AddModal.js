@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Form, Input, Modal, Row, Select, Switch, Spin} from 'antd';
+import {Button, Col, Form, Icon, Input, Modal, Row, Select, Spin, Switch, Upload} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
 import request from "../../../../utils/request";
@@ -52,7 +52,7 @@ export default class AddModal extends React.Component {
         values.isTop = values.isTop ? "1":"0";
         values.status = values.status ? "1":"0";
         values.needSend = values.needSend ? "1":"0";
-        console.log(values)
+        // console.log(values)
         if(!errors) {
           this.props.onOk(values);
         }
@@ -94,6 +94,18 @@ export default class AddModal extends React.Component {
       setFieldsValue({"cateName": e.props.children});
     }
 
+    const handleChange = (file) => {
+      if(file.file.status==='done') {
+        setFieldsValue({"videoId": file.file.response.result.obj.id});
+        this.setState({videoList: 1})
+      } else if(file.file.status ==='removed' && file.file.response) {
+        const attId = file.file.response.result.obj.id;
+        request("attachmentService.delete", {id:attId}, true);
+        setFieldsValue({"videoId": ''});
+        this.setState({videoList: 0})
+      }
+    }
+
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
         <Form layout="horizontal">
@@ -125,7 +137,23 @@ export default class AddModal extends React.Component {
               <Col span={4}>
                 <PictureWall showMsg="封面图片" accept="image/png, image/jpeg, image/gif" data={{'path':'abcdef'}} onFileChange={onFileChange}/>
               </Col>
-              <Col span={20}>
+              <Col span={5} style={{"paddingRight":"10px"}}>
+                {getFieldDecorator('videoId')(<Input type="hidden"/>)}
+                <Upload
+                  action="/api/yardUpload/uploadFile"
+                  data={{'path':'video'}}
+                  onChange={handleChange}
+                  accept="video/*"
+                >
+                  { this.state.videoList>0?null:
+                    <Button type="primary">
+                      <Icon type='upload'/>
+                      选择视频文件上传
+                    </Button>
+                  }
+                </Upload>
+              </Col>
+              <Col span={15}>
                 {getFieldDecorator('guide', {rules: [{required: true, message: '通知公告导读不能为空'}]})(<TextArea placeholder="输入通知公告导读" autosize={{ minRows: 4, maxRows: 4 }}/>)}
               </Col>
             </Row>

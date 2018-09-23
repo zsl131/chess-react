@@ -49,3 +49,11 @@
 .goodBtn {
   position: fixed; bottom: 50px; left: 15px; opacity:0.85; z-index: 1000;
 }
+
+.comments {
+  background:#eee; width:100%; padding:8px;
+}
+
+.commentAffix {
+  position: absolute; bottom:0px; width:100%; float:left;
+}

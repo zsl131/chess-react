@@ -4,6 +4,7 @@ const baseService = "noticeService";
 const categoryService = "noticeCategoryService";
 
 function list(query) {
+  query.sort = "isTop_d, id_d";
   return request(baseService+".list", query, true);
 }
 
@@ -37,6 +38,11 @@ function deleteCate(id) {
   return request(categoryService+".delete", id, true);
 }
 
+//传Attachment的主键ID
+function loadAttachment(obj) {
+  return request("attachmentService.loadOne", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
@@ -46,4 +52,5 @@ export {
   listCategory,
   saveCategory,
   deleteCate,
+  loadAttachment,
 }
