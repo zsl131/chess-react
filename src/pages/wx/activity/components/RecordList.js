@@ -2,11 +2,22 @@ import React from 'react';
 import {Card, List, Button} from 'antd-mobile';
 import Link from 'umi/link';
 
+const Item = List.Item;
+const Brief = Item.Brief;
 const RecordList = ({
   dataSource
 }) => {
 
   const singleItem = dataSource?dataSource[0]:{};
+
+  const list = dataSource?dataSource.map((item) => {
+    return(
+      <Item key={item.id} extra={item.status==='1'?<Link to={`/wx/signUp?recordId=${singleItem.id}`}><Button type="primary" size="small">报名</Button></Link>:'不可报名'} align="top"
+            multipleLine>
+        {item.holdTime} <Brief>{item.address}</Brief>
+      </Item>
+    )
+  }):"";
 
   return (
     <div>
@@ -37,7 +48,7 @@ const RecordList = ({
           </Card>
           :
           <List>
-
+            {list}
           </List>
       }
     </div>

@@ -11,10 +11,10 @@ const WxActivity = ({
   return (
     <div>
       <Helmet>
-        <title>活动精选</title>
+        <title>{wxActivity.department?wxActivity.department.name:'活动精选'}</title>
       </Helmet>
       <div className="listPageHeader">
-        <h3>活动精选<small>（{wxActivity.totalElements}）</small></h3>
+        <h3>{wxActivity.department?wxActivity.department.name:'活动精选'}<small>（{wxActivity.totalElements}）</small></h3>
       </div>
       <MyCard dataSource={wxActivity.datas} loading={loading.models.activity}/>
     </div>

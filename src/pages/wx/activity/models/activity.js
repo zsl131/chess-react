@@ -13,6 +13,7 @@ export default {
     curCommentPage: 1,
     recordList:[],
     recordSize:0,
+    department:{},
   },
   reducers: {
     modifyState(state, {payload: options}) {
@@ -25,17 +26,19 @@ export default {
         }
         return item;
       });
+      return {...state};
     },
     onGoodPage(state, {payload: id}) {
       state.item.goodCount += 1;
+      return {...state};
     }
   },
   effects: {
     *list({payload: query}, {call,put}) {
       const data = yield call(activityService.list, query);
-      console.log(data);
+      // console.log(data);
       if(data) {
-        yield put({type:'modifyState', payload: {datas: data.datas, totalElements: data.size}});
+        yield put({type:'modifyState', payload: {datas: data.datas, totalElements: data.size, department: data.department}});
       }
     },
     *show({payload: query}, {call,put}) {

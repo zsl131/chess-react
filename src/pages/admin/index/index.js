@@ -34,7 +34,7 @@ const Index = ({
 
   return (
     <div style={{"padding":"15px"}}>
-      <h2>系统首页</h2>
+      <h2>· 后台首页</h2>
       {adminIndex.noConfigTemplateMessage && <Alert className={styles.singleAlert} type="error" message={alertMessage()} showIcon />}
       {adminIndex.noConfigScore && <Alert className={styles.singleAlert} type="error" message={scoreMessage()} showIcon />}
     </div>

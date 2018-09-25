@@ -13,7 +13,7 @@ const MyCard = ({
     return (
       <div className={styles.singleObjDiv}>
       <Card className={styles.singleObj}>
-        <Card.Header title={<Link to={`/wx/activity/show?id=${item.id}`} className={styles.titleHref}>{item.title}</Link>}/>
+        <Card.Header title={<Link to={`/wx/activity/show?id=${item.id}`} className={styles.titleHref}>{item.depName?item.depName+"-":""}{item.title}</Link>}/>
         <Card.Body>
           {item.imgUrl &&
             <Link to={`/wx/activity/show?id=${item.id}`}>

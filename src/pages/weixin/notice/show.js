@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import styles from './show.css';
 import {Helmet} from 'react-helmet';
-import {Affix, BackTop, Badge, Button, Col, Input, Row} from 'antd';
+import {Affix, BackTop, Badge, Button, Col, Row} from 'antd';
 import {Player} from 'video-react';
 import AddComment from "./components/AddComment";
 import {Tabs} from 'antd-mobile';
@@ -50,11 +50,9 @@ const ShowNotice = ({
       </p>
       { item.videoId && wxNotice.attachment &&
         <div style={{"padding": "0px 10px 12px 10px"}}>
-          <Affix offsetTop={10}>
-            <Player>
-              <source src={wxNotice.attachment.url} />
-            </Player>
-          </Affix>
+          <Player>
+            <source src={wxNotice.attachment.url} />
+          </Player>
         </div>
       }
       {item.guide && <div className={styles.guide}><b>导读：</b>{item.guide}</div>}

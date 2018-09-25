@@ -65,6 +65,7 @@ const ActivityShow = ({
       <div className={styles.goodBtn}>
         <Button type="primary" shape="circle" icon="like" size="large" onClick={handleClickLike}/>
       </div>
+      <div style={{"paddingBottom":"50px"}}></div>
     </div>
   );
 }
