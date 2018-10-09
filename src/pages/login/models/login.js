@@ -1,40 +1,33 @@
 import { remoteCheckLogin } from '../services/login';
+import * as objService from '../services/objectService';
 import router from 'umi/router';
 import {checkLogin, setLoginUser} from '../../../utils/authUtils';
 
 export default {
   namespace: 'login',
-  state:{},
+  state:{
+    wxLogin:{}
+  },
   reducers: {
     'cacheLogin'(state, { payload: datas }) {
-      /*const loginUser = datas.obj.user;
-      const navMenus = datas.obj.navMenus;
-      const authMenus = datas.obj.authMenus;
-      sessionStorage.setItem("loginUser", JSON.stringify(loginUser));
-      sessionStorage.setItem("navMenus", JSON.stringify(navMenus));
-      sessionStorage.setItem("authMenus", JSON.stringify(authMenus));*/
       setLoginUser(datas.obj);
-
       router.push("/admin/index");
+    },
+    modifyState(state, {payload: options}) {
+      return {...state, ...options};
     }
   },
   effects: {
     *login({ payload: values }, { put, call }) {
       const data = yield call(remoteCheckLogin, values);
-      // console.log("login", data);
-
       if(data) {
-        /*const loginUser = data.obj.user;
-        const navMenus = data.obj.navMenus;
-        const authMenus = data.obj.authMenus;
-        sessionStorage.setItem("loginUser", JSON.stringify(loginUser));
-        sessionStorage.setItem("navMenus", JSON.stringify(navMenus));
-        sessionStorage.setItem("authMenus", JSON.stringify(authMenus));*/
-
         setLoginUser(data.obj);
-
         router.push("/admin/index");
       }
+    },
+    *onQrScene({payload: query}, {call,put}) {
+      const data = yield call(objService.queryWxLogin, {});
+      yield put({type: 'modifyState', payload: {wxLogin: data.obj}});
     }
   },
   subscriptions: {

@@ -42,8 +42,12 @@ export function checkLogin() {
   return false;
 }
 
+//不需要检测权限的，但需要登陆
+const NO_NEED_CHECK = ["/admin/users/updatePwd"];
+
 /** 通过url检测权限 */
 export function checkAuthByUrl(pathname) {
+  if(NO_NEED_CHECK.includes(pathname)) {return true;}
   let hasAuth = false;
   NO_NEED_AUTH.map((url) => {
     if(pathname == url) {hasAuth = true;}

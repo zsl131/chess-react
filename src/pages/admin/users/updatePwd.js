@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form, Icon, Input, Card, Button } from 'antd';
+import { Form, Icon, Input, Card, Button,Tabs } from 'antd';
 import styles from './index.css';
 import {getLoginUser} from '../../../utils/authUtils';
+import BindPhone from './components/BindPhone';
+import {sendCode} from "./services/smsService";
 
 const FormItem = Form.Item;
+const TabPane = Tabs.TabPane;
 
 @Form.create()
 class UpdatePwd extends React.Component {
@@ -63,37 +66,50 @@ class UpdatePwd extends React.Component {
       });
     }
 
+    const phoneOpts = {
+      sendcode: (phone) => {
+        console.log(phone);
+      }
+    }
+
     return (
       <div>
         <div className="listHeader">
-          <h3><Icon type="edit"/> 修改密码</h3>
+          <h3><Icon type="setting"/> 用户配置：{this.state.loginUser.username}[{this.state.loginUser.nickname}]</h3>
         </div>
         <div className={styles.mainContainer}>
           <Card>
-            <Form onSubmit={handleOk} layout="horizontal">
-              {getFieldDecorator("id")(<Input type="hidden"/>)}
-              <FormItem {...formItemLayout} label="用户名">
-                <span className={styles.nickname}>{this.state.loginUser.username}</span>
-              </FormItem>
+            <Tabs defaultActiveKey="phone">
+              <TabPane tab={<span><Icon type="lock"/> 修改密码</span>} key="pwd">
+                <Form onSubmit={handleOk} layout="horizontal">
+                  {getFieldDecorator("id")(<Input type="hidden"/>)}
+                  <FormItem {...formItemLayout} label="用户名">
+                    <span className={styles.nickname}>{this.state.loginUser.username}</span>
+                  </FormItem>
 
-              <FormItem {...formItemLayout} label="用户昵称">
-                {getFieldDecorator('nickname', {rules: [{required: true, message: '用户昵称不能为空'}]})(<Input placeholder="输入用户昵称"/>)}
-              </FormItem>
+                  <FormItem {...formItemLayout} label="用户昵称">
+                    {getFieldDecorator('nickname', {rules: [{required: true, message: '用户昵称不能为空'}]})(<Input placeholder="输入用户昵称"/>)}
+                  </FormItem>
 
-              <FormItem {...formItemLayout} label="原始密码">
-                {getFieldDecorator('oldPwd', {rules: [{required: true, message: '请输入原始密码'}, {validator: checkPassword}]})(<Input type="password" placeholder="输入原始密码"/>)}
-              </FormItem>
+                  <FormItem {...formItemLayout} label="原始密码">
+                    {getFieldDecorator('oldPwd', {rules: [{required: true, message: '请输入原始密码'}, {validator: checkPassword}]})(<Input type="password" placeholder="输入原始密码"/>)}
+                  </FormItem>
 
-              <FormItem {...formItemLayout} label="登陆密码">
-                {getFieldDecorator('password', {rules: [{required: true, message: '请输入密码'}, {validator: checkPassword}]})(<Input type="password" placeholder="输入密码"/>)}
-              </FormItem>
-              <FormItem {...formItemLayout} label="重复密码">
-                {getFieldDecorator("confirmPwd", {rules: [{required: true, message: '请再次输入密码'}, {validator: checkConfirmPwd}]})(<Input type="password" placeholder="再次输入密码"/>)}
-              </FormItem>
-              <FormItem className={styles.submitOper}>
-                <Button className={styles.submitBtn} htmlType="submit" type="primary" icon="check">提交保存</Button>
-              </FormItem>
-            </Form>
+                  <FormItem {...formItemLayout} label="登陆密码">
+                    {getFieldDecorator('password', {rules: [{required: true, message: '请输入密码'}, {validator: checkPassword}]})(<Input type="password" placeholder="输入密码"/>)}
+                  </FormItem>
+                  <FormItem {...formItemLayout} label="重复密码">
+                    {getFieldDecorator("confirmPwd", {rules: [{required: true, message: '请再次输入密码'}, {validator: checkConfirmPwd}]})(<Input type="password" placeholder="再次输入密码"/>)}
+                  </FormItem>
+                  <FormItem className={styles.submitOper}>
+                    <Button className={styles.submitBtn} htmlType="submit" type="primary" icon="check">提交保存</Button>
+                  </FormItem>
+                </Form>
+              </TabPane>
+              <TabPane tab={<span><Icon type="phone" {...phoneOpts}/> 绑定手机号码</span>} key="phone">
+                <BindPhone/>
+              </TabPane>
+            </Tabs>
           </Card>
         </div>
       </div>

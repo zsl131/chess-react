@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Card, Form, Input, Button, Row, Col,Tabs } from 'antd';
+import {connect} from 'dva';
+import {Button, Card, Col, Form, Input, Row, Spin, Tabs} from 'antd';
 import styles from './index.css';
 import Helmet from 'react-helmet';
 
@@ -13,6 +13,7 @@ const Login = ({
                  loading,
                  dispatch,
                  interceptor,
+  login,
                  form: {
                    getFieldDecorator,
                    validateFieldsAndScroll,
@@ -28,6 +29,12 @@ const Login = ({
     });
   }
 
+  const onTabChange = (key) => {
+    if(key==='wx') {
+      dispatch({type: 'login/onQrScene'});
+    }
+  }
+
   // const { getFieldDecorator } = this.props.form;
   return (
     <div>
@@ -37,8 +44,8 @@ const Login = ({
           <Card bordered={false} className={styles.loginCard}>
             <h2 className={styles.title}>{interceptor.appConfig.appName} - LOGIN</h2>
 
-            <Tabs defaultActiveKey="1">
-              <TabPane tab="用户名密码登陆" key="1">
+            <Tabs defaultActiveKey="pwd" onChange={onTabChange}>
+              <TabPane tab="用户登陆" key="pwd">
                 <Form onSubmit={handleOk} className={styles.loginForm}>
                   <FormItem>
                     {getFieldDecorator('username', {rules:[{ required: true, message: '请输入用户名'}]})(<Input onPressEnter={handleOk} placeholder="用户名"/>)}
@@ -54,7 +61,19 @@ const Login = ({
                   </Row>
                 </Form>
               </TabPane>
-              <TabPane tab="微信扫码登陆" key="2">
+              <TabPane tab="扫码登陆" key="wx">
+                <div style={{"textAlign":"center"}}>
+                  {(login.wxLogin && login.wxLogin.ticket)?
+                    <div>
+                      <img width={300}
+                           src={`https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${login.wxLogin.ticket}`}/>
+                      <h3>打开微信扫一扫</h3>
+                    </div>:
+                    <div style={{"padding":"30px 0px"}}><Spin size="large" /></div>
+                  }
+                </div>
+              </TabPane>
+              <TabPane tab="短信登陆" key="phone">
                 提示：正在开发…
               </TabPane>
             </Tabs>
@@ -66,4 +85,4 @@ const Login = ({
 }
 
 // export default Login;
-export default connect(({ loading, interceptor }) => ({ loading, interceptor }))(Form.create()(Login))
+export default connect(({ loading, interceptor,login }) => ({ loading, interceptor,login }))(Form.create()(Login))
