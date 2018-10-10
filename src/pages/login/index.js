@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Button, Card, Col, Form, Input, Row, Spin, Tabs} from 'antd';
+import {Button, Card, Col, Form, Input, Row, Spin, Tabs, Alert} from 'antd';
 import styles from './index.css';
 import Helmet from 'react-helmet';
+import PhoneLogin from './components/PhoneLogin';
 
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -30,8 +31,29 @@ const Login = ({
   }
 
   const onTabChange = (key) => {
+    if(login.wxInterval) {clearInterval(login.wxInterval);}
     if(key==='wx') {
-      dispatch({type: 'login/onQrScene'});
+      dispatch({type: 'login/onQrScene'}).then(()=>{
+        const interval = setInterval(()=> {
+          const token = sessionStorage.getItem("wxLoginToken");
+          if(token) {
+            dispatch({type: 'login/wxLoginCheck', payload: token});
+          }
+        }, 1000);
+        dispatch({type: 'login/modifyState', payload: {wxInterval: interval}});
+      });
+    }
+  }
+
+  const phoneOpts = {
+    canInputCode: login.canInputCode,
+    sendCodeSuc: login.sendCodeSuc,
+    code: login.code,
+    sendCode: (phone) => {
+      dispatch({type:'login/sendCode', payload: phone});
+    },
+    loginByCode: () => {
+      dispatch({type: 'login/loginByUsername', payload: login.loginUsername});
     }
   }
 
@@ -56,9 +78,6 @@ const Login = ({
                   <Row>
                     <Button className={styles.loginBtn} type="primary" onClick={handleOk} loading={loading.models.login}>登   陆</Button>
                   </Row>
-                  <Row className={styles.infoRow}>
-                    &copy; 2018-2020 Created By zsl
-                  </Row>
                 </Form>
               </TabPane>
               <TabPane tab="扫码登陆" key="wx">
@@ -67,16 +86,19 @@ const Login = ({
                     <div>
                       <img width={300}
                            src={`https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=${login.wxLogin.ticket}`}/>
-                      <h3>打开微信扫一扫</h3>
+                      {login.wxError==='1'?<Alert message={login.wxMessage} type="warning" showIcon/>:<Alert message={login.wxMessage} type="success" showIcon/>}
                     </div>:
                     <div style={{"padding":"30px 0px"}}><Spin size="large" /></div>
                   }
                 </div>
               </TabPane>
               <TabPane tab="短信登陆" key="phone">
-                提示：正在开发…
+                <PhoneLogin {...phoneOpts}/>
               </TabPane>
             </Tabs>
+            <Row className={styles.infoRow}>
+              &copy; 2018-2020 Created By zsl
+            </Row>
           </Card>
         </Col>
       </Row>
