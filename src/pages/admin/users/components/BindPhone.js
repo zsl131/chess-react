@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Input} from 'antd';
+import {Button, Form, Input, Alert} from 'antd';
 import styles from '../index.css';
 import {getLoginUser} from "../../../../utils/authUtils";
 
@@ -12,7 +12,7 @@ export default class BindPhone extends React.Component {
     loginUser:{},
     canGetCode:false,
     btnName: "获取验证码",
-    timer:null
+    timer:null,
   }
 
   componentDidMount() {
@@ -20,7 +20,9 @@ export default class BindPhone extends React.Component {
     const {setFieldsValue} = this.props.form;
     setFieldsValue({id:loginUser.id, phone:loginUser.phone});
     this.setState({
-      loginUser: loginUser
+      loginUser: loginUser,
+      suc:false,
+      show:false,
     })
   }
 
@@ -28,8 +30,8 @@ export default class BindPhone extends React.Component {
     const {getFieldValue} = this.props.form;
     const phone = getFieldValue("phone");
     // console.log(phone)
-    this.props.sendcode(phone);
-    let second = 20;
+    this.props.sendCode(phone);
+    let second = 60;
     const that = this;
     const timer = setInterval(() => {
       that.setState({btnName: second+"s后重试"});
@@ -52,10 +54,20 @@ export default class BindPhone extends React.Component {
     }
   }
 
+  changeCode = (e) => {
+    const value = e.target.value;
+    const code = this.props.code;
+    this.setState({show: true})
+    if(value===code) {
+      this.setState({suc:true});
+      this.props.bindPhone();
+    } else {this.setState({suc: false})}
+  }
+
   render() {
     const {validateFieldsAndScroll, getFieldDecorator} = this.props.form;
 
-    console.log(this.props)
+    const props = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -72,32 +84,46 @@ export default class BindPhone extends React.Component {
       e.preventDefault();
       validateFieldsAndScroll((errors, values) => {
         if(!errors) {
-          this.props.dispatch({ type: 'userPwd/updatePwd', payload: values });
+          props.checkCode(values);
         }
       });
     }
 
     return (
       <div>
-        <Form onSubmit={handleOk} layout="horizontal">
-          {getFieldDecorator("id")(<Input type="hidden"/>)}
+        {
+          this.state.loginUser.phone?<h3 style={{"textAlign":"center"}}>已绑定手机：{this.state.loginUser.phone}</h3>:
+            <Form onSubmit={handleOk} layout="horizontal">
+              {getFieldDecorator("id")(<Input type="hidden"/>)}
 
-          <FormItem {...formItemLayout} label="手机号码">
-            {getFieldDecorator('phone', {rules: [{required: true, message: '手机号码不能为空'}]})(<Input type="number" onChange={this.changePhone} maxLength={11} placeholder="输入手机号码"/>)}
-          </FormItem>
+              <FormItem {...formItemLayout} label="手机号码">
+                {getFieldDecorator('phone', {rules: [{required: true, message: '手机号码不能为空'}]})(<Input type="number" onChange={this.changePhone} maxLength={11} placeholder="输入手机号码"/>)}
+              </FormItem>
 
-          <FormItem {...formItemLayout} label="短信验证码">
-            {getFieldDecorator('code', {rules: [{required: true, message: '短信验证码不能为空'}]})(
-              <Input placeholder="输入收到的验证码"
-                     maxLength={4}
-                     addonAfter={<Button size="small" disabled={!this.state.canGetCode} onClick={this.onClick}>{this.state.btnName}</Button>}/>
-            )}
-          </FormItem>
+              <FormItem {...formItemLayout} label="短信验证码">
+                {getFieldDecorator('code', {rules: [{required: true, message: '短信验证码不能为空'}]})(
+                  <Input placeholder="输入收到的验证码"
+                         maxLength={4}
+                         onChange={this.changeCode}
+                         disabled={!props.canInputCode}
+                         addonAfter={<Button size="small" disabled={!this.state.canGetCode} onClick={this.onClick}>{this.state.btnName}</Button>}/>
+                )}
+              </FormItem>
 
-          <FormItem className={styles.submitOper}>
+              { this.state.show?
+                <FormItem>
+                  {
+                    this.state.suc?<Alert message="验证码正确，正在绑定手机号码" type="success" showIcon/>:<Alert message="验证码输入错误" type="error" showIcon/>
+                  }
+                </FormItem>:""
+              }
+
+              {/*<FormItem className={styles.submitOper}>
             <Button className={styles.submitBtn} htmlType="submit" type="primary" icon="check">提交保存</Button>
-          </FormItem>
-        </Form>
+          </FormItem>*/}
+            </Form>
+        }
+
       </div>
     )
   }

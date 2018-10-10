@@ -17,6 +17,11 @@ export function setLoginUser(loginObj) {
   sessionStorage.setItem(DEP_SESSION, JSON.stringify(depIds));
 }
 
+/** 在绑定手机号码等修改用户属性时调用，只修改登陆用户信息 */
+export function setLoginUserOnly(loginUser) {
+  sessionStorage.setItem(LOGIN_USER_SESSION, JSON.stringify(loginUser));
+}
+
 function getSessionValue(field) {
   const str = sessionStorage.getItem(field);
   if(str === null || str === '' || str === undefined) {return null;}

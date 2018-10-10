@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Form, Icon, Input, Card, Button,Tabs } from 'antd';
+import {connect} from 'dva';
+import {Button, Card, Form, Icon, Input, Tabs} from 'antd';
 import styles from './index.css';
 import {getLoginUser} from '../../../utils/authUtils';
 import BindPhone from './components/BindPhone';
-import {sendCode} from "./services/smsService";
 
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -26,6 +25,8 @@ class UpdatePwd extends React.Component {
   }
 
   render() {
+
+    const userPwd = this.props.userPwd;
 
     const {getFieldValue, validateFieldsAndScroll, getFieldDecorator} = this.props.form;
 
@@ -67,8 +68,16 @@ class UpdatePwd extends React.Component {
     }
 
     const phoneOpts = {
-      sendcode: (phone) => {
-        console.log(phone);
+      canInputCode: userPwd.canInputCode,
+      code: userPwd.code,
+      sendCode: (phone) => {
+        // console.log(phone, this.state.loginUser);
+        this.props.dispatch({type: 'userPwd/sendCode', payload: phone});
+      },
+      bindPhone:() => {
+        // console.log(this.state.loading, userPwd.phone);
+        this.props.dispatch({type: 'userPwd/bindPhone', payload: userPwd.phone}).then(() => {
+          window.location.reload();});
       }
     }
 
@@ -106,8 +115,8 @@ class UpdatePwd extends React.Component {
                   </FormItem>
                 </Form>
               </TabPane>
-              <TabPane tab={<span><Icon type="phone" {...phoneOpts}/> 绑定手机号码</span>} key="phone">
-                <BindPhone/>
+              <TabPane tab={<span><Icon type="phone"/> 绑定手机号码</span>} key="phone">
+                <BindPhone {...phoneOpts}/>
               </TabPane>
             </Tabs>
           </Card>
