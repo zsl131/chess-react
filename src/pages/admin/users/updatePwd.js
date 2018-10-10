@@ -88,7 +88,7 @@ class UpdatePwd extends React.Component {
         </div>
         <div className={styles.mainContainer}>
           <Card>
-            <Tabs defaultActiveKey="phone">
+            <Tabs defaultActiveKey="pwd">
               <TabPane tab={<span><Icon type="lock"/> 修改密码</span>} key="pwd">
                 <Form onSubmit={handleOk} layout="horizontal">
                   {getFieldDecorator("id")(<Input type="hidden"/>)}
