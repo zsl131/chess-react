@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button, Form, Input, Alert} from 'antd';
-import styles from '../index.css';
+import {Alert, Button, Form, Input} from 'antd';
 import {getLoginUser} from "../../../../utils/authUtils";
 
 const FormItem = Form.Item;
