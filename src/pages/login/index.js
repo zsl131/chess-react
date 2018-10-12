@@ -61,7 +61,7 @@ const Login = ({
   return (
     <div>
       <Helmet><title>用户登陆</title></Helmet>
-      <Row align="middle" gutter={{md:12}} justify="center" type="flex" className={styles.mainRow}>
+      <Row align="middle" justify="center" type="flex" className={styles.mainRow}>
         <Col xs={22} sm={16} md={12} lg={10} xl={8}>
           <Card bordered={false} className={styles.loginCard}>
             <h2 className={styles.title}>{interceptor.appConfig.appName} - LOGIN</h2>

@@ -88,7 +88,7 @@ const ShowNotice = ({
       }
 
       <BackTop visibilityHeight={100}/>
-      {wxNotice.addCommentVisible && item.canComment === '1' && <AddComment {...addCommentOpts}/>}
+      {wxNotice.addCommentVisible && item.canComment === '1' && <AddComment style={{"zIndex": 10}} {...addCommentOpts}/>}
     </div>
   );
 }

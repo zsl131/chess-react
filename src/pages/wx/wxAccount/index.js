@@ -1,10 +1,29 @@
 import React from 'react';
-const WxAccount = ({
-
+import {connect} from 'dva';
+import Personal from './components/Personal';
+import ListFunction from './components/ListFunction';
+const WxAccountCenter = ({
+  wxAccountCenter,
+  dispatch,
 }) => {
+
+  const personalOpts = {
+    canInputCode: wxAccountCenter.canInputCode,
+    code: wxAccountCenter.code,
+    loadCode:(phone) => {
+      dispatch({type: 'wxAccountCenter/loadCode', payload: phone});
+    },
+    bindPhone: () => {
+      dispatch({type: 'wxAccountCenter/bindPhone', payload: wxAccountCenter.phone}).then(()=>{window.location.reload();});
+    }
+  }
+
   return (
-    <h1 >微信用户内容</h1>
+    <div>
+      <Personal {...personalOpts}/>
+      <ListFunction/>
+    </div>
   );
 }
 
-export default WxAccount;
+export default connect(({ wxAccountCenter,loading }) => ({ wxAccountCenter, loading }))(WxAccountCenter);

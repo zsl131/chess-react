@@ -3,7 +3,7 @@ html, body {
 }
 
 .mainRow {
-  height: 100%; background:#f8f8f8; overflow: hidden;
+  height: 100%; background:#f8f8f8;
 }
 
 /*.loginCard {
