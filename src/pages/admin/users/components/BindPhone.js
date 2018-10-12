@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Button, Form, Input} from 'antd';
+import {Alert, Button, Form, Input,Card} from 'antd';
 import {getLoginUser} from "../../../../utils/authUtils";
 
 const FormItem = Form.Item;
@@ -91,7 +91,7 @@ export default class BindPhone extends React.Component {
     return (
       <div>
         {
-          this.state.loginUser.phone?<h3 style={{"textAlign":"center"}}>已绑定手机：{this.state.loginUser.phone}</h3>:
+          this.state.loginUser.phone?<Card><h3 style={{"textAlign":"center"}}>已绑定手机：{this.state.loginUser.phone}</h3></Card>:
             <Form onSubmit={handleOk} layout="horizontal">
               {getFieldDecorator("id")(<Input type="hidden"/>)}
 
