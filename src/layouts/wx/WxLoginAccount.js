@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './header.css'
+import router from 'umi/router';
 import {getLoginAccount} from '../../utils/loginAccountUtils';
 
 export default class WxLoginAccount extends React.Component {
@@ -23,7 +24,7 @@ export default class WxLoginAccount extends React.Component {
   render() {
     return (
       <div>
-        <img src={this.state.account.avatarUrl} className={styles.accountAvator} alt="A"/>
+        <img src={this.state.account.avatarUrl} onClick={() => {router.push("/wx/wxAccount");}} className={styles.accountAvator} alt="A"/>
       </div>
     );
   }
