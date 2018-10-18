@@ -16,13 +16,13 @@ export default class ListFunction extends React.Component {
           arrow="horizontal"
           onClick={() => {router.push("/wx/feedback/listFeedback");}}
         >我的反馈</Item>
-        {/*<Item
-          thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png"
-          onClick={() => {}}
+        <Item
+          thumb={require('../../../../assets/icons/activity.png')}
+          onClick={() => {router.push("/wx/activity/listOwn")}}
           arrow="horizontal"
         >
-          My Cost Ratio
-        </Item>*/}
+          我的活动
+        </Item>
       </List>
     )
   }

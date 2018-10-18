@@ -32,6 +32,14 @@ function listComment(param) {
   return request("activityCommentService.list4Wx", param, true);
 }
 
+function listOwn(query) {
+  return request("activityStudentService.listOwn", query, true);
+}
+
+function deleteApply(query) {
+  return request("studentService.deleteApply", query, true);
+}
+
 export {
   list,
   loadOne,
@@ -39,4 +47,6 @@ export {
   onGood,
   onCommentGood,
   listComment,
+  listOwn,
+  deleteApply,
 }

@@ -16,6 +16,7 @@ export default {
     wxError:'0',
     wxMessage:'打开微信扫一扫',
     wxInterval:null,
+    loginToken:'',
   },
   reducers: {
     'cacheLogin'(state, { payload: datas }) {
@@ -48,21 +49,21 @@ export default {
       } else {
         const stateArr = yield select(state=>state); //获取所有state
         clearInterval(stateArr.login.wxInterval); //清除Interval
-        yield put({type: 'loginByUsername', payload: data.username}); //登陆成功
+        yield put({type: 'loginByUsername', payload: {username: data.username, token: data.token}}); //登陆成功
       }
     },
     *sendCode({payload: phone}, {call,put}) {
       const data = yield call(objService.sendCode, {phone});
       if(!data.error) {
         message.success("验证码已发送到手机，请注意查收");
-        yield put({type: 'modifyState', payload: {code: data.code, phone: data.phone, canInputCode: true, sendCodeSuc: true, loginUsername: data.username}});
+        yield put({type: 'modifyState', payload: {code: data.code, phone: data.phone, canInputCode: true, sendCodeSuc: true, loginUsername: data.username, loginToken: data.token}});
       } else {
         message.error(data.message);
         yield put({type: 'modifyState', payload: {sendCodeSuc: false}});
       }
     },
     *loginByUsername({payload: username}, {call}) {
-      const data = yield call(userService.loginByUsername, {username});
+      const data = yield call(userService.loginByUsername, username);
       if(data) {
         setLoginUser(data.obj);
         router.push("/admin/index");

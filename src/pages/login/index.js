@@ -53,7 +53,7 @@ const Login = ({
       dispatch({type:'login/sendCode', payload: phone});
     },
     loginByCode: () => {
-      dispatch({type: 'login/loginByUsername', payload: login.loginUsername});
+      dispatch({type: 'login/loginByUsername', payload: {username:login.loginUsername, token: login.loginToken}});
     }
   }
 

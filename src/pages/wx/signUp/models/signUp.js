@@ -14,7 +14,9 @@ export default {
       return {...state, ...options};
     },
     onDeleteApplyPage(state, {payload: id}) {
-      state.applyList.splice(state.applyList.findIndex(item => item.id === id), 1); //从数组中移除
+      // state.applyList.splice(state.applyList.findIndex(item => item.id === id), 1); //从数组中移除
+      const newData = state.applyList.filter((item)=>{if(item.id!==id) return item});
+      return {...state, applyList: newData};
     },
     addStudentOnlyPage(state, {payload: data}) {
       state.stuList.push(data.obj);

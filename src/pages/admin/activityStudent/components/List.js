@@ -56,7 +56,15 @@ export default class List extends React.Component {
       dataIndex: 'actTitle'
     }, {
       title: "活动时间",
-      dataIndex: 'holdTime'
+      // dataIndex: 'holdTime'
+      render: (record) => {
+        return (
+          <div>
+          <p>活动：{record.holdTime}</p>
+          <p>报名：{record.createTime}</p>
+          </div>
+        )
+      }
     }, {
       title: "部门",
       dataIndex: "depName"

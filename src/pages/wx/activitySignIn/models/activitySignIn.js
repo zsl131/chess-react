@@ -4,25 +4,27 @@ import {Toast} from 'antd-mobile';
 export default {
   state: {
     data: [],
+    record:{}
   },
   reducers: {
     modifyState(state, {payload: options}) {
       return {...state, ...options};
     },
     signPage(state, {payload: id}) {
-      state.data.map((item) => {
+      const newData = state.data.map((item) => {
         if(item.id === id) {
           item.hasCheck = "1";
         }
         return item;
       })
+      return {...state, data:newData}
     }
   },
   effects: {
     *listRecord({payload: query}, {call,put}) {
       const data = yield call(objectService.findRecord, query);
       if(data) {
-        yield put({type: "modifyState", payload: {data: data.obj}});
+        yield put({type: "modifyState", payload: {data: data.obj, record: data.record}});
       }
     },
     *sign({payload: id}, {call, put}) {

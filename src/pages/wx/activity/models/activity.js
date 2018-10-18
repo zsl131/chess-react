@@ -1,5 +1,6 @@
 import * as activityService from '../services/activityService';
 import {Toast} from 'antd-mobile';
+import * as signUpService from "../../signUp/services/signUpService";
 
 export default {
   namespace: 'wxActivity',
@@ -14,6 +15,8 @@ export default {
     recordList:[],
     recordSize:0,
     department:{},
+    curPage: 0,
+    refreshing: false,
   },
   reducers: {
     modifyState(state, {payload: options}) {
@@ -31,7 +34,15 @@ export default {
     onGoodPage(state, {payload: id}) {
       state.item.goodCount += 1;
       return {...state};
-    }
+    },
+    modifyData(state, {payload: data}) {
+      const newData = state.recordList.concat(data);
+      return {...state, recordList: newData};
+    },
+    onDeleteApplyPage(state, {payload: id}) {
+      const newData = state.recordList.filter((item)=>{if(item.id!==id) return item});
+      return {...state, recordList: newData};
+    },
   },
   effects: {
     *list({payload: query}, {call,put}) {
@@ -40,6 +51,22 @@ export default {
       if(data) {
         yield put({type:'modifyState', payload: {datas: data.datas, totalElements: data.size, department: data.department}});
       }
+    },
+    *listOwn({payload: query}, {call,put}) {
+      const data = yield call(activityService.listOwn, query);
+      // console.log(data)
+      if(data.data) {
+        yield put({
+          type: 'modifyState',
+          payload: {totalElements: data.size, curPage: query.page ? query.page : 0}
+        });
+        yield put({type: 'modifyData', payload: data.data});
+      }
+    },
+    *onDeleteApply({payload: id}, {call,put}) {
+      const data =yield call(activityService.deleteApply, {id});
+      if(data) {Toast.success(data.message);}
+      yield put({type: 'onDeleteApplyPage', payload: id});
     },
     *show({payload: query}, {call,put}) {
       const data = yield call(activityService.loadOne, query);
@@ -73,7 +100,10 @@ export default {
         }
         if(location.pathname==='/wx/activity/show') {
           dispatch({type: 'show', payload: location.query});
+        } else if(location.pathname === '/wx/activity/listOwn') {
+          dispatch({type: 'listOwn', payload: location.query})
         }
+
       });
     }
   }

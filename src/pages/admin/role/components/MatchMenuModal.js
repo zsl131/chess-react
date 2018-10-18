@@ -30,7 +30,7 @@ const MatchMenuModal = ({
   }
 
   return (
-    <Modal visible={role.matchMenuVisible} title={`为角色【${role.curRole.name}】授权菜单`} footer={false} onCancel={onCancel}>
+    <Modal visible={role.matchMenuVisible} style={{ "minWidth": '80%', top: 30 }} title={`为角色【${role.curRole.name}】授权菜单`} footer={false} onCancel={onCancel}>
     <div style={{"height":"100%", "overflowY": 'hidden'}}>
       <Row style={{"height":"100%"}}>
         <Col span={7} style={{"height":"100%"}}>

@@ -76,7 +76,7 @@ export default class Feedbacks extends React.Component {
     return (
       <div className={styles.mainDiv}>
         {
-          dataSource?
+          (dataSource && dataSource.length>0)?
             <PullToRefresh
               damping={60}
               ref={el => this.ptr = el}
