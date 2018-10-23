@@ -6,6 +6,16 @@ function listFeedback(query) {
   return request(feedbackService+".listFeedback", query, true);
 }
 
+function list(query) {
+  return request(feedbackService+".list", query, true);
+}
+
+function reply(obj) {
+  return request(feedbackService+".reply", obj, true);
+}
+
 export {
   listFeedback,
+  list,
+  reply,
 }

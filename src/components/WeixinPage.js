@@ -17,12 +17,6 @@ export default class WeixinPage extends React.Component {
   }
 
   setButton(nextPage) {
-    //console.log(location.query)
-    //const { query } = this.props.location;
-    //const curPage = query.page?parseInt(query.page):0;
-    // const curPage = this.state.curPage;
-    // console.log("currentPage::"+curPage+"===nextPage::"+nextPage)
-    // this.setState({curPage: curPage})
     const totalPage = this.props.totalPage;
     // console.log(curPage+"/"+totalPage, curPage>=1)
     this.setState({canNext: (totalPage-nextPage)>1, canPre: nextPage>=1, content: (nextPage+1)+' / '+totalPage})

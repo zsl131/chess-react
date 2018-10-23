@@ -37,7 +37,7 @@ export default class ListOwnActivity extends React.Component {
         <Card style={{"margin":"5px"}}>
           <Card.Header title={item.actTitle} extra={item.status==='0'?<Button size="small" inline onClick={()=>showAlert(item.id)}>待审核</Button>:(item.status==='1'?<span className="blue">通过</span>:<span className="red">被驳回</span>)}/>
           <Card.Body>
-            <p>姓名：{item.stuName}（{item.hasCheck==='1'?<span className="blue">已签到</span>:<span className="red">未签到</span>}）</p>
+            <p>姓名：{item.stuName}{item.status==='1'?<span>（{item.hasCheck==='1'?<span className="blue">已签到</span>:<span className="red">未签到</span>}）</span>:""}</p>
             {(item.status === '1' || item.status === '0') ?
               <div>
                 <p>时间：{item.holdTime}</p>
