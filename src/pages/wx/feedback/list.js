@@ -29,7 +29,7 @@ const WxFeedback = ({
     location: location,
     dispatch: dispatch,
     onReply:(obj) => {
-      console.log(obj);
+      //console.log(obj);
       dispatch({type: 'wxFeedback/modifyState', payload: {replyVisible:true, item: obj}});
     }
   }
