@@ -39,7 +39,7 @@ class MainLayout extends React.Component {
     if (isWeixin) {
       // console.log("/weixin开头");
     } else if (isWx) {
-
+      // console.log(user)
     } else if(pathname.indexOf("/public")===0) {
       return (
         <LocaleProvider locale={zhCN}>

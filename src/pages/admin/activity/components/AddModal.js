@@ -91,7 +91,7 @@ const AddModal = ({
         <FormItem>
           <Row>
             <Col span={4}>
-              <PictureWall onBeforeUpload={onBeforeUpload} accept="image/png, image/jpeg, image/gif" data={{'path':'abcdef'}} onFileChange={onFileChange}/>
+              <PictureWall onBeforeUpload={onBeforeUpload} accept="image/png, image/jpeg, image/gif" showMsg="封面图片" data={{'path':'abcdef'}} onFileChange={onFileChange}/>
             </Col>
             <Col span={20}>
               {getFieldDecorator('guide', {rules: [{required: true, message: '活动内容导读不能为空'}]})(<TextArea placeholder="输入活动内容导读" autosize={{ minRows: 4, maxRows: 4 }}/>)}

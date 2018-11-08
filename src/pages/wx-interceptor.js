@@ -1,5 +1,5 @@
 //  此文件会自动运行，不需要在其他地方引入
-
+import router from 'umi/router';
 // 此文件主要功能是解决无微信用户登录的问题
 import {decodeBase64, encodeBase64} from "../utils/Base64Utils";
 import {getLoginAccount, setLoginAccount} from '../utils/loginAccountUtils';
@@ -35,7 +35,8 @@ if(curPathname.startsWith("/wx") && curPathname !== '/weixin/queryAccount') {
         // console.log(loadAccount);
         window.location.href = targetUrl;
       } else {
-        console.log("没有获取微信用户，需要跳转到关注页面");
+        // console.log("没有获取微信用户，需要跳转到关注页面");
+        router.push("/weixin/notice/show?id=41");
       }
       // window.location.href = targetUrl;
     } else {
