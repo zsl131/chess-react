@@ -14,6 +14,13 @@ const ShowNotice = ({
 }) => {
   const item = wxNotice.item;
 
+  dispatch({type: 'wxJsApi/queryJsApi', payload: {}}); //
+  shareObj = {
+    title: item.title,
+    desc: item.guide,
+    imgUrl: item.picPath
+  }
+
   const addCommentOpts = {
     visible: wxNotice.addCommentVisible,
     item: item,

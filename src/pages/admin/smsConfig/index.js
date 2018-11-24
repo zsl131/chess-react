@@ -10,7 +10,7 @@ const FormItem = Form.Item;
 class SmsConfig extends React.Component {
 
   state = {
-    item: this.props.smsConfig.item,
+    //item: this.props.smsConfig.item,
   }
 
   componentDidMount() {

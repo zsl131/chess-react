@@ -6,15 +6,69 @@ import {Helmet} from 'react-helmet';
 import AddComment from '../../../components/AddComment';
 import ListComment from '../../../components/ListComment';
 import RecommendActivity from '../../../components/RecommendActivity';
-import {Tabs,Badge} from 'antd-mobile';
+import {Tabs,Badge,Toast} from 'antd-mobile';
 import {BackTop, Button} from 'antd';
 import RecordList from './components/RecordList';
+// import wx from 'weixin-js-sdk'
 
 const ActivityShow = ({
   wxActivity,
   dispatch
 }) => {
+  dispatch({type: 'wxJsApi/queryJsApi', payload: {}}); //
+
+  /*dispatch({type: 'wxJsApi/shareData', payload: {
+    title: wxActivity.item.title,
+    desc: wxActivity.item.guide,
+    link: window.location.href,
+    img: wxActivity.item.imgUrl
+  }});*/
+
   const item = wxActivity.item;
+
+  shareObj = {
+    title: item.title,
+    desc: item.guide,
+    // link: window.location.href,
+    imgUrl: item.imgUrl
+  }
+
+  /*const url = window.location.href;
+  const domain = window.location.protocol+"//"+window.location.host; //域名
+  const imgUrl = wxActivity.item.imgUrl?(domain+wxActivity.item.imgUrl):"";
+
+  window.wx.ready(function() {
+    // Toast.info("wxReady");
+    //分享给朋友
+    window.wx.updateAppMessageShareData({
+      title: "分享："+item.title, // 分享标题
+      desc: item.desc,
+      link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: imgUrl, // 分享图标
+      success: function () {
+        // 设置成功
+        Toast.success("分享成功");
+      },
+      fail: function(res) {
+        Toast.fail(res);
+      }
+    });
+
+    //分享到朋友圈
+    window.wx.updateTimelineShareData({
+      title: "分享："+item.title, // 分享标题
+      desc: item.desc,
+      link: url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: imgUrl, // 分享图标
+      success: function () {
+        // 用户点击了分享后执行的回调函数
+        Toast.success("分享成功");
+      },
+      fail: function(res) {
+        Toast.fail(res);
+      }
+    })
+  })*/
 
   const handleSubmit = (comment) => {
     dispatch({type: 'wxActivity/onComment', payload: comment});
