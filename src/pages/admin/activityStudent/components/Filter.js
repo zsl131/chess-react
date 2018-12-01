@@ -65,7 +65,14 @@ export default class Filter extends React.Component {
       e.preventDefault();
       validateFields((errors, values) => {
         // console.log("filter", errors, values);
-        this.props.onFilter(values);
+        this.props.onFilter("filter",values);
+      });
+    }
+
+    const onHandleDownload = () => {
+      validateFields((errors, values) => {
+        // console.log("onHandleDownload", errors, values);
+        this.props.onFilter("download", values);
       });
     }
 
@@ -156,7 +163,11 @@ export default class Filter extends React.Component {
           {getFieldDecorator("stuName_like")(<Input placeholder="学生姓名"/>)}
         </FormItem>
         <FormItem>
-          <Button type="primary" icon="search" htmlType="submit">筛选</Button>
+          {getFieldDecorator("phone_like")(<Input placeholder="联系电话"/>)}
+        </FormItem>
+        <FormItem>
+          <Button type="primary" icon="search" htmlType="submit" >筛选</Button> &nbsp;&nbsp;
+          <Button type="primary" icon="download" onClick={()=>onHandleDownload()} >下载</Button>
         </FormItem>
       </Form>
     );

@@ -33,9 +33,9 @@ export default {
       yield put({type: "signPage", payload: id});
     },
     *searchRecord({payload: query}, {call, put}) {
-      console.log(query);
+      //console.log(query);
       const data = yield call(objectService.findRecordByPhone, query);
-      console.log(data);
+      //console.log(data);
       if(data.obj.length>0) {
         yield put({type: "modifyState", payload: {data: data.obj}});
       } else {

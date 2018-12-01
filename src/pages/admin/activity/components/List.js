@@ -1,8 +1,10 @@
 import React from 'react';
 import {Menu, Pagination, Table, Icon} from 'antd';
+import QRCode from 'qrcode.react';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 import {Link} from 'react-router-dom';
 import styles from './list.css';
+import configApi from "../../../../utils/configApi";
 
 const List = ({
   onDelConfirm,
@@ -20,6 +22,13 @@ const List = ({
   }
 
   const columns = [{
+    title: '二维码',
+    render: (record) => {
+      return (
+        <QRCode value={`${configApi.baseUrl}/wx/activity/show?id=${record.id}`} />
+      );
+    }
+  }, {
     title: '标题',
     // dataIndex: 'title'
     render: (text, record) => {

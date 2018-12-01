@@ -3,6 +3,7 @@ import {connect} from 'dva';
 import {Icon} from 'antd';
 import {routerRedux} from 'dva/router'
 import Filter from './components/Filter';
+import router from 'umi/router';
 import List from './components/List';
 import UpdateModal from './components/UpdateModal';
 
@@ -26,9 +27,30 @@ location
   }
 
   const filterOpts = {
-    onFilter: (params) => {
-      handleRefresh({conditions: JSON.stringify(params)});
+    onFilter: (type, params) => {
+      if(type==='filter') {
+        handleRefresh({conditions: JSON.stringify(params)});
+      } else {
+        //console.log("======", params)
+        //router.push("/api/download/student");
+        const p = buildDownloadParams(params);
+        //console.log(p);
+        // router.push("/api/download/student"+p);
+        const w=window.open('about:blank');
+        w.location.href="/api/download/student"+p
+      }
     }
+  }
+
+  const buildDownloadParams = (params) => {
+    let res = "";
+    for(let p in params) {
+      const v = params[p];
+      if(v && v!='*') {
+        res += (res.startsWith("?") ? "&" : "?") + p + "=" + (encodeURI(v));
+      }
+    }
+    return res;
   }
 
   const listOpts = {
