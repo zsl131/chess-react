@@ -9,6 +9,7 @@ export default {
     item:{},
     video:{},
     pdf:{},
+    gradeList:[],
     addVisible: false,
     updateVisible: false,
     importVisible: false,
@@ -36,7 +37,7 @@ export default {
       item.learn = data.learn;
       item.video = data.video;
       item.ppt = data.ppt;
-      yield put({type: 'modifyState', payload: {item: item, updateVisible: true}})
+      yield put({type: 'modifyState', payload: {item: item, updateVisible: true, gradeList: data.gradeList}})
     },
     *onPlayVideo({payload: id}, {call,put}) {
       const data = yield call(objService.loadAttachment, {id});

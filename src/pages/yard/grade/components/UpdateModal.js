@@ -39,10 +39,13 @@ export default class UpdateModal extends React.Component {
         <Form layout="horizontal">
           {getFieldDecorator("id")(<Input type="hidden"/>)}
           <FormItem {...formItemLayout} label="名称">
-            {getFieldDecorator('name', {rules: [{required: true, message: '名称不能为空'}]})(<Input placeholder="部门名称" />)}
+            {getFieldDecorator('name', {rules: [{required: true, message: '年级名称不能为空'}]})(<Input placeholder="输入年级名称" />)}
           </FormItem>
           <FormItem {...formItemLayout} label="序号">
             {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<Input type="number" placeholder="输入序号"/>)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="备注">
+            {getFieldDecorator('remark')(<Input placeholder="输入备注信息"/>)}
           </FormItem>
         </Form>
       </Modal>

@@ -20,6 +20,11 @@ const List = ({
   }
 
   const columns = [{
+    title:'分类',
+    render:(record)=> {
+      return (<span>{record.cpname} - {record.cname}</span>)
+    }
+  },{
     title: '标题',
     dataIndex: 'title'
   }, {
@@ -27,7 +32,7 @@ const List = ({
     render:(record) => {
       return(
         <p>
-          {record.grade?record.grade+"年级":""}
+          {record.grade}
           {record.term?record.term+"学期":""}
           {record.age?record.age+"岁":''}
         </p>

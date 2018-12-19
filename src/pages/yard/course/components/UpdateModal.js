@@ -1,11 +1,13 @@
 import React from 'react';
-import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Tooltip, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Select, Tooltip, TreeSelect, Upload} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import request from "../../../../utils/request";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
+const TreeNode = TreeSelect.TreeNode;
 
 @Form.create()
 export default class UpdateModal extends React.Component {
@@ -18,12 +20,25 @@ export default class UpdateModal extends React.Component {
     ppts: [],
     learnList: this.props.item.learn?1:0,
     learns: [],
+    gradeList:this.props.gradeList,
+    fetching: false,
+    treeData:[],
+  }
+
+  fetchTree = ()=> {
+    if(this.state.treeData<=0) {
+      request("classCategoryService.buildCategoryTree", {}, true).then((res) => {
+        this.setState({treeData: res.data, fetching: false});
+      });
+    }
   }
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
-    setFieldsValue(this.props.item);
+
     const item = this.props.item;
+    setFieldsValue(this.props.item);
+    setFieldsValue({gradeId: item.gradeId+"", cid: item.cid+""});
     //response.result.obj
     const videoList = item.video?[{ uid: -1,name: item.video.fileName, status: 'done', url: '', response: {result:{obj:item.video}}}]:[]
     const pptList = item.ppt?[{ uid: -1,name: item.ppt.fileName, status: 'done', url: '', response: {result:{obj:item.ppt}}}]:[]
@@ -34,6 +49,7 @@ export default class UpdateModal extends React.Component {
   render() {
 // console.log(this.state, this.props.item)
     const {getFieldDecorator, getFieldValue, setFieldsValue, validateFieldsAndScroll} = this.props.form;
+    const {fetching, treeData} = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -121,13 +137,57 @@ export default class UpdateModal extends React.Component {
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
         <Form layout="horizontal">
           {getFieldDecorator("id")(<Input type="hidden"/>)}
-          <FormItem {...formItemLayout} label="课程标题">
-            {getFieldDecorator('title', {rules: [{required: true, message: '课程标题不能为空'}]})(<Input placeholder="输入课程标题"/>)}
+          <FormItem {...formItemLayout} label="分类及标题">
+            <Row>
+              <Col span={6}>
+                <FormItem>
+                  {getFieldDecorator('cid', {rules: [{required: true, message: '请选择所在分类'}]})(
+                    <TreeSelect
+                      placeholder="所在分类"
+                      notFoundContent={fetching ? <Spin size="small" /> : null}
+                      onFocus={this.fetchTree}
+                      showSearch
+                      treeDefaultExpandAll={true}
+                      searchPlaceholder="输入名称筛选"
+                      treeNodeFilterProp="title"
+                      style={{ width: '98%' }}
+                    >
+                      {
+                        treeData.map(item => {
+                            return (
+                              <TreeNode value={item.category.id} title={item.category.name} key={item.category.id} disabled>
+                                {
+                                  item.children.map(e => <TreeNode value={e.id} title={e.name} key={e.id}/>)
+                                }
+                              </TreeNode>
+                            )
+                          }
+                        )
+                      }
+                    </TreeSelect>
+                  )}
+                </FormItem>
+              </Col>
+              <Col span={18}>
+                <FormItem>
+                  {getFieldDecorator('title', {rules: [{required: true, message: '课程标题不能为空'}]})(<Input placeholder="输入课程标题"/>)}
+                </FormItem>
+              </Col>
+            </Row>
           </FormItem>
           <FormItem {...formItemLayout} label="适合">
             <Row>
-              <Col span={8} style={{"textAlign":'right', "paddingRight":"10px"}}>
-                <Tooltip placement="topLeft" title="输入适合的年级">{getFieldDecorator('grade')(<Input placeholder="输入年级"/>)}</Tooltip>
+              <Col span={5} style={{"textAlign":'right', "paddingRight":"10px"}}>
+                <Tooltip placement="topLeft" title="选择适合的年级">
+                  {getFieldDecorator("gradeId")(
+                    <Select
+                      placeholder="选择年级"
+                      style={{ width: '120px' }}
+                    >
+                      {this.state.gradeList.map(d => <Option key={d.id}>{d.name}</Option>)}
+                    </Select>
+                  )}
+                </Tooltip>
               </Col>
               <Col span={6} style={{"textAlign":'left', "paddingRight":"10px"}}>
                 <Tooltip placement="topLeft" title="选择学期" arrowPointAtCenter>
@@ -143,6 +203,9 @@ export default class UpdateModal extends React.Component {
                 <Tooltip placement="topLeft" title="输入适合的年龄">{getFieldDecorator('age')(<Input placeholder="输入年龄"/>)}</Tooltip>
               </Col>
             </Row>
+          </FormItem>
+          <FormItem {...formItemLayout} label="学习目标">
+            {getFieldDecorator('learnTarget')(<Input placeholder="输入课程学习目标"/>)}
           </FormItem>
           <FormItem {...formItemLayout} label="附件">
             <Row>

@@ -90,6 +90,7 @@ const ClassCourse = ({
     okText:'确认提交',
     cancelText: '取消',
     item: classCourse.item,
+    gradeList: classCourse.gradeList,
     confirmLoading: loading.effects['classCourse/addOrUpdate'],
     onOk(datas) {
       // dispatch({ type: 'department/modifyState', payload: { updateVisible: false } });

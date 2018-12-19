@@ -96,7 +96,7 @@ const SchoolDic = ({
   return(
     <div>
       <div className="listHeader">
-        <h3><Icon type="bars"/> 年龄数据字典管理<b>（{schoolDic.totalElements}）</b></h3>
+        <h3><Icon type="bars"/> 学校数据字典管理<b>（{schoolDic.totalElements}）</b></h3>
         <Operator {...operatorOpts}/>
       </div>
       <div className="listFilter">
