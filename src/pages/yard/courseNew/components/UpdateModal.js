@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, InputNumber, Modal, Select} from 'antd';
+import {Form, Input, Modal,Select} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -54,16 +54,16 @@ export default class UpdateModal extends React.Component {
             {getFieldDecorator('name', {rules: [{required: true, message: '名称不能为空'}]})(<Input placeholder="输入分类名称"/>)}
           </FormItem>
           <FormItem {...formItemLayout} label="序号">
-            {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<InputNumber placeholder="输入分类序号"/>)}
+            {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<Input placeholder="输入分类序号"/>)}
           </FormItem>
-          {/*<FormItem {...formItemLayout} label="状态">
+          <FormItem {...formItemLayout} label="状态">
             {getFieldDecorator('status', {rules: [{required: true, message: '请选择分类状态'}]})(
               <Select>
                 <Option value="1">使用</Option>
                 <Option value="0">不使用</Option>
               </Select>
             )}
-          </FormItem>*/}
+          </FormItem>
         </Form>
       </Modal>
     );

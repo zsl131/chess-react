@@ -43,6 +43,14 @@ export default class AddModal extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const {setFieldsValue} = this.props.form;
+    const cid = this.props.cid;
+    if(cid) {
+      setFieldsValue({cid: cid});
+    }
+  }
+
   render() {
     // console.log(this.props.form)
     const {getFieldDecorator, getFieldValue, setFieldsValue, validateFieldsAndScroll} = this.props.form;
@@ -128,45 +136,55 @@ export default class AddModal extends React.Component {
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
         <Form layout="horizontal">
-          <FormItem {...formItemLayout} label="分类及标题">
-            <Row>
-              <Col span={4}>
-                <FormItem>
-                {getFieldDecorator('cid', {rules: [{required: true, message: '请选择所在分类'}]})(
-                  <TreeSelect
-                    placeholder="所在分类"
-                    notFoundContent={fetching ? <Spin size="small" /> : null}
-                    onFocus={this.fetchTree}
-                    showSearch
-                    allowClear={true}
-                    treeDefaultExpandAll={true}
-                    searchPlaceholder="输入名称筛选"
-                    treeNodeFilterProp="title"
-                    style={{ width: '120px' }}
-                  >
-                    {
-                      treeData.map(item => {
-                          return (
-                            <TreeNode value={item.category.id} title={item.category.name} key={item.category.id} disabled>
-                              {
-                                item.children.map(e => <TreeNode value={e.id} title={e.name} key={e.id}/>)
-                              }
-                            </TreeNode>
+          {
+            this.props.cid?
+            <div>
+              {getFieldDecorator("cid")(<input type="hidden"/>)}
+              <FormItem {...formItemLayout} label="课程标题">
+                {getFieldDecorator('title', {rules: [{required: true, message: '课程标题不能为空'}]})(<Input placeholder="输入课程标题"/>)}
+              </FormItem>
+            </div>
+              :
+            <FormItem {...formItemLayout} label="分类及标题">
+              <Row>
+                <Col span={4}>
+                  <FormItem>
+                    {getFieldDecorator('cid', {rules: [{required: true, message: '请选择所在分类'}]})(
+                      <TreeSelect
+                        placeholder="所在分类"
+                        notFoundContent={fetching ? <Spin size="small" /> : null}
+                        onFocus={this.fetchTree}
+                        showSearch
+                        allowClear={true}
+                        treeDefaultExpandAll={true}
+                        searchPlaceholder="输入名称筛选"
+                        treeNodeFilterProp="title"
+                        style={{ width: '120px' }}
+                      >
+                        {
+                          treeData.map(item => {
+                              return (
+                                <TreeNode value={item.category.id} title={item.category.name} key={item.category.id} disabled>
+                                  {
+                                    item.children.map(e => <TreeNode value={e.id} title={e.name} key={e.id}/>)
+                                  }
+                                </TreeNode>
+                              )
+                            }
                           )
                         }
-                      )
-                    }
-                  </TreeSelect>
-                )}
-                </FormItem>
-              </Col>
-              <Col span={20}>
-                <FormItem>
-                {getFieldDecorator('title', {rules: [{required: true, message: '课程标题不能为空'}]})(<Input placeholder="输入课程标题"/>)}
-                </FormItem>
-              </Col>
-            </Row>
-          </FormItem>
+                      </TreeSelect>
+                    )}
+                  </FormItem>
+                </Col>
+                <Col span={20}>
+                  <FormItem>
+                    {getFieldDecorator('title', {rules: [{required: true, message: '课程标题不能为空'}]})(<Input placeholder="输入课程标题"/>)}
+                  </FormItem>
+                </Col>
+              </Row>
+            </FormItem>
+          }
           <FormItem {...formItemLayout} label="适合">
             <Row>
               <Col span={5} style={{"textAlign":'right', "paddingRight":"10px"}}>

@@ -20,7 +20,7 @@ export default class UpdateModal extends React.Component {
     ppts: [],
     learnList: this.props.item.learn?1:0,
     learns: [],
-    gradeList:this.props.gradeList,
+    gradeList:this.props.gradeList||[],
     fetching: false,
     treeData:[],
   }
@@ -38,7 +38,12 @@ export default class UpdateModal extends React.Component {
 
     const item = this.props.item;
     setFieldsValue(this.props.item);
-    setFieldsValue({gradeId: item.gradeId+"", cid: item.cid+""});
+    request("gradeService.listNoPage",{}, true).then((res)=> {
+      // console.log(res)
+      setFieldsValue({gradeId: item.gradeId+"", cid: item.cid+""});
+      this.setState({gradeList: res.list});
+    })
+
     //response.result.obj
     const videoList = item.video?[{ uid: -1,name: item.video.fileName, status: 'done', url: '', response: {result:{obj:item.video}}}]:[]
     const pptList = item.ppt?[{ uid: -1,name: item.ppt.fileName, status: 'done', url: '', response: {result:{obj:item.ppt}}}]:[]
