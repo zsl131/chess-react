@@ -54,13 +54,13 @@ export default class ShowCourse extends React.Component {
 
             <Tabs defaultActiveKey="1">
               <TabPane tab="内容" key="1"><div dangerouslySetInnerHTML={{__html: course.content}}/></TabPane>
-              {video && <TabPane tab="视频" key="2">
+              {video && video.id && <TabPane tab="视频" key="2">
                 <Player>
                   <source src={video.url} />
                 </Player>
               </TabPane>}
-              {ppt && <TabPane tab="PPT" key="3"><Button icon="eye" type="primary" onClick={()=>handleShowPPT()}>查看PPT</Button></TabPane>}
-              {learn && <TabPane tab="学习单" key="4"><Button icon="eye" type="primary" onClick={()=>handleShowLearn()}>查看学习单</Button></TabPane>}
+              {ppt && ppt.id && <TabPane tab="PPT" key="3"><Button icon="eye" type="primary" onClick={()=>handleShowPPT()}>查看PPT</Button></TabPane>}
+              {learn && learn.id && <TabPane tab="学习单" key="4"><Button icon="eye" type="primary" onClick={()=>handleShowLearn()}>查看学习单</Button></TabPane>}
             </Tabs>
         </Card>
         {this.state.showPDFVisible && <ShowPDFModal {...showPDFOpts}/>}

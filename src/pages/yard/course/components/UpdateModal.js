@@ -36,8 +36,18 @@ export default class UpdateModal extends React.Component {
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
 
-    const item = this.props.item;
-    setFieldsValue(this.props.item);
+    let item = this.props.item;
+    if(item.pptId && !item.ppt) {
+      request("attachmentService.loadOne", {id: item.pptId}, true).then((res) => item.ppt = res.obj);
+    }
+    if(item.learnId && !item.learn) {
+      request("attachmentService.loadOne", {id: item.learnId}, true).then((res)=> item.learn = res.obj)
+    }
+    if(item.videoId && !item.video) {
+      request("attachmentService.loadOne", {id: item.videoId}, true).then((res) =>item.video = res.obj);
+    }
+    this.setState({item: item});
+    setFieldsValue(item);
     request("gradeService.listNoPage",{}, true).then((res)=> {
       // console.log(res)
       setFieldsValue({gradeId: item.gradeId+"", cid: item.cid+""});
