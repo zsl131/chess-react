@@ -1,12 +1,17 @@
 import React from 'react';
-import {Form, Input, Modal, Select} from 'antd';
+import {Form, Input, Modal,Select} from 'antd';
 
 const FormItem = Form.Item;
-const { TextArea } = Input;
 const Option = Select.Option;
 
 @Form.create()
 export default class UpdateModal extends React.Component {
+
+  UNSAFE_componentWillMount() {
+    this.setState({
+      item: this.props.item,
+    })
+  }
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
@@ -31,20 +36,33 @@ export default class UpdateModal extends React.Component {
       e.preventDefault();
       validateFieldsAndScroll((errors, values) => {
         if(!errors) {
-         this.props.onOk(values);
+          this.props.onOk(values);
         }
       });
     }
 
+    const modalOpts = {
+      ...this.props,
+      onOk: handleOk
+    }
+
     return(
-      <Modal {...this.props} onOk={handleOk}>
+      <Modal {...modalOpts}>
         <Form layout="horizontal">
-          {getFieldDecorator("id")(<Input type="hidden"/>)}
-          <FormItem {...formItemLayout} label="体系名称">
-            {getFieldDecorator('name', {rules: [{required: true, message: '体系名称不能为空'}]})(<Input placeholder="输入体系名称"/>)}
+          {getFieldDecorator("id")(<input type="hidden"/>)}
+          <FormItem {...formItemLayout} label="名称">
+            {getFieldDecorator('name', {rules: [{required: true, message: '名称不能为空'}]})(<Input placeholder="输入分类名称"/>)}
           </FormItem>
-          <FormItem {...formItemLayout} label="备注">
-            {getFieldDecorator('remark')(<TextArea rows={4} placeholder="输入备注信息"/>)}
+          <FormItem {...formItemLayout} label="序号">
+            {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<Input placeholder="输入分类序号"/>)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="状态">
+            {getFieldDecorator('status', {rules: [{required: true, message: '请选择分类状态'}]})(
+              <Select>
+                <Option value="1">使用</Option>
+                <Option value="0">不使用</Option>
+              </Select>
+            )}
           </FormItem>
         </Form>
       </Modal>

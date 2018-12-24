@@ -22,7 +22,6 @@ export default {
   effects: {
     *index({ payload: query }, { put, call }) {
       const data = yield call(objService.index, query);
-      console.log(data);
       yield put({ type: 'modifyState', payload: data });
     },
     *addCategory({payload: obj}, {call}) {

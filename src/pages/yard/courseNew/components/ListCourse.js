@@ -163,7 +163,7 @@ export default class ListCourse extends React.Component {
     return (
       <div>
         <div className="listHeader">
-          <h3><Icon type="bars"/> 科普分课程管理<b>（{category.name}，{listOpts.dataSource.length}条数据）</b></h3>
+          <h3><Icon type="bars"/> 科普课程管理<b>（{category.name}，{listOpts.dataSource.length}条数据）</b></h3>
           <div className="listOperator">
             <Button type="primary" icon="plus" onClick={handleAdd}>添加科普课程</Button>
           </div>

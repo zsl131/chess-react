@@ -1,8 +1,8 @@
 import React from 'react';
-import {Form, Input, Modal, Select} from 'antd';
+import {Form, Input, Modal,InputNumber} from 'antd';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
+const { TextArea } = Input;
 
 @Form.create()
 export default class AddModal extends React.Component {
@@ -31,10 +31,10 @@ export default class AddModal extends React.Component {
       e.preventDefault();
 
       validateFieldsAndScroll((errors, values) => {
+        // console.log(values)
         if(!errors) {
           this.props.onOk(values);
         }
-        // console.log("submit", errors, values);
       });
     }
 
@@ -43,24 +43,18 @@ export default class AddModal extends React.Component {
       onOk: handleOk
     }
 
-
     return(
       <Modal {...modalOpts}>
         <Form layout="horizontal">
           {getFieldDecorator("pid")(<input type="hidden"/>)}
-          <FormItem {...formItemLayout} label="名称">
-            {getFieldDecorator('name', {rules: [{required: true, message: '名称不能为空'}]})(<Input placeholder="输入分类名称"/>)}
+          <FormItem {...formItemLayout} label="体系名称">
+            {getFieldDecorator('name', {rules: [{required: true, message: '体系名称不能为空'}]})(<Input placeholder="输入体系名称"/>)}
           </FormItem>
           <FormItem {...formItemLayout} label="序号">
-            {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<Input placeholder="输入分类序号"/>)}
+            {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<InputNumber placeholder="输入序号"/>)}
           </FormItem>
-          <FormItem {...formItemLayout} label="状态">
-            {getFieldDecorator('status', {rules: [{required: true, message: '请选择分类状态'}]})(
-              <Select>
-                <Option value="1">使用</Option>
-                <Option value="0">不使用</Option>
-              </Select>
-            )}
+          <FormItem {...formItemLayout} label="备注">
+            {getFieldDecorator('remark')(<TextArea rows={4} placeholder="输入备注信息"/>)}
           </FormItem>
         </Form>
       </Modal>

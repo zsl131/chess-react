@@ -1,20 +1,18 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Icon } from 'antd';
-import { routerRedux } from 'dva/router'
-import Operator from './components/Operator';
-import Filter from './components/Filter';
-import List from './components/List';
-import AddModal from './components/AddModal';
-import UpdateModal from './components/UpdateModal';
+import {connect} from 'dva';
+import {Button, Col, Icon, Popconfirm, Row} from 'antd';
+import LeftTree from './components/LeftTree';
+import {routerRedux} from 'dva/router'
+import ListRootSystem from './components/ListRootSystem';
+import ListDetail from './components/ListDetail';
+import ShowDetail from './components/ShowDetail';
 
 const ClassSystem = ({
-                  dispatch,
-                  loading,
-                  classSystem,
-                  location
-                }) => {
-
+  loading,
+  classSystem,
+  location,
+  dispatch
+}) => {
   const { query, pathname } = location;
 
   const handleRefresh = (newQuery) => {
@@ -27,91 +25,122 @@ const ClassSystem = ({
     }));
   }
 
-  const operatorOpts = {
-    onAdd: () => {
-      dispatch({ type: 'classSystem/modifyState', payload: {addVisible: true}});
-    }
-  }
-
-  const filterOpts = {
-    onFilter: (params) => {
-      handleRefresh({conditions: JSON.stringify(params)});
+  const treeOpts = {
+    treeData: classSystem.treeData,
+    onSelect: (key, title) => {
+      let selectKey = key[0];
+      if(!selectKey) {title = "根分类"; selectKey = 0;}
+      handleRefresh({"pid": selectKey});
+      // console.log(key[0]);
+      dispatch({ type: 'classSystem/setState', payload: {pid: selectKey, pname: title} });
     }
   }
 
   const listOpts = {
-    dataSource: classSystem.data,
+    dataSource: classSystem.datas,
+    rowKey: 'id',
+    totalElements: classSystem.totalElements,
     loading: loading.models.classSystem,
-    location,
-    totalElement: classSystem.totalElements,
-    onDelConfirm: (id) => {
-      dispatch({ type: 'classSystem/deleteObj', payload: id }).then(() => {handleRefresh()});
+    onUpdate: (item) => {
+      dispatch({ type: 'classSystem/setState', payload: { item: item, updateVisible: true } });
     },
-    onPageChange: (page) => {
-      handleRefresh({page : page - 1});
-    },
-    onUpdate: (id) => {
-      // console.log("update::", id);
-      dispatch({ type: 'classSystem/onUpdate', payload: id });
-    },
-    handleSettingContent:(obj) => {
-      console.log(obj)
-      // dispatch({type: 'classSystem/modifyState', payload: {item: school, importVisible: true}});
-    }
-  }
-
-  const addOpts = {
-    visible: classSystem.addVisible,
-    title: "添加课程体系",
-    okText:'确认提交',
-    cancelText: '取消并关闭',
-    confirmLoading: loading.effects['classSystem/addOrUpdate'],
-    onOk(datas) {
-      dispatch({ type: 'classSystem/addOrUpdate', payload: datas }).then(() => {
-        handleRefresh();
-        dispatch({ type: 'classSystem/modifyState', payload: { addVisible: false } });
-      });
-    },
-    onCancel() {
-      dispatch({ type: 'classSystem/modifyState', payload: { addVisible: false } });
+    onDelete: (id) => {
+      dispatch({ type: "classSystem/deleteMenu", payload: id }).then(() => {handleRefresh()});
     }
   }
 
   const updateOpts = {
     visible: classSystem.updateVisible,
-    title: `修改数据[${classSystem.item.name}]`,
-    okText:'确认提交',
-    cancelText: '取消',
+    title: `修改课程分类【${classSystem.item.name}】`,
     item: classSystem.item,
-    confirmLoading: loading.effects['classSystem/addOrUpdate'],
-    onOk(datas) {
-      // dispatch({ type: 'department/modifyState', payload: { updateVisible: false } });
-      dispatch({ type: 'classSystem/addOrUpdate', payload: datas }).then(() => {
-        handleRefresh();
-        dispatch({ type: 'classSystem/modifyState', payload: { updateVisible: false } });
-      });
+    onCancel:() => {
+      dispatch({ type: 'classSystem/setState', payload: { updateVisible: false } });
     },
-    onCancel: () => {
-      dispatch({ type: 'classSystem/modifyState', payload: { updateVisible: false } });
+    onOk:(obj) => {
+      // console.log("onOk::"+obj,"string::"+ JSON.stringify(obj));
+      dispatch({ type: 'classSystem/update', payload: obj }).then(() => {
+        dispatch({ type: 'classSystem/setState', payload: { updateVisible: false } });
+        handleRefresh();
+      });
     }
   }
 
+  const addOpts = {
+    visible: classSystem.addVisible,
+    title: `添加课程分类到【${classSystem.pname}】`,
+    pid: classSystem.pid,
+    // pname: classSystem.pname,
+    onCancel: () => {
+      dispatch({ type: 'classSystem/setState', payload: { addVisible: false } });
+    },
+    onOk : (obj) => {
+      dispatch({type:'classSystem/add', payload: obj}).then(() => {
+        dispatch({ type: 'classSystem/setState', payload: { addVisible: false } });
+        handleRefresh();
+      });
+    }
+  }
+
+  const handleAdd = () => {
+    dispatch({ type: 'classSystem/setState', payload: { addVisible: true } });
+  }
+
+  const listRootOpts = {
+    dataSource: classSystem.data,
+    rowKey: 'id',
+    system: classSystem.system,
+    totalElements: classSystem.data.length,
+    loading: loading.models.classSystem,
+    onUpdate: (item) => {
+      dispatch({ type: 'classSystem/setState', payload: { item: item, updateVisible: true } });
+    },
+    onDelete: (id) => {
+      dispatch({ type: "classSystem/deleteMenu", payload: id }).then(() => {handleRefresh()});
+    },
+    addSystem: (obj) => {
+      dispatch({ type: "classSystem/addSystem", payload: obj }).then(() => {handleRefresh()});
+    },
+    updateSystem: (obj)=> {
+      dispatch({type: "classSystem/updateSystem", payload: obj }).then(()=>{handleRefresh()});
+    }
+  }
+
+  const listDetailOpts = {
+    dataSource: classSystem.data,
+    rowKey: 'id',
+    system: classSystem.system,
+    totalElements: classSystem.data.length,
+    loading: loading.models.classSystem,
+    addDetail: (obj) => {
+      dispatch({ type: "classSystem/addOrUpdateDetail", payload: obj }).then(() => {handleRefresh()});
+    },
+    updateDetail: (obj)=> {
+      dispatch({type: "classSystem/addOrUpdateDetail", payload: obj }).then(()=>{handleRefresh()});
+    }
+  }
+
+  const showDetailOpts = {
+    detail: classSystem.obj,
+    course: classSystem.course,
+    ppt: classSystem.ppt,
+    learn: classSystem.learn,
+    video: classSystem.video,
+  }
+
   return(
-    <div>
-      <div className="listHeader">
-        <h3><Icon type="bars"/> 课程体系管理<b>（{classSystem.totalElements}）</b></h3>
-        <Operator {...operatorOpts}/>
-      </div>
-      <div className="listFilter">
-        <Filter {...filterOpts}/>
-      </div>
-      <div className="listContent">
-        <List {...listOpts} />
-      </div>
-      {classSystem.addVisible && <AddModal {...addOpts}/>}
-      {classSystem.updateVisible && <UpdateModal {...updateOpts}/>}
+    <div style={{"minHeight":"100%", "overflowY": 'hidden'}}>
+      <Row style={{"minHeight":"100%"}}>
+        <Col span={7} style={{"minHeight":"100%","borderRight": "1px #c8c8c8 solid"}}>
+          <LeftTree {...treeOpts}/>
+        </Col>
+        <Col span={17} style={{"background":"#FFF"}}>
+          {(classSystem.type == 'base' || classSystem.type=='root') && <ListRootSystem {...listRootOpts}/>}
+          {classSystem.type=='child' && <ListDetail {...listDetailOpts}/>}
+          {classSystem.type=='detail' && <ShowDetail {...showDetailOpts}/>}
+        </Col>
+      </Row>
     </div>
   );
 }
 
-export default connect(({ loading, classSystem }) => ({ loading, classSystem }))(ClassSystem);
+export default connect(({loading, classSystem}) => ({loading, classSystem}))(ClassSystem);

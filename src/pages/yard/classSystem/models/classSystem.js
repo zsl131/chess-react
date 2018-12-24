@@ -1,44 +1,54 @@
-import * as objService from '../services/objService';
+import * as objService from '../services/objectService';
 import {message} from 'antd';
 
 export default {
   state: {
-    data:[],
-    totalElements: 0,
     item:{},
-    addVisible: false,
-    updateVisible: false,
+    obj:{},
+    data:[], //列表
+    type: '', //返回的数据类型，base、root、child、course
+    system:{}, //当前分类
+    course:{},
+    learn:{},
+    ppt:{},
+    video:{},
+    treeData:[],
+    totalElements: 0,
   },
   reducers: {
-    modifyState(state, {payload: options}) {
+    modifyState(state,{payload: options}) {
       return {...state, ...options};
-    },
+    }
   },
   effects: {
-    *list({payload: query}, {call,put}) {
-      const data = yield call(objService.list, query);
-      yield put({type: 'modifyState', payload: {data: data.data, totalElements: data.size}})
+    *index({ payload: query }, { put, call }) {
+      const data = yield call(objService.index, query);
+      yield put({ type: 'modifyState', payload: data });
     },
-    *addOrUpdate({payload: obj}, {call}) {
-      const data = yield call(objService.addOrUpdate, obj);
-      if(data) {message.success("数据保存成功");}
+    *addSystem({payload: obj}, {call}) {
+      const data = yield call(objService.addOrUpdateSystem, obj);
+      if(data) {
+        message.success("保存成功");
+      }
     },
-    *onUpdate({payload: id}, {call,put}) {
-      const data = yield call(objService.loadOne, {id})
-      yield put({type: 'modifyState', payload: {item: data.obj, updateVisible: true}})
+    *updateSystem({payload: obj}, {call}) {
+      const data = yield call(objService.addOrUpdateSystem, obj);
+      if(data) {
+        message.success("修改成功");
+      }
     },
-    *deleteObj({payload: id}, {call}) {
-      const data = yield call(objService.deleteObj, {id});
-      if(data) {message.success(data.message)}
+    *addOrUpdateDetail({payload: obj}, {call}) {
+      const data = yield call(objService.addOrUpdateDetail, obj);
+      if(data) {message.success("保存成功");}
     }
   },
   subscriptions: {
-    setup({history, dispatch}) {
+    setup({ history, dispatch }) {
       return history.listen((location) => {
         if(location.pathname === '/yard/classSystem') {
-          dispatch({type: 'list', payload: location.query});
+          dispatch({ type: 'index', payload: location.query });
         }
-      })
+      });
     }
   }
 }

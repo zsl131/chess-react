@@ -43,7 +43,7 @@ export default class ListOwnActivity extends React.Component {
                 <p>时间：{item.holdTime}</p>
                 <p>地址：{item.address}</p>
               </div> :
-              <div>原因：{item.rejectReason}</div>
+              <div>注意：{item.rejectReason}</div>
             }
           </Card.Body>
         </Card>

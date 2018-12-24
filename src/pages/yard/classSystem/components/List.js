@@ -1,41 +1,67 @@
 import React from 'react';
-import {Icon, Menu, Pagination, Table} from 'antd';
-import ListOperator from '../../../../components/ListOperator/ListOperator';
+import {Button, Pagination, Table, Icon, Popover, Popconfirm} from 'antd';
 
 const List = ({
-                onDelConfirm,
-                onUpdate,
-                handleSettingContent,
-                onPageChange,
-                totalElement,
-                ...listOpts
-              }) => {
-
-  const delOpts = {
-    okText: '确定删除',
-    cancelText: '取消',
-    onDelConfirm: onDelConfirm,
-    onUpdate: onUpdate,
-  }
+  onPageChange,
+  onUpdate,
+  onDelete,
+  totalElements,
+  ...listOpts
+}) => {
 
   const columns = [{
-    title: '体系名称',
+    title: '序号',
+    dataIndex: 'orderNo'
+  }, {
+    title: '分类名称',
     dataIndex: 'name'
   }, {
-    title: "备注",
-    dataIndex: "remark",
+    title: '状态',
+    // dataIndex: 'url'
+    render: (record) => {
+      return (
+        record.status=='1'?<span className="blue">在使用</span>:<span className="red">已停用</span>
+      )
+    }
   }, {
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.name} {...delOpts}>
-          <Menu.Item key={record.id}>
-            <span onClick={()=>handleSettingContent(record)}><Icon type="plus"/> 设置课程内容</span>
-          </Menu.Item>
-        </ListOperator>
+        <Popover content={operators(record)} title="相关操作" placement="bottom">
+            <span className="ant-dropdown-link">
+              操作 <Icon type="down" />
+            </span>
+        </Popover>
       );
     }
   }];
+
+  const handlerDel = (id) => {
+    // console.log("---", id);
+    onDelete(id);
+  }
+
+  const operators = (record) => {
+    return (
+      <div style={{"textAlign":"center"}}>
+        <p><Button type="default" icon="edit" onClick={()=>handleUpdate(record)}>修改</Button></p>
+        <p><Popconfirm title={`确定删除【${record.name}】吗？`} {...delOpts} onConfirm={()=>handlerDel(record.id)}><Button type="danger" icon="close">删除</Button></Popconfirm></p>
+      </div>
+    );
+  }
+
+  const delOpts = {
+    okText: "确定删除",
+    cancelText: "取消",
+  }
+
+  const handleUpdate = (record) => {
+    onUpdate(record);
+  }
+
+  const handlerRow = (record, index) => {
+    // console.log(index, record.name);
+  }
 
   const handlePageChange = (pageNumber) => {
     onPageChange(pageNumber);
@@ -43,12 +69,12 @@ const List = ({
 
   const pager = () => {
     return (
-      <Pagination showQuickJumper defaultPageSize={15} total={totalElement} onChange={handlePageChange}/>
+      <Pagination defaultPageSize={15} total={totalElements} onChange={handlePageChange}/>
     );
   }
 
   return (
-    <Table {...listOpts} columns={columns} rowKey="id" pagination={false} footer={pager}/>
+    <Table {...listOpts} columns={columns} onRow={handlerRow} pagination={false} footer={pager}></Table>
   );
 }
 

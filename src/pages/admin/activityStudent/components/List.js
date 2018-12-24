@@ -5,16 +5,24 @@ import {Menu, Pagination, Table, Dropdown, Icon,Popconfirm,Button,Modal,Form,Inp
 export default class List extends React.Component {
   state = {
     isReject: false,
+    isPass: false,
     item: {}
   };
 
   onReject = (record) => {
-    console.log(record);
     this.setState({isReject: true, item: record});
   };
 
+  onPass = (record) => {
+    this.setState({isPass: true, item: record});
+  }
+
   hiddenReject = () => {
     this.setState({isReject: false});
+  };
+
+  hiddenPass = () => {
+    this.setState({isPass: false});
   };
 
   render() {
@@ -29,14 +37,22 @@ export default class List extends React.Component {
       })
     }
     const handlePass = (record) => {
-      this.props.onVerify(record.id, "1", "通过");
+      // this.props.onVerify(record.id, "1", "通过");
+      validateFields((errors, values) => {
+        if(!errors) {
+          const reason = values.reason?values.reason:"通过";
+          this.props.onVerify(this.state.item.id, "1", reason);
+          this.hiddenReject();
+        }
+      })
     }
 
     const menu = (record) => {
       return (
         <Menu>
           <Menu.Item key="0">
-            <Popconfirm okType="primary" onConfirm={()=>handlePass(record)} title={`确定让【${record.stuName}】通过审核吗？`}><Button icon="check" type="default"> 确定通过</Button></Popconfirm>
+            {/*<Popconfirm okType="primary" onConfirm={()=>handlePass(record)} title={`确定让【${record.stuName}】通过审核吗？`}><Button icon="check" type="default"> 确定通过</Button></Popconfirm>*/}
+            <Button icon="minus" type="default" onClick={()=>this.onPass(record)}> 通过申请</Button>
           </Menu.Item>
           <Menu.Item key="1">
             <Button icon="minus" type="default" onClick={()=>this.onReject(record)}> 驳回申请</Button>
@@ -84,7 +100,7 @@ export default class List extends React.Component {
         return (
           <div>
             <p>
-              {record.status === '0' ? <span className="green">未审核</span> : (record.status === '1' ?<span className="blue">通过</span>:<span className="red">驳回：{record.rejectReason}</span>)}
+              {record.status === '0' ? <span className="green">未审核</span> : (record.status === '1' ?<span className="blue">通过：{record.rejectReason}</span>:<span className="red">驳回：{record.rejectReason}</span>)}
             </p>
             {record.status === "0" &&
             <Dropdown overlay={menu(record)}>
@@ -124,10 +140,17 @@ export default class List extends React.Component {
     const item = this.state.item;
 
     const modelOpts = {
-      title: "驳回【"+item.stuName+"】",
+      title: "驳回【"+item.stuName+"】的申请",
       visible: this.state.isReject,
       onCancel: ()=>this.hiddenReject(),
       onOk: () => handleReject()
+    }
+
+    const passOpts = {
+      title: "通过【"+item.stuName+"】的申请",
+      visible: this.state.isPass,
+      onCancel: ()=>this.hiddenPass(),
+      onOk: () => handlePass()
     }
 
     return (
@@ -137,6 +160,14 @@ export default class List extends React.Component {
           <Form layout="inline">
             <Form.Item>
               {getFieldDecorator("reason", {rules: [{required: true, message: '请输入驳回原因'}]})(<Input placeholder="输入驳回原因" style={{"width":"440px"}}/>)}
+            </Form.Item>
+          </Form>
+        </Modal>}
+
+        {this.state.isPass && <Modal {...passOpts}>
+          <Form layout="inline">
+            <Form.Item>
+              {getFieldDecorator("reason")(<Input placeholder="输入注意事项，可不输入" style={{"width":"440px"}}/>)}
             </Form.Item>
           </Form>
         </Modal>}

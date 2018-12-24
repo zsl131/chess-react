@@ -25,7 +25,7 @@ export default class ListApply extends React.Component {
         <Item multipleLine extra={<Icon type="cross" onClick={()=>this.deleteAlert(item)} />}>
           {item.stuName}
           <Brief>
-            {item.status === '0' ? <span>待审核</span>: (item.status==='1'?<span className="blue">审核通过，请准时参加</span>:<span className="red">被驳回[{item.rejectReason}]</span>)}
+            {item.status === '0' ? <span>待审核</span>: (item.status==='1'?<span className="blue">[{item.rejectReason}]审核通过，请准时参加</span>:<span className="red">被驳回[{item.rejectReason}]</span>)}
           </Brief>
         </Item>
       );

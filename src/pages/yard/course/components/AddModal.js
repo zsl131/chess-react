@@ -217,7 +217,7 @@ export default class AddModal extends React.Component {
             </Row>
           </FormItem>
           <FormItem {...formItemLayout} label="学习目标">
-            {getFieldDecorator('learnTarget')(<Input placeholder="输入课程学习目标"/>)}
+            {getFieldDecorator('learnTarget')(<TextArea placeholder="输入课程学习目标" rows={3}>&nbsp;</TextArea>)}
           </FormItem>
           <FormItem {...formItemLayout} label="附件">
             <Row>
