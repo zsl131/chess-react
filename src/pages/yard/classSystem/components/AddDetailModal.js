@@ -51,7 +51,6 @@ export default class AddDetailModal extends React.Component {
         if(!errors) {
           this.props.onOk(values);
         }
-        // console.log("submit", errors, values);
       });
     }
 

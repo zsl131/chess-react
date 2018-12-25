@@ -3,6 +3,7 @@ import {Button, Icon, Pagination, Popconfirm, Popover, Table} from 'antd';
 
 import UpdateModal from '../../classSystemOld/components/UpdateModal';
 import AddModal from '../../classSystemOld/components/AddModal';
+import Download from "./Download";
 
 export default class ListRootSystem extends React.Component {
 
@@ -101,8 +102,12 @@ export default class ListRootSystem extends React.Component {
     return (
       <div>
         <div className="listHeader">
-          <h3><Icon type="bars"/> 课程体系管理<b>（{(system && system.name)?system.name:"根目录"}，{listOpts.dataSource.length}条数据）</b><span className="red">仅限2级分类</span></h3>
+          <h3><Icon type="bars"/> 课程体系管理<b>（{(system && system.name)?system.name:"根目录"}，{listOpts.dataSource.length}条数据）</b><span className="red">仅限2级分类</span>
+
+          </h3>
+
           <div className="listOperator">
+            <Download system={system}/>
             <Button type="primary" icon="plus" onClick={handleAdd}>添加课程体系</Button>
           </div>
         </div>

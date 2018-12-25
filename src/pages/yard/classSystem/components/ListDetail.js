@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Icon, Table, Tooltip} from 'antd';
 import UpdateDetailModal from '../components/UpdateDetailModal';
 import AddDetailModal from '../components/AddDetailModal';
+import Download from "./Download";
 
 export default class ListDetail extends React.Component {
 
@@ -100,6 +101,7 @@ export default class ListDetail extends React.Component {
         <div className="listHeader">
           <h3><Icon type="bars"/> 课程体系内容管理<b>（{system.name}，{listOpts.dataSource.length}条数据）</b></h3>
           <div className="listOperator">
+            <Download system={system}/>
             <Button type="primary" icon="plus" onClick={handleAdd}>添加体系内容</Button>
           </div>
         </div>
