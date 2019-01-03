@@ -58,7 +58,7 @@ const FinanceCategory = ({
 
   const addOpts = {
     visible: financeCategory.addVisible,
-    title: "添加财务流水",
+    title: "添加账目分类",
     confirmLoading: loading.effects['financeCategory/addOrUpdate'],
     onOk(datas) {
       dispatch({ type: 'financeCategory/addOrUpdate', payload: datas }).then(() => {
