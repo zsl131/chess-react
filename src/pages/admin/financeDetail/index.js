@@ -34,6 +34,7 @@ const FinanceDetail = ({
   }
 
   const filterOpts = {
+    cateList:financeDetail.cateList,
     onFilter: (params) => {
       handleRefresh({conditions: JSON.stringify(params)});
     }

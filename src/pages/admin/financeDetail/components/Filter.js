@@ -5,6 +5,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const Filter = ({
   onFilter,
+  cateList,
   form: {
     getFieldDecorator,
     validateFields,
@@ -21,6 +22,17 @@ const Filter = ({
 
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
+      <FormItem>
+        {getFieldDecorator("cateId")(
+          <Select
+            placeholder="账目分类"
+            style={{ width: '100px' }}
+          >
+            <Option key="*">=全部=</Option>
+            {cateList.map((item)=><Option key={item.id}>{item.name}</Option>)}
+          </Select>
+        )}
+      </FormItem>
       <FormItem>
         {getFieldDecorator("ticketNo_like")(<Input placeholder="单据号"/>)}
       </FormItem>

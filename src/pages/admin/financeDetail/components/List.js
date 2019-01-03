@@ -29,7 +29,7 @@ const List = ({
     render:(record)=>{
       return (
         <div>
-          <p>{record.title}</p>
+          <p>[{record.cateName}]{record.title}</p>
           <p>{record.remark}</p>
         </div>
       )
