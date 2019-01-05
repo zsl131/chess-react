@@ -12,6 +12,7 @@ export default {
     addVisible: false,
     updateVisible: false,
     invalidVisible: false,
+    downloadVisible: false,
   },
   reducers: {
     modifyState(state, { payload: options }) {
@@ -28,6 +29,10 @@ export default {
       if(data) {
         message.success(data.message);
       }
+    },
+    *loadOne({payload: id}, {call,put}) {
+      const data = yield call(objService.loadOne, {id});
+      yield put({type: 'modifyState', payload: {item: data.obj, addVisible: true}})
     },
     *updateStatus({payload: obj}, {call}) {
       const data = yield call(objService.updateStatus, obj);

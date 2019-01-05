@@ -5,7 +5,7 @@ const Operator = ({
   onAdd,
 }) => {
   return(
-    <div className="listOperator"><Button type="primary" icon="plus" onClick={onAdd}>添加数据</Button></div>
+    <div className="listOperator"><Button type="primary" icon="download" onClick={onAdd}>下载报销单</Button></div>
   );
 }
 

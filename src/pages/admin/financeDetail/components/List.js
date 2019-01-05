@@ -3,6 +3,7 @@ import {Button, Pagination, Table} from 'antd';
 
 const List = ({
   onInvalid,
+  onRecord,
   onPageChange,
   totalElement,
   ...listOpts
@@ -10,6 +11,10 @@ const List = ({
 
   const onClick = (record) => {
     onInvalid(record);
+  }
+
+  const onRecordClick = (record) => {
+    onRecord(record)
   }
 
   const columns = [{
@@ -40,7 +45,7 @@ const List = ({
       return (
         <div>
           <p>{record.flag=='1'?<b className="blue">+{record.amount}</b>:<b className="red">-{record.amount}</b>}</p>
-          <p>据号：{record.ticketNo}</p>
+          <p>据号：<b>{record.ticketNo}</b></p>
         </div>
       )
     }
@@ -58,7 +63,8 @@ const List = ({
     title: "状态",
     render:(record)=> {
       return(
-        record.status=='1' ? <div><p className="blue">有效</p><Button type="danger" size="small" onClick={()=>onClick(record)}>作废</Button></div>:<span className="red">{record.invalidName}:{record.invalidReason}</span>
+        record.status=='1' ? <div><p className="blue">有效</p><Button type="danger" size="small" onClick={()=>onClick(record)}>作废</Button></div>:
+          (record.status=="-1"?<span className="red">{record.invalidName}:{record.invalidReason}</span>:<div><p className="blue">初始</p><Button type="primary" size="small" onClick={()=>onRecordClick(record)}>记账</Button></div>)
       )
     }
   }];

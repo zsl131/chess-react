@@ -7,6 +7,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import InvalidModal from './components/InvalidModal';
+import DownloadModal from './components/DownloadModal';
 
 const FinanceDetail = ({
   dispatch,
@@ -29,7 +30,7 @@ const FinanceDetail = ({
 
   const operatorOpts = {
     onAdd: () => {
-      dispatch({ type: 'financeDetail/modifyState', payload: {addVisible: true}});
+      dispatch({ type: 'financeDetail/modifyState', payload: {downloadVisible: true}});
     }
   }
 
@@ -55,11 +56,16 @@ const FinanceDetail = ({
       // console.log("update::", id);
       dispatch({ type: 'financeDetail/modifyState', payload: {invalidVisible: true, item: obj}});
     },
+    onRecord: (obj)=> {
+      dispatch({type: 'financeDetail/loadOne', payload: obj.id});
+    }
   }
 
   const addOpts = {
+    maskClosable: false,
     visible: financeDetail.addVisible,
     title: "添加财务流水",
+    item: financeDetail.item,
     confirmLoading: loading.effects['financeDetail/addOrUpdate'],
     onOk(datas) {
       dispatch({ type: 'financeDetail/addOrUpdate', payload: datas }).then(() => {
@@ -89,6 +95,19 @@ const FinanceDetail = ({
     }
   }
 
+  const downloadOpts = {
+    visible: financeDetail.downloadVisible,
+    title: '下载费用报销单',
+    onOk(datas) {
+      //console.log(datas);
+      const w=window.open('about:blank');
+      w.location.href="/api/downloadPdf?month="+datas.month;
+    },
+    onCancel() {
+      dispatch({ type: 'financeDetail/modifyState', payload: { downloadVisible: false } });
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -108,6 +127,7 @@ const FinanceDetail = ({
       </div>
       {financeDetail.addVisible && <AddModal {...addOpts}/>}
       {financeDetail.invalidVisible && <InvalidModal {...invalidOpts}/>}
+      {financeDetail.downloadVisible && <DownloadModal {...downloadOpts}/>}
     </div>
   );
 }

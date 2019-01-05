@@ -15,6 +15,11 @@ export default class AddModal extends React.Component {
     fetching: false,
   }
 
+  componentDidMount() {
+    const {setFieldsValue} = this.props.form;
+    setFieldsValue(this.props.item);
+  }
+
   fetchCate = ()=> {
     if(this.state.cateList<=0) {
       request("financeCategoryService.listNoPage", {}, true).then((response) => {
@@ -27,6 +32,12 @@ export default class AddModal extends React.Component {
         this.setState({cateList: data, fetching: false});
       });
     }
+  }
+
+  validMoney=(rule, value, callback) => {
+    if(value<=0) {
+      callback("请输入大于0的金额");
+    } else {callback()}
   }
 
   render() {
@@ -73,6 +84,7 @@ export default class AddModal extends React.Component {
     return(
       <Modal {...modalOpts} style={{ "minWidth": '50%', top: 20 }}>
         <Form layout="horizontal">
+          {getFieldDecorator("id")(<Input type="hidden"/>)}
           <FormItem {...formItemLayout} label="账目分类">
             {getFieldDecorator("cateId", {rules: [{required: true, message: '请选择账目分类'}]})(
               <Select
@@ -105,7 +117,7 @@ export default class AddModal extends React.Component {
               <Tooltip placement="topLeft" title="输入正数金额" arrowPointAtLeft>
                 <Col span={12}>
                   <FormItem >
-                    {getFieldDecorator('amount', {rules: [{required: true, message: '金额不能为空'}]})(<InputNumber placeholder="正数金额"/>)}
+                    {getFieldDecorator('amount', {rules: [{required: true, message: '金额不能为空'},{validator:this.validMoney}]})(<InputNumber placeholder="正数金额"/>)}
                   </FormItem>
                 </Col>
               </Tooltip>
@@ -123,7 +135,7 @@ export default class AddModal extends React.Component {
               <Tooltip placement="topLeft" title="单据编号" arrowPointAtLeft>
                 <Col span={12}>
                   <FormItem >
-                    {getFieldDecorator('ticketNo')(<Input placeholder="输入单据编号"/>)}
+                    {getFieldDecorator('ticketNo')(<Input placeholder="输入单据编号" type="hidden"/>)}
                   </FormItem>
                 </Col>
               </Tooltip>

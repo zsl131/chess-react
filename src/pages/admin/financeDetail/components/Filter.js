@@ -64,6 +64,7 @@ const Filter = ({
             style={{ width: '100px' }}
           >
             <Option key="*">=全部=</Option>
+            <Option key="0">初始</Option>
             <Option key="1">有效</Option>
             <Option key="-1">作废</Option>
           </Select>
