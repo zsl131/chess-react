@@ -5,7 +5,7 @@ export default class WxNormalFooter extends React.Component {
 
   render() {
     return (
-      <p className={styles.footerP}>Copyright &copy; 51玩科学, 滇ICP备15005159号-3</p>
+      <p className={styles.footerP}>Copyright &copy; 奇思玩科学, 滇ICP备15005159号-3</p>
     );
   }
 }

@@ -112,7 +112,7 @@ const FinanceDetail = ({
     <div>
       <div className="listHeader">
         <h3><Icon type="bars"/> 财务管理<b>（{financeDetail.totalElements}）</b>
-          <span style={{"paddingLeft": "20px"}}><Tooltip placement="bottom" title="总收入"><b className="red">{financeDetail.totalIn} 元</b></Tooltip>-
+          <span style={{"paddingLeft": "20px"}}>总览：<Tooltip placement="bottom" title="总收入"><b className="red">{financeDetail.totalIn} 元</b></Tooltip>-
           <Tooltip placement="bottom" title="总支出"><b className="red">{financeDetail.totalOut} 元</b></Tooltip>=
           <Tooltip placement="bottom" title="账面结余"><b className="red">{financeDetail.totalIn - financeDetail.totalOut} 元</b></Tooltip>
             </span>

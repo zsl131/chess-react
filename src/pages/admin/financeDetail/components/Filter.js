@@ -71,6 +71,15 @@ const Filter = ({
         )}
       </FormItem>
       <FormItem>
+        {getFieldDecorator("recordYear_like")(<Input placeholder="年份，yyyy"/>)}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("recordMonth_eq")(<Input placeholder="月份，yyyyMM"/>)}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("recordDate_eq")(<Input placeholder="日期，yyyyMMdd"/>)}
+      </FormItem>
+      <FormItem>
         <Button type="dashed" htmlType="submit">筛选</Button>
       </FormItem>
     </Form>

@@ -16,9 +16,9 @@ export default class WeixinNormalHeader extends React.Component {
   componentWillMount() {
     try {
       const loginAccountStr = sessionStorage.getItem("wxLoginAccount");
-      console.log("loginAccountStr::", loginAccountStr);
+      //console.log("loginAccountStr::", loginAccountStr);
       const loginAccount = JSON.parse(loginAccountStr);
-      console.log("loginAccount->layout::", loginAccount);
+      //console.log("loginAccount->layout::", loginAccount);
       this.setState({account: loginAccount || {}});
     } catch (e) {
       console.log("出错啦：", e);

@@ -15,8 +15,8 @@ if(curPathname.startsWith("/wx") && curPathname !== '/weixin/queryAccount') {
   const laStr = getLoginAccount();
 
   // console.log("loginAccountStr session:::", laStr);
-
-  if (laStr === null) { //表示没有Account
+// console.log(laStr === 'null', typeof laStr)
+  if (!laStr || laStr==='null') { //表示没有Account
     // const query = getRequest();
 
     const account = getQueryString("account"); //检测参数中是有account
@@ -36,7 +36,9 @@ if(curPathname.startsWith("/wx") && curPathname !== '/weixin/queryAccount') {
         window.location.href = targetUrl;
       } else {
         // console.log("没有获取微信用户，需要跳转到关注页面");
-        router.push("/weixin/notice/show?id=41");
+        // router.push("/weixin/notice/show?id=41");
+        // console.log("----")
+        window.location.href = "https://mp.weixin.qq.com/s/dwzVadKLUd3dtzAAdl1uSQ"; //
       }
       // window.location.href = targetUrl;
     } else {

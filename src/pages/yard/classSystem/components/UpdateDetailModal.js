@@ -76,6 +76,14 @@ export default class UpdateDetailModal extends React.Component {
           <FormItem {...formItemLayout} label="章节序号">
             {getFieldDecorator('sectionNo', {rules: [{required: true, message: '章节序号不能为空'}]})(<InputNumber step={0.1} placeholder="章节序号"/>)}
           </FormItem>
+          <FormItem {...formItemLayout} label="是否课标范围">
+            {getFieldDecorator('inRange', {rules: [{required: true, message: '请选择是否在课标范围'}]})(
+              <Select>
+                <Option value="0">不在课标</Option>
+                <Option value="1">在课标范围</Option>
+              </Select>
+            )}
+          </FormItem>
           <FormItem {...formItemLayout} label="对应课程">
             {getFieldDecorator('courseId')(
               <TreeSelect

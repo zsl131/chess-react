@@ -42,7 +42,7 @@ export default class List extends React.Component {
         if(!errors) {
           const reason = values.reason?values.reason:"通过";
           this.props.onVerify(this.state.item.id, "1", reason);
-          this.hiddenReject();
+          this.hiddenPass();
         }
       })
     }
@@ -111,7 +111,8 @@ export default class List extends React.Component {
             }
             {
               record.status === '2' &&
-              <Popconfirm okType="primary" onConfirm={()=>handlePass(record)} title={`确定让【${record.stuName}】通过审核吗？`}><Button type="default"> 重新通过审核</Button></Popconfirm>
+              <Button type="default" onClick={()=>this.onPass(record)}> 重新通过审核</Button>
+              // <Popconfirm okType="primary" onConfirm={()=>handlePass(record)} title={`确定让【${record.stuName}】通过审核吗？`}><Button type="default"> 重新通过审核</Button></Popconfirm>
             }
           </div>
         );
