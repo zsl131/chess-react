@@ -117,7 +117,7 @@ const FinanceDetail = ({
           <Tooltip placement="bottom" title="账面结余"><b className="red">{financeDetail.totalIn - financeDetail.totalOut} 元</b></Tooltip>
             </span>
         </h3>
-        <Operator {...operatorOpts}/>
+        {/*<Operator {...operatorOpts}/>*/}
       </div>
       <div className="listFilter">
         <Filter {...filterOpts}/>

@@ -24,7 +24,7 @@ export default class PictureWall extends React.Component {
     // console.log("file:::", file);
     // console.log("event::", event);
     this.setState({ fileList });
-    this.props.onFileChange(file);
+    this.props.onFileChange(file, this.props.extra);
   }
 
   handleBeforeUpload = (file) => {
