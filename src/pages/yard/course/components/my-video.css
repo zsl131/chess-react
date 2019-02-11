@@ -1,0 +1,15 @@
+button.video-btn-class {
+  display: none;
+}
+
+button.video-react-big-play-button {
+  display:none; position: absolute; top:-30px;
+}
+
+.video-react .video-react-big-play-button, .video-react .video-react-control {
+  display: none;
+}
+
+video#myVideo.video-control-class {
+
+}

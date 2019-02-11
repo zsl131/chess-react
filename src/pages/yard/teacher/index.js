@@ -58,6 +58,7 @@ const Teacher = ({
   }
 
   const addOpts = {
+    maskClosable: false,
     visible: teacher.addVisible,
     title: "添加教师",
     schoolList: teacher.schoolList,
@@ -76,6 +77,7 @@ const Teacher = ({
   }
 
   const updateOpts = {
+    maskClosable: false,
     visible: teacher.updateVisible,
     title: `修改数据[${teacher.item.name}]`,
     okText:'确认提交',

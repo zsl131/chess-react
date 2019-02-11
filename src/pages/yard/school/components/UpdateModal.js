@@ -1,5 +1,6 @@
 import React from 'react';
 import {Form, Input, Modal, Select} from 'antd';
+import request from "../../../../utils/request";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -7,6 +8,26 @@ const Option = Select.Option;
 
 @Form.create()
 export default class UpdateModal extends React.Component {
+
+  state = {
+    systemList:[],
+    fetching: false,
+    recordDate:'',
+  }
+
+  fetchSystem = ()=> {
+    if(this.state.systemList<=0) {
+      request("classSystemService.findSystem", {}, true).then((response) => {
+        let data = [];
+        data.push( ...response.list.map((item) => ({
+          value: ""+item.id,
+          text: item.name,
+        })));
+
+        this.setState({systemList: data, fetching: false});
+      });
+    }
+  }
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
@@ -57,6 +78,18 @@ export default class UpdateModal extends React.Component {
               <Select>
                 <Option value="1">在合作</Option>
                 <Option value="0">未合作</Option>
+              </Select>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="使用体系">
+            {getFieldDecorator("systemId")(
+              <Select
+                placeholder="选择所使用体系"
+                notFoundContent={this.state.fetching ? <Spin size="small" /> : null}
+                onFocus={this.fetchSystem}
+                style={{ width: '200px' }}
+              >
+                {this.state.systemList.map(d => <Option key={d.value}>{d.text}</Option>)}
               </Select>
             )}
           </FormItem>

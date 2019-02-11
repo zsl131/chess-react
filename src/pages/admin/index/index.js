@@ -33,10 +33,10 @@ const Index = ({
   // console.log(alertMessage());
 
   return (
-    <div style={{"padding":"15px"}}>
+    <div style={{"padding":"15px"}} >
       <h2>· 后台首页</h2>
-      {adminIndex.noConfigTemplateMessage && <Alert className={styles.singleAlert} type="error" message={alertMessage()} showIcon />}
-      {adminIndex.noConfigScore && <Alert className={styles.singleAlert} type="error" message={scoreMessage()} showIcon />}
+      {adminIndex.noConfigTemplateMessage && <div className="auth" sn="/admin/templateMessageRelation"><Alert className={styles.singleAlert} type="error" message={alertMessage()} showIcon /></div>}
+      {adminIndex.noConfigScore && <div className="auth" sn="/admin/scoreRule"><Alert className={styles.singleAlert} type="error" message={scoreMessage()} showIcon /></div>}
     </div>
   );
 }

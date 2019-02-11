@@ -15,7 +15,7 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
-import {checkAuthByUrl} from '../utils/authUtils';
+import {checkAuthByUrl, hideNoAuthContent} from '../utils/authUtils';
 
 moment.locale('zh-cn');
 
@@ -53,7 +53,6 @@ class MainLayout extends React.Component {
       router.push("/login");
     } else if(pathname.indexOf("/admin")===0 || pathname.indexOf("/yard")===0) { //需要进行登陆验证
       const hasAuth = checkAuthByUrl(pathname); //通过url检测权限
-      // console.log(hasAuth);
       if(!hasAuth) { //无权限
         router.push("/public/noAuth");
       }

@@ -20,21 +20,33 @@ const List = ({
 
   const columns = [{
     title: '学校名称',
-    dataIndex: 'name'
+    // dataIndex: 'name'
+    render:(record)=> {
+      return (
+        <div>
+          <p>{record.name}</p>
+          <p>{record.address}</p>
+        </div>
+      )
+    }
   }, {
     title: '联系人',
-    dataIndex: 'contacts'
-  }, {
-    title: '联系电话',
-    dataIndex: 'phone'
-  }, {
-    title: '学校地址',
-    dataIndex: 'address'
+    // dataIndex: 'contacts'
+    render:(record)=> {
+      return (
+        <div>
+          <p>{record.contacts}</p>
+          <p>{record.phone}</p>
+        </div>
+      )
+    }
   }, {
     title: "状态",
     render:(record)=> {
       return (
-        <div>{record.status === '1' ? "在合作":"未使用"}</div>
+        <div><p>{record.status === '1' ? <span className="blue">在合作</span>:<span className="red">未使用</span>}</p>
+          <p>{record.systemName?record.systemName:"未配置体系"}</p>
+        </div>
       )
     }
   }, {

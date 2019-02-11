@@ -11,10 +11,15 @@ export function setLoginUser(loginObj) {
   const navMenus = loginObj.navMenus;
   const authMenus = loginObj.authMenus;
   const depIds = loginObj.depIds;
+  //console.log(loginObj)
   sessionStorage.setItem(LOGIN_USER_SESSION, JSON.stringify(loginUser));
   sessionStorage.setItem(NAV_MENU_SESSION, JSON.stringify(navMenus));
   sessionStorage.setItem(AUTH_MENU_SESSION, JSON.stringify(authMenus));
   sessionStorage.setItem(DEP_SESSION, JSON.stringify(depIds));
+}
+
+export function getAuthMenus() {
+  return JSON.parse(sessionStorage.getItem(AUTH_MENU_SESSION));
 }
 
 /** 在绑定手机号码等修改用户属性时调用，只修改登陆用户信息 */

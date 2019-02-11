@@ -62,6 +62,7 @@ const School = ({
   }
 
   const addOpts = {
+    maskClosable: false,
     visible: school.addVisible,
     title: "添加学校",
     okText:'确认提交',
@@ -79,6 +80,7 @@ const School = ({
   }
 
   const updateOpts = {
+    maskClosable: false,
     visible: school.updateVisible,
     title: `修改数据[${school.item.name}]`,
     okText:'确认提交',
