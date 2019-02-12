@@ -21,10 +21,10 @@ const Filter = ({
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
       <FormItem>
-        {getFieldDecorator("name_like")(<Input placeholder="名称"/>)}
+        {getFieldDecorator("phone_like")(<Input placeholder="手机号码"/>)}
       </FormItem>
       <FormItem>
-        {getFieldDecorator("sn_like")(<Input placeholder="SN"/>)}
+        {getFieldDecorator("content_like")(<Input placeholder="内容"/>)}
       </FormItem>
       <FormItem>
         <Button type="dashed" htmlType="submit">筛选</Button>

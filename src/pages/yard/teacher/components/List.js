@@ -1,10 +1,11 @@
 import React from 'react';
-import {Pagination, Table} from 'antd';
+import {Pagination, Table,Menu, Icon} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
                 onDelConfirm,
                 onUpdate,
+                handleVideoCount,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -44,7 +45,11 @@ const List = ({
     title: '操作',
     render: (text, record) => {
       return (
-        <ListOperator id={record.id} delName={record.name} {...delOpts}/>
+        <ListOperator id={record.id} delName={record.name} {...delOpts}>
+          <Menu.Item>
+            <span onClick={()=>handleVideoCount(record)}><Icon type="eye"/> 视频播放次数</span>
+          </Menu.Item>
+        </ListOperator>
       );
     }
   }];

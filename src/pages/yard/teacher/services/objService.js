@@ -25,10 +25,20 @@ function deleteObj(obj) {
   return request(baseService+".delete", obj, true);
 }
 
+function queryCountTree(obj) {
+  return request("videoRecordService.queryCountTree", obj, true);
+}
+
+function saveCount(obj) {
+  return request("teacherVideoCountService.updateCount", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
   listSchool,
   deleteObj,
-  loadOne
+  loadOne,
+  queryCountTree,
+  saveCount,
 }

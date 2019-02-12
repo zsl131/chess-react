@@ -8,7 +8,9 @@ export default {
     totalElements: 0,
     item:{},
     addVisible: false,
-    updateVisible: false
+    updateVisible: false,
+    videoCountVisible: false,
+    countTree:[],
   },
   reducers: {
     modifyState(state, {payload: options}) {
@@ -35,6 +37,15 @@ export default {
     *deleteObj({payload: id}, {call}) {
       const data = yield call(objService.deleteObj, {id});
       if(data) {message.success(data.message)}
+    },
+    *queryCountTree({payload: username}, {call, put}) {
+      const data = yield call(objService.queryCountTree, {username: username});
+      //console.log(data);
+      yield put({type: 'modifyState', payload: {countTree:data.countTree}});
+    },
+    *saveCount({payload:obj}, {call}) {
+      const data = yield call(objService.saveCount, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

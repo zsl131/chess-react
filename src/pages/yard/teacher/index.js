@@ -7,6 +7,7 @@ import Filter from './components/Filter';
 import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
+import TeacherCountModal from './components/TeacherCountModal';
 
 const Teacher = ({
                   dispatch,
@@ -55,6 +56,12 @@ const Teacher = ({
       // console.log("update::", id);
       dispatch({ type: 'teacher/onUpdate', payload: id });
     },
+    handleVideoCount: (record) => {
+      //console.log(record);
+      dispatch({type: 'teacher/queryCountTree', payload: record.phone}).then(()=>{
+        dispatch({ type: 'teacher/modifyState', payload: { videoCountVisible: true, item: record } });
+      });
+    }
   }
 
   const addOpts = {
@@ -96,6 +103,24 @@ const Teacher = ({
     }
   }
 
+  const teaCountOpts = {
+    maskClosable: false,
+    visible: teacher.videoCountVisible,
+    item: teacher.item,
+    title: `为[${teacher.item.name}]配置视频播放次数`,
+    countTree: teacher.countTree,
+    onCancel: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { videoCountVisible: false } });
+    },
+    onOk: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { videoCountVisible: false } });
+    },
+    saveCount: (obj) => {
+      //console.log(obj);
+      dispatch({type: 'teacher/saveCount', payload:obj});
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -110,6 +135,7 @@ const Teacher = ({
       </div>
       {teacher.addVisible && <AddModal {...addOpts}/>}
       {teacher.updateVisible && <UpdateModal {...updateOpts}/>}
+      {teacher.videoCountVisible && <TeacherCountModal {...teaCountOpts}/>}
     </div>
   );
 }
