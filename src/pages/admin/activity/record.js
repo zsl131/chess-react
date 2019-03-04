@@ -44,7 +44,7 @@ const Record = ({
       dispatch({ type: 'activity/onUpdateRecord', payload: id });
     },
     onShow: (id) => {
-      console.log("id:::", id);
+      // console.log("id:::", id);
       dispatch({ type: 'activity/onShow', payload: id });
     }
   }

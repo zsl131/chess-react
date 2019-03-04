@@ -35,7 +35,6 @@ class MainLayout extends React.Component {
     const isWeixin = pathname.indexOf("/weixin") === 0;
 
     const user = JSON.parse(sessionStorage.getItem("loginUser"));
-
     if (isWeixin) {
       // console.log("/weixin开头");
     } else if (isWx) {

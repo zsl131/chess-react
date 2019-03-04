@@ -25,7 +25,9 @@ const List = ({
     title: '二维码',
     render: (record) => {
       return (
-        <QRCode value={`${configApi.baseUrl}/wx/activity/show?id=${record.id}`} />
+        <div><QRCode value={`${configApi.baseUrl}/wx/activity/show?id=${record.id}`} />
+          <p>ID: {record.id}</p>
+        </div>
       );
     }
   }, {
