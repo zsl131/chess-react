@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Button, Col, Icon, Popconfirm, Row} from 'antd';
+import {Col, Row} from 'antd';
 import LeftTree from './components/LeftTree';
 import {routerRedux} from 'dva/router'
 import ListRootSystem from './components/ListRootSystem';

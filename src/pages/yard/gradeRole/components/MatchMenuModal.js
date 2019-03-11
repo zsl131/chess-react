@@ -5,38 +5,33 @@ import ListMenu from './ListMenu';
 
 const MatchMenuModal = ({
   role,
-  onSelect,
   onCancel,
   onPageChange,
   onSetMenu,
   loading,
+  visible,
+  sidList,
+  systemList,
 }) => {
-  const treeOpts = {
-    menuTree: role.menuTree,
-    onSelect: (key) => {
-      onSelect(key);
-    },
-  }
 
   const listOpts = {
     onPageChange: onPageChange,
-    dataSource: role.menuList,
+    dataSource: systemList,
+    sidList: sidList,
     rowKey: 'id',
     totalElements: role.menuElements,
-    loading: loading.models.role,
-    onSetMenu:onSetMenu,
+    loading: loading.models.gradeRole,
+    onSetMenu:(sid, checked)=>onSetMenu(role.id, sid, checked),
     curAuthMenu: role.curAuthMenu
   }
 
   return (
-    <Modal visible={role.matchMenuVisible} style={{ "minWidth": '80%', top: 30 }} title={`为角色【${role.curRole.name}】授权菜单`} footer={false} onCancel={onCancel}>
+    <Modal visible={visible} style={{ "minWidth": '80%', top: 30 }} title={`为年级角色【${role.name}】授权课程分类`} footer={false} onCancel={onCancel}>
     <div style={{"height":"100%", "overflowY": 'hidden'}}>
       <Row style={{"height":"100%"}}>
-        <Col span={7} style={{"height":"100%"}}>
-        </Col>
-        <Col span={17}>
+        <Col span={24}>
           <div className="listHeader">
-            <h3><Icon type="bars"/> 菜单列表<b>（{role.menuElements}）</b></h3>
+            <h3><Icon type="bars"/> 课程分类列表<b>（勾选上即授权，不能全选）</b></h3>
           </div>
           <ListMenu {...listOpts}/>
         </Col>

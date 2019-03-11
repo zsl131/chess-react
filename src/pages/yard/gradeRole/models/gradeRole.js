@@ -6,7 +6,8 @@ export default {
     datas:[],
     item:{},
     menuTree:[],
-    menuList:[],
+    systemList:[],
+    sidList:[],
     menuElements:0,
     totalElements:0,
     addVisible: false,
@@ -60,17 +61,12 @@ export default {
       const data = yield call(objService.addOrUpdate, obj);
       if(data) {message.success("修改成功");}
     },
-    *queryMenus({ payload: query }, { put, call }) {
-      // console.log("queryMenus::", query);
-      // const data = yield call(menuService.listRoot, query);
-      const data2 = yield call(objService.listMenuIds, query);
-
-      yield put({ type: 'setModalVisible', payload: { curAuthMenu: data2.datas } });
-      // yield put({ type: 'showMenus', payload: data.datas });
-      // console.log("data2===", data2);
+    *querySystem({ payload: query }, { put, call }) {
+      const data = yield call(objService.querySystem, query);
+      yield put({ type: 'setModalVisible', payload: { systemList: data.systemList, sidList: data.sidList } });
     },
-    *authMenu({ payload: obj }, { call }) {
-      const data = yield call(objService.authMenu, obj);
+    *authSystem({ payload: obj }, { call }) {
+      const data = yield call(objService.authSystem, obj);
       message.success(data.message);
     }
   },

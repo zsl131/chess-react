@@ -19,12 +19,12 @@ function loadOne(id) {
   return request(baseService+".loadOne", id, true);
 }
 
-function listMenuIds(rid) {
-  return request(baseService+".listRoleMenuIds", JSON.stringify(rid), true);
+function querySystem(rid) {
+  return request(baseService+".querySystem", rid, true);
 }
 
-function authMenu(obj) {
-  return request(baseService+".authMenu", JSON.stringify(obj), true);
+function authSystem(obj) {
+  return request(baseService+".authSystem", obj, true);
 }
 
 export {
@@ -32,6 +32,6 @@ export {
   addOrUpdate,
   deleteObj,
   loadOne,
-  listMenuIds,
-  authMenu,
+  querySystem,
+  authSystem,
 }

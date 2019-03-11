@@ -144,6 +144,19 @@ export default class Filter extends React.Component {
         </FormItem>
 
         <FormItem>
+          {getFieldDecorator("fromFlag")(
+            <Select
+              placeholder="报名来源"
+              style={{ width: '100px' }}
+            >
+              <Option key="*">=全部=</Option>
+              <Option key="0">社会</Option>
+              <Option key="1">学校</Option>
+            </Select>
+          )}
+        </FormItem>
+
+        <FormItem>
           {getFieldDecorator("hasCheck")(
             <Select
               placeholder="是否签到"

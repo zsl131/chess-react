@@ -10,6 +10,9 @@ export default {
     addVisible: false,
     updateVisible: false,
     videoCountVisible: false,
+    authRoleVisible: false,
+    roleList:[],
+    ridList:[],
     countTree:[],
   },
   reducers: {
@@ -46,6 +49,17 @@ export default {
     *saveCount({payload:obj}, {call}) {
       const data = yield call(objService.saveCount, obj);
       if(data) {message.success(data.message);}
+    },
+    *queryGradeRole({payload: obj}, {call,put}) {
+      const data = yield call(objService.queryGradeRole, obj);
+      // console.log(data);
+      yield put({type: "modifyState", payload: {roleList: data.roleList, ridList: data.ridList}});
+    },
+    *authRole({payload: obj}, {call}) {
+      const data = yield call(objService.authRole, obj);
+      if(data) {
+        message.success(data.message);
+      }
     }
   },
   subscriptions: {

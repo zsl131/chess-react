@@ -33,9 +33,19 @@ function saveCount(obj) {
   return request("teacherVideoCountService.updateCount", obj, true);
 }
 
+function queryGradeRole(obj) {
+  return request(baseService+ ".queryGradeRole", obj, true);
+}
+
+function authRole(obj) {
+  return request(baseService + ".authRole", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
+  queryGradeRole,
+  authRole,
   listSchool,
   deleteObj,
   loadOne,

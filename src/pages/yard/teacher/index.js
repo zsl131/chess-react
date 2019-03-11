@@ -8,6 +8,7 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import TeacherCountModal from './components/TeacherCountModal';
+import TeacherRoleModal from './components/TeacherRoleModal';
 
 const Teacher = ({
                   dispatch,
@@ -60,6 +61,11 @@ const Teacher = ({
       //console.log(record);
       dispatch({type: 'teacher/queryCountTree', payload: record.phone}).then(()=>{
         dispatch({ type: 'teacher/modifyState', payload: { videoCountVisible: true, item: record } });
+      });
+    },
+    authGradeRole: (record)=> {
+      dispatch({type: 'teacher/queryGradeRole', payload: {tid: record.id}}).then(()=> {
+        dispatch({ type: 'teacher/modifyState', payload: { authRoleVisible: true, item: record } });
       });
     }
   }
@@ -121,6 +127,25 @@ const Teacher = ({
     }
   }
 
+  const teaRoleOpts = {
+    maskClosable: false,
+    visible: teacher.authRoleVisible,
+    item: teacher.item,
+    roleList: teacher.roleList,
+    ridList: teacher.ridList,
+    title: `为[${teacher.item.name}]授权年级角色`,
+    onCancel: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { authRoleVisible: false } });
+    },
+    onOk: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { authRoleVisible: false } });
+    },
+    saveAuth: (obj) => {
+      // console.log(obj);
+      dispatch({type: 'teacher/authRole', payload:obj});
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -136,6 +161,7 @@ const Teacher = ({
       {teacher.addVisible && <AddModal {...addOpts}/>}
       {teacher.updateVisible && <UpdateModal {...updateOpts}/>}
       {teacher.videoCountVisible && <TeacherCountModal {...teaCountOpts}/>}
+      {teacher.authRoleVisible && <TeacherRoleModal {...teaRoleOpts}/>}
     </div>
   );
 }

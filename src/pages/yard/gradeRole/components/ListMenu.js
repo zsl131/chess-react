@@ -5,15 +5,17 @@ const ListMenu = ({
   onPageChange,
   totalElements,
   onSetMenu,
-  curAuthMenu,
+  sidList,
   ...listOpts
 }) => {
   const columns = [{
-    title: '菜单名称',
-    dataIndex: 'name'
-  }, {
-    title: '连接地址',
-    dataIndex: 'href'
+    title: '课程分类名称',
+    // dataIndex: 'name'
+    render: (record)=> {
+      return (
+        record.pname+"-"+record.name
+      )
+    }
   }];
 
   const handlePageChange = (pageNumber) => {
@@ -33,12 +35,12 @@ const ListMenu = ({
     },*/
     onSelect: (record, selected, selectedRows) => {
       // console.log(`record:${record.name},,selected:${selected}`,`selectedRows::${selectedRows}`);
-      onSetMenu(record.id);
+      onSetMenu(record.id, selected?"1":"0");
     },
     getCheckboxProps(record) {
       return {
         // defaultChecked: record.id === 1, // 配置默认勾选的列
-        defaultChecked: curAuthMenu.includes(record.id)
+        defaultChecked: sidList.includes(record.id)
       };
     },
   };

@@ -6,6 +6,7 @@ const List = ({
                 onDelConfirm,
                 onUpdate,
                 handleVideoCount,
+                authGradeRole,
                 onPageChange,
                 totalElement,
                 ...listOpts
@@ -48,6 +49,9 @@ const List = ({
         <ListOperator id={record.id} delName={record.name} {...delOpts}>
           <Menu.Item>
             <span onClick={()=>handleVideoCount(record)}><Icon type="eye"/> 视频播放次数</span>
+          </Menu.Item>
+          <Menu.Item>
+            <span onClick={()=>authGradeRole(record)}><Icon type="team"/> 授权年级角色</span>
           </Menu.Item>
         </ListOperator>
       );

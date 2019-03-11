@@ -51,7 +51,7 @@ const GradeRole = ({
       dispatch({ type: 'gradeRole/update', payload: id });
     },
     onMatchMenu: (curRole) => {
-      dispatch({ type: 'gradeRole/queryMenus', payload: {rid: curRole.id}}).then(() => { dispatch({ type: 'gradeRole/setModalVisible', payload: {curRole: curRole} }) });
+      dispatch({ type: 'gradeRole/querySystem', payload: {rid: curRole.id}}).then(() => { dispatch({ type: 'gradeRole/setModalVisible', payload: {curRole: curRole,matchMenuVisible:true} }) });
     }
   }
 
@@ -91,7 +91,10 @@ const GradeRole = ({
   }
 
   const treeOpts = {
-    role: gradeRole,
+    role: gradeRole.curRole,
+    visible: gradeRole.matchMenuVisible,
+    systemList: gradeRole.systemList,
+    sidList: gradeRole.sidList,
     onSelect: (key) => {
       dispatch({ type: 'gradeRole/queryMenus', payload: { pid: key[0], rid: gradeRole.curRole.id } });
     },
@@ -103,9 +106,10 @@ const GradeRole = ({
       // console.log("page::"+page);
       dispatch({ type: 'gradeRole/queryMenus', payload: { page: page-1, rid: gradeRole.curRole.id } });
     },
-    onSetMenu: (key) => {
+    onSetMenu: (rid, sid, checked) => {
       // console.log("setMenu"+key, "roleId:"+role.curRole.id);
-      dispatch({ type: 'gradeRole/authMenu', payload: {rid: gradeRole.curRole.id, mid: key} });
+      // console.log(rid, sid, checked)
+      dispatch({ type: 'gradeRole/authSystem', payload: {rid: rid, sid:sid, checked:checked} });
     },
     loading: loading.effects.gradeRole
   }
