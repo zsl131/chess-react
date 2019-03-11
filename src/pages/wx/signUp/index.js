@@ -14,6 +14,9 @@ class SignUp extends React.Component {
 
     const { query, pathname } = this.props.location;
 
+    const from = query.from?query.from:"0";
+    // console.log(from);
+
     const signUp = this.props.signUp;
 
     const handleRefresh = (newQuery) => {
@@ -33,6 +36,7 @@ class SignUp extends React.Component {
     // console.log(this.props);
 
     const handleAddStudent = (student) =>  {
+      student.from = from;
       this.props.dispatch({type: "signUp/addStudent", payload: student}).then(()=>handleRefresh());
     }
 
@@ -45,7 +49,7 @@ class SignUp extends React.Component {
     }
 
     const handleApplyBatch = (objIds) => {
-      this.props.dispatch({type: "signUp/applyBatch", payload: {objIds: objIds, recordId: signUp.record.id}}).then(()=>handleRefresh());
+      this.props.dispatch({type: "signUp/applyBatch", payload: {objIds: objIds, recordId: signUp.record.id, from:from}}).then(()=>handleRefresh());
     }
 
 

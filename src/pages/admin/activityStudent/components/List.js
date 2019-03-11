@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Pagination, Table, Dropdown, Icon,Popconfirm,Button,Modal,Form,Input} from 'antd';
+import {Button, Dropdown, Form, Icon, Input, Menu, Modal, Pagination, Table, Tooltip} from 'antd';
 
 @Form.create()
 export default class List extends React.Component {
@@ -90,7 +90,7 @@ export default class List extends React.Component {
         return (
           <div>
             <p><b>{record.stuName}</b>｜{record.sex === '1'?"男":"女"} ｜ <span>{record.ageName}</span> ｜ {record.schoolName}</p>
-            <p>{record.phone}</p>
+            <p><Tooltip title="报名来源" placement="bottom">{record.fromFlag=='1'?<span className="blue">学校</span>:<span className="yellow">社会</span>}</Tooltip>｜{record.phone}</p>
           </div>
         );
       }
