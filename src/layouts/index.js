@@ -23,9 +23,27 @@ const { Sider, Content } = Layout;
 
 class MainLayout extends React.Component {
 
+  state = {
+    collapsed: false
+  }
+
+  componentWillMount() {
+    const curVal = sessionStorage.getItem("curCollapsed");
+    this.setState({collapsed: curVal==="1"});
+  }
 
   // console.log("layoutIndex->path::", props);
   render() {
+
+    const setCollapse = () => {
+      const curVal = !this.state.collapsed;
+      this.setState({collapsed: curVal});
+      sessionStorage.setItem("curCollapsed", curVal?"1":"0");
+    }
+
+    const onCollapse = () => {
+      setCollapse();
+    }
 
     const props = this.props;
 
@@ -88,16 +106,17 @@ class MainLayout extends React.Component {
     return (
       <LocaleProvider locale={zhCN}>
       <Layout className={styles.adminLayout}>
-        <Affix>
-          <AdminHeader/>
-        </Affix>
         <Layout className={styles.adminMenuSider}>
-          <Affix offsetTop={60} style={{"overflow": "auto"}}>
-            <Sider>
-              <AdminSideMenu/>
+          <Affix offsetTop={0} style={{"overflow": "auto"}}>
+            <Sider collapsed={this.state.collapsed}>
+              <AdminSideMenu onCollapse={onCollapse} collapsed={this.state.collapsed}/>
             </Sider>
           </Affix>
-          <Content style={{"background": "#f0f2f5"}}>{props.children}
+          <Content style={{"background": "#f0f2f5"}}>
+            <Affix>
+              <AdminHeader/>
+            </Affix>
+            <div style={{"width":"100%","float":"left"}}>{props.children}</div>
             <AdminFooter/>
           </Content>
         </Layout>

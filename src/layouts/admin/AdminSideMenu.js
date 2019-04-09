@@ -1,7 +1,8 @@
 import React from 'react';
-import {Icon, Menu} from 'antd';
+import {Icon, Menu, Tooltip} from 'antd';
 import {Link} from 'react-router-dom';
 
+import styles from '../layout.css';
 
 const SubMenu = Menu.SubMenu;
 
@@ -10,12 +11,6 @@ class AdminSideMenu extends React.Component {
   state = {
     collapsed: false,
     defaultKey: sessionStorage.getItem("menuKey") || '1',
-  }
-
-  toggleCollapsed = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
   }
 
   handlerClick = ({item, key, keyPath}) => {
@@ -41,11 +36,20 @@ class AdminSideMenu extends React.Component {
       );
     }):"";
 
+    const collapsed = this.props.collapsed;
+
     return (
-      <div>
-        {/*<Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
-          <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
-        </Button>*/}
+      <div style={{"position":"relative", "height":"100vh"}}>
+        <div className={styles.logoDiv}>
+          {/*<Icon type="radar-chart" style={{"fontSize":"50px", "color":"#FFF","marginTop":"5px"}}/>*/}
+          <div className={styles.logo}></div>
+        </div>
+        <div className={styles.collapseDiv}>
+          <Tooltip title={collapsed?"点击展开侧边导航":"点击收起侧边导航"} placement="right">
+            {/*<Button type="primary" shape="circle" onClick={this.props.onCollapse} style={{ marginBottom: 16 }} icon={collapsed?"right-circle":"left-circle"}/>*/}
+            <Icon className={styles.collapseIcon} onClick={this.props.onCollapse} type={collapsed?"right-circle":"left-circle"}/>
+          </Tooltip>
+        </div>
         <Menu
           defaultSelectedKeys={[this.state.defaultKey]}
           defaultOpenKeys={['sub1']}
