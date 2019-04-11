@@ -15,6 +15,9 @@ const WxAccountCenter = ({
     },
     bindPhone: () => {
       dispatch({type: 'wxAccountCenter/bindPhone', payload: wxAccountCenter.phone}).then(()=>{window.location.reload();});
+    },
+    refreshAccount: ()=> {
+      dispatch({type: 'wxAccountCenter/queryAccountByOpenid', payload: {}});
     }
   }
 

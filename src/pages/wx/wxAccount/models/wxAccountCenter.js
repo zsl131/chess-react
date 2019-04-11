@@ -31,6 +31,16 @@ export default {
         loginAccount.phone = phone;
         setLoginAccount(JSON.stringify(loginAccount));
       }
-    }
+    },
+    *queryAccountByOpenid({payload}, {call}) {
+      const loginAccount = getLoginAccount2Obj();
+      const openid = loginAccount.openid;
+      const data = yield call(objService.queryAccountByOpenid, {openid:openid});
+      if(data) {
+        console.log(data.obj);
+        setLoginAccount(JSON.stringify(data.obj));
+        message.success("刷新成功");
+      }
+    },
   }
 }

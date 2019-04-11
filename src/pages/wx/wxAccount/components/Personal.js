@@ -86,6 +86,7 @@ export default class Personal extends React.Component {
           <span className={styles.nickname}>{loginAccount.nickname}</span>
           <span className={styles.phone}>{loginAccount.bindPhone==='1'?<b>手机号码：{loginAccount.phone}</b>:<Button size="small" type="ghost" onClick={this.onBindPhone} inline>马上绑定手机号码</Button>}</span>
         </div>
+        <Button onClick={this.props.refreshAccount} className={styles.refreshBtn} type="primary" inline size="small">刷新权限</Button>
 
         <Modal
           popup

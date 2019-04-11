@@ -15,6 +15,7 @@ export default class WxLoginAccount extends React.Component {
       const loginAccountStr = getLoginAccount();
       // console.log("loginAccountStr::", loginAccountStr);
       const loginAccount = JSON.parse(loginAccountStr);
+      // console.log(loginAccount);
       this.setState({account: loginAccount || {}});
     } catch (e) {
       console.log("出错啦：", e);

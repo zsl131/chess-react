@@ -69,6 +69,7 @@ const List = ({
     switch(type) {
       case "1" : return "学生"; break;
       case "2" : return "学生家长"; break;
+      case "4" : return "科普教师"; break;
       case "5" : return "公司员工"; break;
       case "10" : return "管理员"; break;
       default: return "游客";
@@ -102,6 +103,12 @@ const List = ({
           <Menu.Item key="2">
             <Popconfirm title={`确定设置[${nickname}]为：学生家长 吗？`}
                         onConfirm={() => handleSetType(record, "2")} {...confirmOpts}>设置为：学生家长</Popconfirm>
+          </Menu.Item>
+        }
+        {type === '4' ? '' :
+          <Menu.Item key="4">
+            <Popconfirm title={`确定设置[${nickname}]为：科普教师 吗？`}
+                        onConfirm={() => handleSetType(record, "4")} {...confirmOpts}>设置为：科普教师</Popconfirm>
           </Menu.Item>
         }
         {type === '5' ? '' :

@@ -1,5 +1,5 @@
 .mainDiv {
-  background: #fafafa; border-bottom: 3px #e8e8e8 solid; width:100%; float:left;
+  background: #fafafa; border-bottom: 3px #e8e8e8 solid; width:100%; float:left; position: relative;
 }
 
 .headimg {
@@ -15,4 +15,8 @@
 
 .phone {
   margin-top:6px; float:left; width:100%;
+}
+
+.refreshBtn {
+  position: absolute; top: -35px; right:10px; float:right;
 }
