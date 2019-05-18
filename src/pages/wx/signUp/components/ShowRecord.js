@@ -9,9 +9,9 @@ const ShowRecord = ({
       <Card style={{"marginTop": "10px"}}>
         <Card.Header title={`活动信息：${record.actTitle}`}/>
         <Card.Body>
-          <p>地址：{record.address}</p>
+          <p className="red">地址：{record.address}</p>
           <p>电话：{record.phone}</p>
-          <p>时间：{record.holdTime}</p>
+          <p className="red">时间：{record.holdTime}</p>
           <p>报名起始：{record.startTime}</p>
           <p>报名截止：{record.deadline}</p>
           <p>状态：

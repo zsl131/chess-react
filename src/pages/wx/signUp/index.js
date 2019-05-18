@@ -61,7 +61,7 @@ class SignUp extends React.Component {
 
     return (
       <div style={{"padding": "10px"}}>
-        <div className="listPageHeader">报名参与活动</div>
+        <div className="listPageHeader">报名参与活动{from==='1'?<b className="blue">（受邀请）</b>:""}</div>
 
         {needAdd && <AddStudent onAdd={handleAddStudent} record={this.props.signUp.record} loading={this.props.loading.effects["signUp/addStudent"]} ageList={signUp.ageList} schoolList={signUp.schoolList}/>}
         {!needAdd && <ListStudent dataSource={signUp.stuList} ageList={signUp.ageList} schoolList={signUp.schoolList} addStudent={handleAddStudentOnly} deleteBatch={handleDeleteBatch} applyBatch={handleApplyBatch}/>}
