@@ -173,6 +173,9 @@ export default class Filter extends React.Component {
           {getFieldDecorator("actTitle_like")(<Input placeholder="活动标题"/>)}
         </FormItem>
         <FormItem>
+          {getFieldDecorator("holdTime_like")(<Input placeholder="活动时间"/>)}
+        </FormItem>
+        <FormItem>
           {getFieldDecorator("stuName_like")(<Input placeholder="学生姓名"/>)}
         </FormItem>
         <FormItem>
