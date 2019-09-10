@@ -60,6 +60,10 @@ export default {
       if(data) {
         message.success(data.message);
       }
+    },
+    *initPwd({payload: obj}, {call}) {
+      const data = yield call(objService.initPwd, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

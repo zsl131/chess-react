@@ -41,6 +41,10 @@ function authRole(obj) {
   return request(baseService + ".authRole", obj, true);
 }
 
+function initPwd(obj) {
+  return request(baseService + ".initPwd", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
@@ -51,4 +55,5 @@ export {
   loadOne,
   queryCountTree,
   saveCount,
+  initPwd,
 }

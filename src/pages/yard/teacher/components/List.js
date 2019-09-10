@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pagination, Table,Menu, Icon} from 'antd';
+import {Pagination, Popconfirm, Table,Menu, Icon, Button} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
@@ -8,6 +8,7 @@ const List = ({
                 handleVideoCount,
                 authGradeRole,
                 onPageChange,
+                initPwd,
                 totalElement,
                 ...listOpts
               }) => {
@@ -42,6 +43,11 @@ const List = ({
   }, {
     title: "备注",
     dataIndex: "remark",
+  }, {
+    title: '密码',
+    render: (record) => {
+      return <Popconfirm title="确定将密码初始化为手机号码后6位吗？" onConfirm={()=>initPwd(record)}><Button>重置</Button></Popconfirm>
+    }
   }, {
     title: '操作',
     render: (text, record) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Select, Tooltip, TreeSelect, Upload} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import request from "../../../../utils/request";
+import CourseTag from "../../../../components/CourseTag";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -37,7 +38,7 @@ export default class UpdateModal extends React.Component {
     const {setFieldsValue} = this.props.form;
 
     let item = this.props.item;
-    if(item.pptId && !item.ppt) {
+    /*if(item.pptId && !item.ppt) {
       request("attachmentService.loadOne", {id: item.pptId}, true).then((res) => item.ppt = res.obj);
     }
     if(item.learnId && !item.learn) {
@@ -46,7 +47,22 @@ export default class UpdateModal extends React.Component {
     if(item.videoId && !item.video) {
       request("attachmentService.loadOne", {id: item.videoId}, true).then((res) =>item.video = res.obj);
     }
-    this.setState({item: item});
+    this.setState({item: item});*/
+
+    const that = this;
+    request("attachmentService.loadAttach", {cid: item.id}, true).then((res) => {
+      //console.log(res);
+      item.video = res.video;
+      item.learn = res.learn;
+      item.ppt = res.ppt;
+     // console.log(item);
+      that.setState({item: item});
+      const videoList = item.video?[{ uid: -1,name: item.video.fileName, status: 'done', url: '', response: {result:{obj:item.video}}}]:[];
+      const pptList = item.ppt?[{ uid: -1,name: item.ppt.fileName, status: 'done', url: '', response: {result:{obj:item.ppt}}}]:[];
+      const learnList = item.learn?[{ uid: -1,name: item.learn.fileName, status: 'done', url: '', response: {result:{obj:item.learn}}}]:[];
+      that.setState({videos: videoList, ppts: pptList, learns: learnList});
+    });
+
     setFieldsValue(item);
     request("gradeService.listNoPage",{}, true).then((res)=> {
       // console.log(res)
@@ -55,10 +71,10 @@ export default class UpdateModal extends React.Component {
     })
 
     //response.result.obj
-    const videoList = item.video?[{ uid: -1,name: item.video.fileName, status: 'done', url: '', response: {result:{obj:item.video}}}]:[]
+    /*const videoList = item.video?[{ uid: -1,name: item.video.fileName, status: 'done', url: '', response: {result:{obj:item.video}}}]:[]
     const pptList = item.ppt?[{ uid: -1,name: item.ppt.fileName, status: 'done', url: '', response: {result:{obj:item.ppt}}}]:[]
     const learnList = item.learn?[{ uid: -1,name: item.learn.fileName, status: 'done', url: '', response: {result:{obj:item.learn}}}]:[]
-    this.setState({videos: videoList, ppts: pptList, learns: learnList})
+    this.setState({videos: videoList, ppts: pptList, learns: learnList})*/
   }
 
   render() {
@@ -275,6 +291,9 @@ export default class UpdateModal extends React.Component {
                 </Upload>
               </Col>
             </Row>
+          </FormItem>
+          <FormItem {...formItemLayout} label="课程标签">
+            {getFieldDecorator('courseTags')(<CourseTag cid={this.props.item.id}/>)}
           </FormItem>
           <FormItem>
             {getFieldDecorator("content", {rules: [{required: true, message: '课程内容不能为空'}]})(<MyEditor content={this.props.item.content} onChangeContent={handleChangeContent}/>)}

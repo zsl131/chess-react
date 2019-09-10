@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Icon } from 'antd';
+import { Icon, message } from 'antd';
 import { routerRedux } from 'dva/router'
 import Operator from './components/Operator';
 import Filter from './components/Filter';
@@ -67,6 +67,9 @@ const Teacher = ({
       dispatch({type: 'teacher/queryGradeRole', payload: {tid: record.id}}).then(()=> {
         dispatch({ type: 'teacher/modifyState', payload: { authRoleVisible: true, item: record } });
       });
+    },
+    initPwd: (record) => {
+      dispatch({type: 'teacher/initPwd', payload: {id: record.id, phone: record.phone}});
     }
   }
 

@@ -22,7 +22,7 @@ const ListRecord = ({
     title: '二维码',
     render: (record) => {
       return (
-        <div><QRCode value={`${configApi.baseUrl}/wx/activitySignIn?recordId=${record.id}`} />
+        <div><QRCode value={`${configApi.baseUrl}/wx/activityRecord/signUp?recordId=${record.id}`} />
           <p>ID: {record.id}</p>
         </div>
       );
