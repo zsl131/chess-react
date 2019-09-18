@@ -9,6 +9,7 @@ import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import TeacherCountModal from './components/TeacherCountModal';
 import TeacherRoleModal from './components/TeacherRoleModal';
+import TeacherGradeModal from "./components/TeacherGradeModal";
 
 const Teacher = ({
                   dispatch,
@@ -70,6 +71,11 @@ const Teacher = ({
     },
     initPwd: (record) => {
       dispatch({type: 'teacher/initPwd', payload: {id: record.id, phone: record.phone}});
+    },
+    setGrade: (record) => {
+      dispatch({type: 'teacher/onSetGrade', payload: {tid: record.id}}).then(()=> {
+        dispatch({ type: 'teacher/modifyState', payload: { setGradeVisible: true, item: record } });
+      });
     }
   }
 
@@ -149,6 +155,25 @@ const Teacher = ({
     }
   }
 
+  const teaGradeOpts = {
+    maskClosable: false,
+    visible: teacher.setGradeVisible,
+    item: teacher.item,
+    gradeList: teacher.gradeList,
+    gradeIds: teacher.gradeIds,
+    title: `为[${teacher.item.name}]设置年级`,
+    onCancel: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { setGradeVisible: false } });
+    },
+    onOk: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { setGradeVisible: false } });
+    },
+    setGrade: (obj) => {
+      // console.log(obj);
+      dispatch({type: 'teacher/setGrade', payload:obj});
+    }
+  }
+
   return(
     <div>
       <div className="listHeader">
@@ -165,6 +190,7 @@ const Teacher = ({
       {teacher.updateVisible && <UpdateModal {...updateOpts}/>}
       {teacher.videoCountVisible && <TeacherCountModal {...teaCountOpts}/>}
       {teacher.authRoleVisible && <TeacherRoleModal {...teaRoleOpts}/>}
+      {teacher.setGradeVisible && <TeacherGradeModal {...teaGradeOpts}/>}
     </div>
   );
 }

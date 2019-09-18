@@ -11,9 +11,12 @@ export default {
     updateVisible: false,
     videoCountVisible: false,
     authRoleVisible: false,
+    setGradeVisible: false,
     roleList:[],
     ridList:[],
     countTree:[],
+    gradeList:[],
+    gradeIds:[],
   },
   reducers: {
     modifyState(state, {payload: options}) {
@@ -63,6 +66,14 @@ export default {
     },
     *initPwd({payload: obj}, {call}) {
       const data = yield call(objService.initPwd, obj);
+      if(data) {message.success(data.message);}
+    },
+    *onSetGrade({payload: obj}, {call, put}) {
+      const data = yield call(objService.onSetGrade, obj);
+      yield put({type: "modifyState", payload: {gradeList: data.gradeList, gradeIds: data.gids}});
+    },
+    *setGrade({payload: obj}, {call}) {
+      const data = yield call(objService.setGrade, obj);
       if(data) {message.success(data.message);}
     }
   },

@@ -54,7 +54,7 @@ export default class CourseTag extends React.Component {
       visible: this.state.addVisible,
       maskClosable: false,
       onOk: (obj) => {
-        console.log(obj);
+        //console.log(obj);
         const that = this;
         let allTags = this.state.allTags;
         request("classCourseTagService.loadTag", obj, true).then((res) => {

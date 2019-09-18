@@ -7,6 +7,7 @@ const List = ({
                 onUpdate,
                 handleVideoCount,
                 authGradeRole,
+                setGrade,
                 onPageChange,
                 initPwd,
                 totalElement,
@@ -58,6 +59,9 @@ const List = ({
           </Menu.Item>
           <Menu.Item>
             <span onClick={()=>authGradeRole(record)}><Icon type="team"/> 授权年级角色</span>
+          </Menu.Item>
+          <Menu.Item>
+            <span onClick={()=>setGrade(record)}><Icon type="team"/> 设置年级</span>
           </Menu.Item>
         </ListOperator>
       );

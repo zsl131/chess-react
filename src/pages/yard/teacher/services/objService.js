@@ -45,6 +45,14 @@ function initPwd(obj) {
   return request(baseService + ".initPwd", obj, true);
 }
 
+function onSetGrade(obj) {
+  return request(baseService+".onSetGrade", obj, true);
+}
+
+function setGrade(obj) {
+  return request(baseService+".setGrade", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
@@ -56,4 +64,6 @@ export {
   queryCountTree,
   saveCount,
   initPwd,
+  onSetGrade,
+  setGrade,
 }
