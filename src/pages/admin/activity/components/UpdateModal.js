@@ -11,6 +11,7 @@ export default class UpdateModal extends React.Component {
 
   state = {
     item:this.props.item,
+    fileList:[]
   }
 
   componentDidMount() {
