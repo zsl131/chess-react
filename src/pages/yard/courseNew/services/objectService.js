@@ -19,9 +19,14 @@ function addOrUpdateCourse(obj){
   return request(courseService+".addOrUpdate", obj, true);
 }
 
+function setShowTest(obj) {
+  return request(courseService+".setShowTest", obj, true);
+}
+
 export {
   index,
   addCategory,
   updateCategory,
   addOrUpdateCourse,
+  setShowTest,
 }

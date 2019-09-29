@@ -53,6 +53,10 @@ function setGrade(obj) {
   return request(baseService+".setGrade", obj, true);
 }
 
+function setIsTest(obj) {
+  return request(baseService+".setIsTest", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
@@ -66,4 +70,5 @@ export {
   initPwd,
   onSetGrade,
   setGrade,
+  setIsTest,
 }

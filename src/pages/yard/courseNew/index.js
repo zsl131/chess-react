@@ -116,6 +116,9 @@ const CourseNew = ({
     },
     updateCourse: (obj)=> {
       dispatch({type: "courseNew/addOrUpdateCourse", payload: obj }).then(()=>{handleRefresh()});
+    },
+    setShowTest: (record) => {
+      dispatch({type: "courseNew/setShowTest", payload: {id: record.id, showTest: record.showTest==="1"?"0":"1"}}).then(()=>{handleRefresh()});
     }
   }
 

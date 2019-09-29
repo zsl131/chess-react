@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pagination, Popconfirm, Table,Menu, Icon, Button} from 'antd';
+import {Button, Icon, Menu, Pagination, Popconfirm, Table, Tooltip} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
@@ -10,6 +10,7 @@ const List = ({
                 setGrade,
                 onPageChange,
                 initPwd,
+                setIsTest,
                 totalElement,
                 ...listOpts
               }) => {
@@ -49,6 +50,9 @@ const List = ({
     render: (record) => {
       return <Popconfirm title="确定将密码初始化为手机号码后6位吗？" onConfirm={()=>initPwd(record)}><Button>重置</Button></Popconfirm>
     }
+  }, {
+    title: '测试',
+    render:(record)=>{return <Tooltip placement="top" title="是否为测试教师用户"><Button icon={record.isTest==="1"?"check":"close"} type={record.isTest==="1"?"danger":"default"} onClick={()=>setIsTest(record)}/></Tooltip>}
   }, {
     title: '操作',
     render: (text, record) => {

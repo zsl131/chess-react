@@ -75,6 +75,10 @@ export default {
     *setGrade({payload: obj}, {call}) {
       const data = yield call(objService.setGrade, obj);
       if(data) {message.success(data.message);}
+    },
+    *setIsTest({payload: obj}, {call}) {
+      const data = yield call(objService.setIsTest, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

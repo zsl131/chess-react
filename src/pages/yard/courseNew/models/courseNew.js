@@ -39,6 +39,10 @@ export default {
     *addOrUpdateCourse({payload: obj}, {call}) {
       const data = yield call(objService.addOrUpdateCourse, obj);
       if(data) {message.success("保存成功");}
+    },
+    *setShowTest({payload: obj}, {call}) {
+      const data = yield call(objService.setShowTest, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

@@ -76,6 +76,9 @@ const Teacher = ({
       dispatch({type: 'teacher/onSetGrade', payload: {tid: record.id}}).then(()=> {
         dispatch({ type: 'teacher/modifyState', payload: { setGradeVisible: true, item: record } });
       });
+    },
+    setIsTest: (record) => {
+      dispatch({type: "teacher/setIsTest", payload: {id: record.id, isTest: record.isTest==="1"?"0":"1"}}).then(()=>{handleRefresh()});
     }
   }
 

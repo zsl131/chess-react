@@ -24,6 +24,7 @@ export default class ListCourse extends React.Component {
       totalElements,
       addCourse,
       updateCourse,
+      setShowTest,
       ...listOpts
     } = this.props;
 
@@ -58,6 +59,9 @@ export default class ListCourse extends React.Component {
     }, {
       title: '学习单',
       render:(record)=>{return record.learnId?<Tooltip placement="top" title="查看已上传的学习单"><Button icon="eye" onClick={()=>handleShowPDF(record.learnId)}/></Tooltip>:<span className="red">未传</span>}
+    }, {
+      title: '测试',
+      render:(record)=>{return <Tooltip placement="top" title="是否显示给测试教师用户"><Button icon={record.showTest==="1"?"check":"close"} type={record.showTest==="1"?"primary":"default"} onClick={()=>setShowTest(record)}/></Tooltip>}
     }, {
       title: '操作',
       render: (text, record) => {
