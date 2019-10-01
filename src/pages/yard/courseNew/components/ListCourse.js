@@ -4,6 +4,8 @@ import UpdateModal from '../../course/components/UpdateModal';
 import AddModal from '../../course/components/AddModal';
 import request from "../../../../utils/request";
 
+import styles from "./list.css";
+
 import ShowPDFModal from '../../course/components/ShowPDFModal';
 import PlayVideoModal from "../../../../components/PlayVideoModal";
 
@@ -29,6 +31,13 @@ export default class ListCourse extends React.Component {
     } = this.props;
 
     const columns = [{
+      title: '封面',
+      render: (text, record) => {
+        return (
+          <a key={record.id} href={record.imgUrl} target="_blank" rel="noopener noreferrer"><img src={record.imgUrl} alt={record.title} className={styles.avatarImg}/></a>
+        )
+      }
+    }, {
       title: '标题',
       // dataIndex: 'title'
       render:(record) =>{

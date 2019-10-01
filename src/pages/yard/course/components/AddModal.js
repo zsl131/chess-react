@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Select, Tooltip, TreeSelect, Upload} from 'antd';
+import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Select, Tooltip, TreeSelect, Upload, message} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import request from "../../../../utils/request";
+import PictureWall from '../../../../components/PictureWall';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -131,6 +132,23 @@ export default class AddModal extends React.Component {
         setFieldsValue({"learnId": ''});
         this.setState({learnList: 0})
       }
+    };
+
+    const onBeforeUpload = (file) => {
+      // console.log("====", file);
+      if(file.type.indexOf("image")<0) {
+        message.error("只能上传图片格式文件");
+        return false;
+      }
+      return true;
+    }
+
+    const onFileChange = (file) => {
+      // console.log("onFileChange", file);
+      if(file.status === 'done') {
+        console.log(file);
+        setFieldsValue({"imgUrl": file.response});
+      }
     }
 
     return(
@@ -217,7 +235,19 @@ export default class AddModal extends React.Component {
             </Row>
           </FormItem>
           <FormItem {...formItemLayout} label="学习目标">
-            {getFieldDecorator('learnTarget')(<TextArea placeholder="输入课程学习目标" rows={3}>&nbsp;</TextArea>)}
+            <Row>
+              <Col span={6}>
+                <Tooltip placement="topLeft" title="上传封面图片">
+                  <PictureWall onBeforeUpload={onBeforeUpload} accept="image/png, image/jpeg, image/gif" showMsg="封面图片" data={{'path':'abcdef'}} onFileChange={onFileChange}/>
+                  {getFieldDecorator('imgUrl')(<Input type="hidden"/>)}
+                </Tooltip>
+              </Col>
+              <Col span={18}>
+                <Tooltip placement="topLeft" title="输入课程学习目标">
+                  {getFieldDecorator('learnTarget')(<TextArea placeholder="输入课程学习目标" rows={3}>&nbsp;</TextArea>)}
+                </Tooltip>
+              </Col>
+            </Row>
           </FormItem>
           <FormItem {...formItemLayout} label="附件">
             <Row>
