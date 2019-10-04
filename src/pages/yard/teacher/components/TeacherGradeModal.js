@@ -1,42 +1,37 @@
 import React from 'react';
-import {Col, Icon, Modal, Row, Table} from 'antd';
+import {Button, Col, Icon, Modal, Row} from 'antd';
 
 export default class TeacherGradeModal extends React.Component {
 
+  state= {
+    gradeIds:this.props.gradeIds
+  };
+
   render() {
 
-    const {gradeIds, gradeList, setGrade, item} = this.props;
+    const {gradeList, setGrade, item} = this.props;
 
-    const columns = [{
-      title: '年级名称',
-      dataIndex: 'name'
-    }];
-
-    const rowSelection = {
-      /*onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        onSetMenu(selectedRowKeys)
-      },*/
-      onSelect: (record, selected, selectedRows) => {
-        // console.log(`record:${record.name},,selected:${selected}`,`selectedRows::${selectedRows}`);
-        setGrade({tid: item.id, gid: record.id, flag:(selected?"1":"0")});
-      },
-      getCheckboxProps(record) {
-        return {
-          // defaultChecked: record.id === 1, // 配置默认勾选的列
-          defaultChecked: gradeIds.includes(record.id)
-        };
-      },
-    };
+    const onSetGrade = (obj) => {
+      setGrade({tid: item.id, gid: obj.gid, flag: obj.flag});
+      let newIds = this.state.gradeIds;
+      if(newIds.includes(obj.gid)) {
+        newIds.splice(newIds.findIndex(item => item === obj.gid), 1);
+      } else {
+        newIds.push(obj.gid);
+      }
+      this.setState({gradeIds: newIds});
+    }
 
     return(
       <Modal {...this.props} footer={null}>
         <Row>
           <Col span={24}>
             <div className="listHeader">
-              <h3><Icon type="bars"/> 年级列表<b>（勾选上即授权，不能全选）</b></h3>
+              <h3><Icon type="bars"/> 年级列表<b>（点亮即授权）</b></h3>
             </div>
-            <Table dataSource={gradeList} rowSelection={rowSelection} columns={columns}/>
+            {gradeList.map((grade)=> {
+              return <span key={grade.id} style={{"margin":"5px", "float":"left"}}><Button onClick={()=>onSetGrade({flag:this.state.gradeIds.includes(grade.id)?"0":"1", gid: grade.id})} key={grade.id} type={this.state.gradeIds.includes(grade.id)?"primary":"default"}>{grade.name}</Button></span>
+            })}
           </Col>
         </Row>
       </Modal>

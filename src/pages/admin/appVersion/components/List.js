@@ -30,14 +30,21 @@ const List = ({
       )
     }
   }, {
-    title: "更新标记",
+    title: "是否更新",
     render:(record)=> {
       return (
-        <p><Tooltip placement="top" title="设置是否可更新"><Button icon={record.status==="1"?"check":"close"} type={record.status==="1"?"danger":"default"} onClick={()=>setField({field: "status", val:(record.status==='1'?"0":"1"), id: record.id})}/></Tooltip></p>
+        <p><Tooltip placement="top" title="设置是否可更新"><Button icon={record.status==="1"?"check":"close"} type={record.status==="1"?"primary":"default"} onClick={()=>setField({field: "status", val:(record.status==='1'?"0":"1"), id: record.id})}/></Tooltip></p>
       )
     }
   }, {
-    title: "状态",
+    title: "是否强制",
+    render:(record)=> {
+      return (
+        <p><Tooltip placement="top" title="设置是否为强制更新"><Button icon={record.isForce==="1"?"check":"close"} type={record.isForce==="1"?"primary":"default"} onClick={()=>setField({field: "isForce", val:(record.isForce==='1'?"0":"1"), id: record.id})}/></Tooltip></p>
+      )
+    }
+  }, {
+    title: "是否有效",
     render:(record)=> {
       return (
         <p><Tooltip placement="top" title="设置此数据是否有效"><Button icon={record.flag==="1"?"check":"close"} type={record.flag==="1"?"primary":"default"} onClick={()=>setField({field: 'flag', val: (record.flag==='1'?"0":"1"), id: record.id})}/></Tooltip></p>
