@@ -36,7 +36,8 @@ export default class UpdateModal extends React.Component {
 
   render() {
 
-    const { getFieldDecorator, validateFieldsAndScroll} = this.props.form;
+    const { getFieldDecorator, setFieldsValue, validateFieldsAndScroll} = this.props.form;
+    const {item} = this.props;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -89,7 +90,7 @@ export default class UpdateModal extends React.Component {
             <PictureWall fileList={this.state.fileList} onBeforeUpload={onBeforeUpload} accept="image/png, image/jpeg, image/gif" showMsg="上传图片" data={{'path':'swiper'}} onFileChange={onFileChange}/>
           </FormItem>
           <FormItem {...formItemLayout} label="是否启用">
-            {getFieldDecorator("status")(<Switch checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross" />}/>)}
+            {getFieldDecorator("status")(<Switch defaultChecked={item.status==="1"} checkedChildren={<Icon type="check"/>} unCheckedChildren={<Icon type="cross" />}/>)}
           </FormItem>
         </Form>
       </Modal>

@@ -73,7 +73,7 @@ const AppSwiper = ({
     cancelText: '取消',
     maskClosable: false,
     item: appSwiper.item,
-    confirmLoading: loading.effects['appSwiper/addOrUpdateCode'],
+    confirmLoading: loading.effects['appSwiper/addOrUpdate'],
     onOk(datas) {
       dispatch({ type: 'appSwiper/updateState', payload: { updateVisible: false } });
       dispatch({ type: 'appSwiper/addOrUpdate', payload: datas }).then(() => {handleRefresh()});
