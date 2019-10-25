@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Pagination, Popconfirm, Popover, Table} from 'antd';
+import {Button, Icon, Pagination, Popconfirm, Tooltip, Table} from 'antd';
 
 import UpdateModal from '../../classSystemOld/components/UpdateModal';
 import AddModal from '../../classSystemOld/components/AddModal';
@@ -15,7 +15,7 @@ export default class ListRootSystem extends React.Component {
 
   render() {
     const {
-      onDelete,
+      deleteSystem,
       system,
       totalElements,
       addSystem,
@@ -43,11 +43,9 @@ export default class ListRootSystem extends React.Component {
         return (
           <div>
           <Button type="default" icon="edit" onClick={()=>handleUpdate(record)}>修改</Button>
-          {/*<Popover content={operators(record)} title="相关操作" placement="bottom">
-            <span className="ant-dropdown-link">
-              操作 <Icon type="down" />
-            </span>
-          </Popover>*/}
+          <Tooltip placement="top" title="删除体系">
+            <Popconfirm okType="danger" onConfirm={()=>deleteSystem(record)} title={`确定删除[${record.name}]？此操作不可逆！`}><Button type="default" icon="close"/></Popconfirm>
+        </Tooltip>
           </div>
         );
       }

@@ -94,16 +94,17 @@ const ClassSystem = ({
     onUpdate: (item) => {
       dispatch({ type: 'classSystem/setState', payload: { item: item, updateVisible: true } });
     },
-    onDelete: (id) => {
-      dispatch({ type: "classSystem/deleteMenu", payload: id }).then(() => {handleRefresh()});
+    deleteSystem: (obj) => {
+      // console.log(obj);
+      dispatch({ type: "classSystem/deleteSystem", payload: obj.id }).then(() => {handleRefresh()});
     },
     addSystem: (obj) => {
       dispatch({ type: "classSystem/addSystem", payload: obj }).then(() => {handleRefresh()});
     },
     updateSystem: (obj)=> {
       dispatch({type: "classSystem/updateSystem", payload: obj }).then(()=>{handleRefresh()});
-    }
-  }
+    },
+  };
 
   const listDetailOpts = {
     dataSource: classSystem.data,
@@ -116,8 +117,12 @@ const ClassSystem = ({
     },
     updateDetail: (obj)=> {
       dispatch({type: "classSystem/addOrUpdateDetail", payload: obj }).then(()=>{handleRefresh()});
+    },
+    deleteSystem: (obj)=> {
+      // console.log(obj);
+      dispatch({ type: "classSystem/deleteSystemDetail", payload: obj.id }).then(() => {handleRefresh()});
     }
-  }
+  };
 
   const showDetailOpts = {
     detail: classSystem.obj,

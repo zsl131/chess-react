@@ -40,7 +40,15 @@ export default {
     *addOrUpdateDetail({payload: obj}, {call}) {
       const data = yield call(objService.addOrUpdateDetail, obj);
       if(data) {message.success("保存成功");}
-    }
+    },
+    *deleteSystem({payload: id}, {call}) {
+      const data = yield call(objService.deleteSystem, {id});
+      if(data) {message.success(data.message);}
+    },
+    *deleteSystemDetail({payload: id}, {call}) {
+      const data = yield call(objService.deleteSystemDetail, {id});
+      if(data) {message.success(data.message);}
+    },
   },
   subscriptions: {
     setup({ history, dispatch }) {

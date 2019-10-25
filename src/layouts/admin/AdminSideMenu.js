@@ -55,7 +55,7 @@ class AdminSideMenu extends React.Component {
           defaultOpenKeys={['sub1']}
           mode="inline"
           theme="dark"
-          inlineCollapsed={this.state.collapsed}
+          collapsed="{collapsed}"
           onClick={this.handlerClick.bind(this)}
         >
           {menus}

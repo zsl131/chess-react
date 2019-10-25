@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Table, Tooltip} from 'antd';
+import {Button, Icon, Table, Tooltip,Popconfirm} from 'antd';
 import UpdateDetailModal from '../components/UpdateDetailModal';
 import AddDetailModal from '../components/AddDetailModal';
 import Download from "./Download";
@@ -17,6 +17,7 @@ export default class ListDetail extends React.Component {
       system,
       addDetail,
       updateDetail,
+      deleteSystem,
       ...listOpts
     } = this.props;
 
@@ -50,9 +51,14 @@ export default class ListDetail extends React.Component {
       title: '操作',
       render: (text, record) => {
         return (
+          <div>
           <Tooltip placement="top" title="修改体系内容">
           <Button type="default" icon="edit" onClick={()=>handleUpdate(record)}/>
           </Tooltip>
+            <Tooltip placement="top" title="删除体系">
+              <Popconfirm okType="danger" onConfirm={()=>deleteSystem(record)} title={`确定删除[${record.name}]？此操作不可逆！`}><Button type="default" icon="close"/></Popconfirm>
+            </Tooltip>
+          </div>
         );
       }
     }];

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Affix, Layout, LocaleProvider} from 'antd';
+import {Affix, Layout, ConfigProvider} from 'antd';
 import {connect} from 'dva';
 
 import AdminHeader from './admin/AdminHeader';
@@ -25,25 +25,26 @@ class MainLayout extends React.Component {
 
   state = {
     collapsed: false
-  }
+  };
 
   componentWillMount() {
     const curVal = sessionStorage.getItem("curCollapsed");
     this.setState({collapsed: curVal==="1"});
   }
 
-  // console.log("layoutIndex->path::", props);
   render() {
+
+    const { locale } = this.state;
 
     const setCollapse = () => {
       const curVal = !this.state.collapsed;
       this.setState({collapsed: curVal});
       sessionStorage.setItem("curCollapsed", curVal?"1":"0");
-    }
+    };
 
     const onCollapse = () => {
       setCollapse();
-    }
+    };
 
     const props = this.props;
 
@@ -59,11 +60,11 @@ class MainLayout extends React.Component {
       // console.log(user)
     } else if(pathname.indexOf("/public")===0) {
       return (
-        <LocaleProvider locale={zhCN}>
+        <ConfigProvider locale={locale}>
           <ErrorModel>
             {props.children}
           </ErrorModel>
-        </LocaleProvider>
+        </ConfigProvider>
       );
     } else if ((pathname !== '/login' && pathname !== '/init') && user === null) {
       // console.log("loginUser is null", user);
@@ -75,36 +76,30 @@ class MainLayout extends React.Component {
       }
     }
 
-    // console.log("layout::", props, dispatch);
-
-    // console.log("layoutIndex:::", window.history);
-    // console.log("layoutIndex:::", props);
-
     if (pathname === '/login' || pathname === '/init') {
       return (
-        <LocaleProvider locale={zhCN}>
+        <ConfigProvider locale={locale}>
         <Layout>
           <Content>{props.children}</Content>
         </Layout>
-        </LocaleProvider>
+        </ConfigProvider>
       );
     } else if (isWx || isWeixin) {
       return (
-        <LocaleProvider locale={zhCN}>
+        <ConfigProvider locale={locale}>
         <div style={{"background":"#FFFFFF"}}>
           <WxNormalHeader/>
           {props.children}
           <WxNormalFooter/>
         </div>
-        </LocaleProvider>
+        </ConfigProvider>
       );
     } else if (pathname === '/weixin/root' || pathname === '/weixin/public/loadLoginAccount') {
       return (<p>{props.children}</p>);
     }
 
-
     return (
-      <LocaleProvider locale={zhCN}>
+      <ConfigProvider locale={locale}>
       <Layout className={styles.adminLayout}>
         <Layout className={styles.adminMenuSider}>
           <Affix offsetTop={0} style={{"overflow": "auto"}}>
@@ -122,7 +117,7 @@ class MainLayout extends React.Component {
         </Layout>
 
       </Layout>
-      </LocaleProvider>
+      </ConfigProvider>
     );
   }
 }

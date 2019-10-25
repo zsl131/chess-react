@@ -8,7 +8,7 @@ const AddModal = ({
     validateFields,
   },
   onAdd,
-  ...addOpts,
+  ...addOpts
 }) => {
   const handleOk =(e)=> {
     e.preventDefault();

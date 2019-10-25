@@ -23,10 +23,20 @@ function setShowTest(obj) {
   return request(courseService+".setShowTest", obj, true);
 }
 
+function deleteCategory(id) {
+  return request(cateService+".delete", id, true);
+}
+
+function deleteCourse(id) {
+  return request(courseService+".delete", id, true);
+}
+
 export {
   index,
   addCategory,
   updateCategory,
   addOrUpdateCourse,
   setShowTest,
+  deleteCategory,
+  deleteCourse,
 }

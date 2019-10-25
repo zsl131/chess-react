@@ -7,7 +7,7 @@ const List = ({
   onDelConfirm,
   onUpdate,
   onPageChange,
-  ...listOpts,
+  ...listOpts
 }) => {
   const delOpts={
     onText:'确定删除',

@@ -102,6 +102,10 @@ const CourseNew = ({
     },
     updateCategory: (obj)=> {
       dispatch({type: "courseNew/updateCategory", payload: obj }).then(()=>{handleRefresh()});
+    },
+    deleteCategory: (obj) => {
+      // console.log(obj)
+      dispatch({ type: "courseNew/deleteCategory", payload: obj.id }).then(() => {handleRefresh()});
     }
   }
 
@@ -119,6 +123,9 @@ const CourseNew = ({
     },
     setShowTest: (record) => {
       dispatch({type: "courseNew/setShowTest", payload: {id: record.id, showTest: record.showTest==="1"?"0":"1"}}).then(()=>{handleRefresh()});
+    },
+    deleteCourse: (obj) => {
+      dispatch({type: "courseNew/deleteCourse", payload: obj.id }).then(()=>{handleRefresh()});
     }
   }
 

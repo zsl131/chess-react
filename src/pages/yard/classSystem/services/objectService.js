@@ -14,8 +14,18 @@ function addOrUpdateDetail(obj) {
   return request(detailService+".addOrUpdate", obj, true);
 }
 
+function deleteSystem(id) {
+  return request(baseService+".deleteSystem", id, true);
+}
+
+function deleteSystemDetail(id) {
+  return request(detailService+".deleteSystemDetail", id, true);
+}
+
 export {
   index,
   addOrUpdateSystem,
   addOrUpdateDetail,
+  deleteSystem,
+  deleteSystemDetail
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Pagination, Table, Tooltip} from 'antd';
+import {Button, Icon, Pagination, Table, Tooltip, Popconfirm} from 'antd';
 import UpdateModal from '../../course/components/UpdateModal';
 import AddModal from '../../course/components/AddModal';
 import request from "../../../../utils/request";
@@ -26,6 +26,7 @@ export default class ListCourse extends React.Component {
       totalElements,
       addCourse,
       updateCourse,
+      deleteCourse,
       setShowTest,
       ...listOpts
     } = this.props;
@@ -75,9 +76,14 @@ export default class ListCourse extends React.Component {
       title: '操作',
       render: (text, record) => {
         return (
+          <div>
           <Tooltip placement="top" title="修改课程">
           <Button type="default" icon="edit" onClick={()=>handleUpdate(record)}/>
           </Tooltip>
+          <Tooltip placement="top" title="删除课程">
+            <Popconfirm okType="danger" onConfirm={()=>deleteCourse(record)} title={`确定删除[${record.title}]？此操作不可逆！`}><Button type="default" icon="close"/></Popconfirm>
+        </Tooltip>
+          </div>
         );
       }
     }];

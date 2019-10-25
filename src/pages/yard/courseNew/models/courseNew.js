@@ -43,7 +43,15 @@ export default {
     *setShowTest({payload: obj}, {call}) {
       const data = yield call(objService.setShowTest, obj);
       if(data) {message.success(data.message);}
-    }
+    },
+    *deleteCourse({payload: id}, {call}) {
+      const data = yield call(objService.deleteCourse, {id});
+      if(data) {message.success(data.message);}
+    },
+    *deleteCategory({payload: id}, {call}) {
+      const data = yield call(objService.deleteCategory, {id});
+      if(data) {message.success(data.message);}
+    },
   },
   subscriptions: {
     setup({ history, dispatch }) {

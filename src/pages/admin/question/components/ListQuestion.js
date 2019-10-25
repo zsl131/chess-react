@@ -8,7 +8,7 @@ const ListQuestion = ({
   onUpdate,
   onPageChange,
   question,
-  ...listOpts,
+  ...listOpts
 }) => {
   const delOpts = {
     okText: '确定删除',
