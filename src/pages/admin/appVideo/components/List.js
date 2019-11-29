@@ -41,6 +41,7 @@ const List = ({
             {record.title}
             </p>
           <p>{record.createTime}</p>
+          <p>{record.url}</p>
         </div>
       )
     }

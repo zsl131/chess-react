@@ -12,16 +12,14 @@ export default class UpdateModal extends React.Component {
   state = {
     fileList : [],
     status: false,
-    isTop: false,
-    needSend:false,
   }
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
     setFieldsValue(this.props.item);
     const curItem = this.props.item;
-    setFieldsValue({cateId:''+curItem.cateId})
-    this.setState({status: curItem.status === '1', isTop: curItem.isTop==='1', needSend: curItem.needSend==='1'})
+    this.setState({status: curItem.status === '1'});
+    //console.log(curItem);
     if(curItem.picPath) {
       const fileList = [{
         uid: -1,
@@ -85,7 +83,7 @@ export default class UpdateModal extends React.Component {
           <FormItem>
             <Row>
               <Col span={4}>
-                <PictureWall showMsg="封面图片" accept="image/png, image/jpeg, image/gif" data={{'path':'appVideo'}} onFileChange={onFileChange}/>
+                <PictureWall showMsg="封面图片" fileList={this.state.fileList} accept="image/png, image/jpeg, image/gif" data={{'path':'appVideo'}} onFileChange={onFileChange}/>
               </Col>
               <Col span={20}>
                 {getFieldDecorator('guide', {rules: [{required: true, message: '科普视频导读不能为空'}]})(<TextArea placeholder="输入科普视频导读" autosize={{ minRows: 4, maxRows: 4 }}/>)}
@@ -95,7 +93,7 @@ export default class UpdateModal extends React.Component {
           <FormItem>
             <Row>
               <Col span={8}>
-                状态：{getFieldDecorator("status")(<Switch checkedChildren="显示" unCheckedChildren="隐藏"/>)}
+                状态：{getFieldDecorator("status")(<Switch defaultChecked={this.state.status} checkedChildren="显示" unCheckedChildren="隐藏"/>)}
               </Col>
             </Row>
           </FormItem>
