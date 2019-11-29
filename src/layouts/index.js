@@ -11,11 +11,22 @@ import styles from './layout.css';
 
 import WxNormalHeader from './wx/WxNormalHeader';
 import WxNormalFooter from './wx/WxNormalFooter';
+<<<<<<< HEAD
 
 import zhCN from 'antd/es/locale/zh_CN';
 
 import {checkAuthByUrl, hideNoAuthContent} from '../utils/authUtils';
 
+=======
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+
+import {checkAuthByUrl, hideNoAuthContent} from '../utils/authUtils';
+
+moment.locale('zh-cn');
+
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
 const { Sider, Content } = Layout;
 
 class MainLayout extends React.Component {
@@ -31,6 +42,11 @@ class MainLayout extends React.Component {
 
   render() {
 
+<<<<<<< HEAD
+=======
+    const { locale } = this.state;
+
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
     const setCollapse = () => {
       const curVal = !this.state.collapsed;
       this.setState({collapsed: curVal});
@@ -55,7 +71,11 @@ class MainLayout extends React.Component {
       // console.log(user)
     } else if(pathname.indexOf("/public")===0) {
       return (
+<<<<<<< HEAD
         <ConfigProvider locale={zhCN}>
+=======
+        <ConfigProvider locale={locale}>
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
           <ErrorModel>
             {props.children}
           </ErrorModel>
@@ -73,7 +93,11 @@ class MainLayout extends React.Component {
 
     if (pathname === '/login' || pathname === '/init') {
       return (
+<<<<<<< HEAD
         <ConfigProvider locale={zhCN}>
+=======
+        <ConfigProvider locale={locale}>
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
         <Layout>
           <Content>{props.children}</Content>
         </Layout>
@@ -81,7 +105,11 @@ class MainLayout extends React.Component {
       );
     } else if (isWx || isWeixin) {
       return (
+<<<<<<< HEAD
         <ConfigProvider locale={zhCN}>
+=======
+        <ConfigProvider locale={locale}>
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
         <div style={{"background":"#FFFFFF"}}>
           <WxNormalHeader/>
           {props.children}
@@ -94,7 +122,11 @@ class MainLayout extends React.Component {
     }
 
     return (
+<<<<<<< HEAD
       <ConfigProvider locale={zhCN}>
+=======
+      <ConfigProvider locale={locale}>
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
       <Layout className={styles.adminLayout}>
         <Layout className={styles.adminMenuSider}>
           <Affix offsetTop={0} style={{"overflow": "auto"}}>

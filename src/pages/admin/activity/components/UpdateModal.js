@@ -12,7 +12,11 @@ export default class UpdateModal extends React.Component {
   state = {
     item:this.props.item,
     fileList:[]
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> 941da9c9188d829abe627bc665eebdce777b2bda
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
