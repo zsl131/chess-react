@@ -1,0 +1,20 @@
+.listImg {
+  width:100%; border-radius: 10px; padding-right:5px;
+}
+
+.guide {
+  color:#bababa; padding-top:7px; line-height: 24px;
+}
+
+.singleObj {
+  margin-bottom:12px;
+}
+
+.titleHref {
+  color:#000;
+}
+
+div.singleObjDiv {
+  /*width:50%; float:left;*/
+}
+

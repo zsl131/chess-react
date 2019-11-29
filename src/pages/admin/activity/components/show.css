@@ -1,0 +1,14 @@
+.title {
+  width: 100%; text-align:center; border-bottom: 1px #ddd solid; margin-bottom: 15px;
+}
+.title p {
+  color: #b9b9b9;
+}
+
+.guide {
+  background:#f1f1f1; border-left:4px #d5d5d5 solid; padding:8px; color: #a1a1a1;
+}
+
+.content {
+  padding: 8px; line-height:28px;
+}

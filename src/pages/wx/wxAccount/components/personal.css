@@ -1,0 +1,22 @@
+.mainDiv {
+  background: #fafafa; border-bottom: 3px #e8e8e8 solid; width:100%; float:left; position: relative;
+}
+
+.headimg {
+  width:60px; height:60px; border-radius: 40px; margin: 8px 12px; border: 2px #ddd solid; float:left;
+}
+
+.content {
+  float:left;
+}
+.nickname {
+  margin-top: 13px; font-weight:bold; float:left; width:100%;
+}
+
+.phone {
+  margin-top:6px; float:left; width:100%;
+}
+
+.refreshBtn {
+  position: absolute; top: -35px; right:10px; float:right;
+}
