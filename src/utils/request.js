@@ -29,7 +29,7 @@ function checkDatas(data) {
 
 function catchError(error) {
   if(error.message.search("Gateway Timeout")>=0 || error.message.search("Bad Gateway")>=0) {
-    message.error("服务端网络异常", 6);
+    message.error("服务端网络异常：", 6);
   } else {
     message.error("出现错误：" + error.message, 6);
   }
