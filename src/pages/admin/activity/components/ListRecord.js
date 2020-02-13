@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pagination, Table} from 'antd';
+import {Button, Pagination, Table} from 'antd';
 import QRCode from 'qrcode.react';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 import configApi from "../../../../utils/configApi";
@@ -9,6 +9,7 @@ const ListRecord = ({
   onUpdate,
   onPageChange,
   totalElement,
+  showImages,
   ...listOpts
 }) => {
 
@@ -52,7 +53,15 @@ const ListRecord = ({
       return (<div>{(record.status === '0' || record.status === '1')?<span className="blue">报名中</span>:<span className="red">停止报名</span>}</div>);
     }
   }, {
+    title: '照片',
+    render: (record) => {
+      return (
+        <Button onClick={()=>showImages(record)}>{record.imgCount}</Button>
+      )
+    }
+  }, {
     title: '操作',
+    dataIndex: 'id',
     render: (text, record) => {
       return (
         <ListOperator key={record.id} id={record.id} delName={record.holdTime} {...delOpts}/>

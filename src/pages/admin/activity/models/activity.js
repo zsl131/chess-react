@@ -15,6 +15,9 @@ export default {
     addRecordVisible: false,
     updateRecordVisible: false,
     recordItem:{},
+
+    imageVisible: false,
+    imageList: [],
   },
   reducers: {
     modifyState(state, { payload: options }) {
@@ -78,7 +81,20 @@ export default {
       if(data) {
         yield put({type:'onUpdateRecordPage', payload: data});
       }
-    }
+    },
+    *showImages({payload: obj}, {call,put}) {
+      const data =yield call(activityService.loadImage, {recordId: obj.id});
+      //console.log(data);
+      if(data) {
+        yield put({type: "modifyState", payload: {imageVisible: true, imageList: data.imageList, item: obj}});
+      }
+    },
+    *deleteImage({payload: id}, {call}) {
+      const data = yield call(activityService.deleteImage, {id});
+      if(data) {
+        message.success(data.message);
+      }
+    },
   },
   subscriptions: {
     setupt({ history, dispatch }) {

@@ -40,6 +40,14 @@ function loadOneRecord(id) {
   return request("activityRecordService.loadOne", id, true);
 }
 
+function loadImage(id) {
+  return request("activityRecordImageService.listByRecordId", id, true);
+}
+
+function deleteImage(id) {
+  return request("activityRecordImageService.deleteImage", id, true);
+}
+
 export {
   list,
   loadOne,
@@ -50,4 +58,6 @@ export {
   addOrUpdateRecord,
   deleteRecord,
   loadOneRecord,
+  loadImage,
+  deleteImage,
 }

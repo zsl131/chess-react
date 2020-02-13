@@ -9,6 +9,7 @@ import AddRecordModal from './components/AddRecordModal';
 import UpdateRecordModal from './components/UpdateRecordModal';
 
 import Show from "./components/Show";
+import ImageModal from "./components/ImageModal";
 
 const Record = ({
   activity,
@@ -46,8 +47,12 @@ const Record = ({
     onShow: (id) => {
       // console.log("id:::", id);
       dispatch({ type: 'activity/onShow', payload: id });
+    },
+    showImages: (obj) => {
+      console.log(obj);
+      dispatch({ type: 'activity/showImages', payload: obj });
     }
-  }
+  };
 
   const operatorOpts = {
     onAdd: () => {
@@ -99,7 +104,24 @@ const Record = ({
         handleRefresh();
       });
     }
-  }
+  };
+
+  const imgOpts = {
+    visible: activity.imageVisible,
+    imageList: activity.imageList,
+    record: activity.item,
+    maskClosable: false,
+    title: "活动图片",
+    onCancel:() => {
+      dispatch({type: 'activity/modifyState', payload: {imageVisible: false}});
+    },
+    onOk: (obj) => {
+      dispatch({type: 'activity/modifyState', payload: {imageVisible: false}});
+    },
+    deleteImage: (id)=> {
+      dispatch({type: 'activity/deleteImage', payload: id});
+    }
+  };
 
   return (
     <div>
@@ -120,6 +142,7 @@ const Record = ({
           {activity.showVisible && <Show {...showOpts}/>}
           {activity.addRecordVisible && <AddRecordModal {...addRecordOpts}/>}
           {activity.updateRecordVisible && <UpdateRecordModal {...updateRecordOpts}/>}
+          {activity.imageVisible && <ImageModal {...imgOpts}/>}
         </div>:
         <h2 className="red" style={{"textAlign":"center"}}>没有权限访问！</h2>
       }

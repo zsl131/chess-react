@@ -1,0 +1,12 @@
+.imageMain {
+  display: inline-block;
+}
+.singleImage {
+  width:180px; border:1px #e0e0e0 solid; border-radius: 10px; padding: 5px; display: inline-block; margin: 12px; background:#fafafa;
+}
+.singleImage img {
+  width: 100%;
+}
+.singleImage p {
+  width: 100%; text-align: center; overflow: hidden; padding-top: 5px;
+}
