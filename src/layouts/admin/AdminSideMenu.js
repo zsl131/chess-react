@@ -22,7 +22,10 @@ class AdminSideMenu extends React.Component {
   render() {
 
     const navMenus = JSON.parse(sessionStorage.getItem("navMenus"));
+    const systemList = JSON.parse(sessionStorage.getItem("systemList"));
 
+    const isTeacher = sessionStorage.getItem("isTeacher");
+    // console.log(isTeacher, navMenus);
 
     const menus = navMenus!==null?navMenus.map((item) => {
       return (
@@ -36,17 +39,25 @@ class AdminSideMenu extends React.Component {
       );
     }):"";
 
+    const systemData = systemList!==null?<SubMenu title="课程体系">
+      {
+        systemList.map((item)=>{
+          return (
+            <Menu.Item key={item.id}><Link to={'/admin/teacherCourse?gid='+item.id}>{item.name}</Link></Menu.Item>
+          )
+        })
+      }
+    </SubMenu>:"";
+
     const collapsed = this.props.collapsed;
 
     return (
       <div style={{"position":"relative", "height":"100vh"}}>
         <div className={styles.logoDiv}>
-          {/*<Icon type="radar-chart" style={{"fontSize":"50px", "color":"#FFF","marginTop":"5px"}}/>*/}
           <div className={styles.logo}></div>
         </div>
         <div className={styles.collapseDiv}>
           <Tooltip title={collapsed?"点击展开侧边导航":"点击收起侧边导航"} placement="right">
-            {/*<Button type="primary" shape="circle" onClick={this.props.onCollapse} style={{ marginBottom: 16 }} icon={collapsed?"right-circle":"left-circle"}/>*/}
             <Icon className={styles.collapseIcon} onClick={this.props.onCollapse} type={collapsed?"right-circle":"left-circle"}/>
           </Tooltip>
         </div>
@@ -58,7 +69,7 @@ class AdminSideMenu extends React.Component {
           collapsed="{collapsed}"
           onClick={this.handlerClick.bind(this)}
         >
-          {menus}
+          {isTeacher==="true"?systemData:menus}
         </Menu>
       </div>
     );

@@ -2,7 +2,7 @@ import * as userService from '../services/login';
 import * as objService from '../services/objectService';
 import router from 'umi/router';
 import {message} from 'antd';
-import {checkLogin, setLoginUser} from '../../../utils/authUtils';
+import {checkLogin, setLoginUser, setTeacherInfo} from '../../../utils/authUtils';
 
 export default {
   namespace: 'login',
@@ -28,10 +28,12 @@ export default {
     }
   },
   effects: {
-    *login({ payload: values }, { put, call }) {
+    *login({ payload: values }, { call }) {
       const data = yield call(userService.remoteCheckLogin, values);
       if(data) {
+        // console.log(data);
         setLoginUser(data.obj);
+        setTeacherInfo(data); //设置教师用户信息
         router.push("/admin/index");
       }
     },

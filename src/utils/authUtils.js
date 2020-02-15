@@ -2,8 +2,20 @@ const LOGIN_USER_SESSION = "loginUser";
 const NAV_MENU_SESSION = "navMenus";
 const AUTH_MENU_SESSION = "authMenus";
 const DEP_SESSION = "depIds";
+const IS_TEACHER = "isTeacher";
+const SYSTEM_LIST = "systemList";
 
 const NO_NEED_AUTH = ["/admin/index"];
+
+/** 如果是教师用户则设置相应信息 */
+export function setTeacherInfo(data) {
+  const isTeacher = data.isTeacher;
+  if(isTeacher) {
+    const systemList = data.systemList;
+    sessionStorage.setItem(SYSTEM_LIST, JSON.stringify(systemList));
+  }
+  sessionStorage.setItem(IS_TEACHER, isTeacher);
+}
 
 /** 登陆时调用该方法 */
 export function setLoginUser(loginObj) {
@@ -55,9 +67,13 @@ export function checkLogin() {
 //不需要检测权限的，但需要登陆
 const NO_NEED_CHECK = ["/admin/users/updatePwd"];
 
+//教师用户专属的忽略路径
+const TEACHER_NO_NEED_CHECK = ["/admin/teacherCourse"];
+
 /** 通过url检测权限 */
 export function checkAuthByUrl(pathname) {
   if(NO_NEED_CHECK.includes(pathname)) {return true;}
+  if(sessionStorage.getItem("isTeacher")==='true' && TEACHER_NO_NEED_CHECK.includes(pathname)) {return true;} //如果是教师用户并包含忽略路径
   let hasAuth = false;
   NO_NEED_AUTH.map((url) => {
     if(pathname == url) {hasAuth = true;}

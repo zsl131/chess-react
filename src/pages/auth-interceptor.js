@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 const authMenus = getAuthMenus();
 window.onload = function() {
   const authList = document.getElementsByClassName("auth");
+  // console.log(authList)
   for(let item in authList) {
     // console.log(item,"----")
     if(item&&item!='length' && item!='item' && item!='namedItem') {
