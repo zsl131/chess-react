@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Icon, message } from 'antd';
-import { routerRedux } from 'dva/router'
+import {connect} from 'dva';
+import {Icon} from 'antd';
+import {routerRedux} from 'dva/router'
 import Operator from './components/Operator';
 import Filter from './components/Filter';
 import List from './components/List';
@@ -28,20 +28,20 @@ const Teacher = ({
         ...newQuery,
       },
     }));
-  }
+  };
 
   const operatorOpts = {
     msg: '添加教师',
     onAdd: () => {
       dispatch({ type: 'teacher/onAdd', payload: {}});
     }
-  }
+  };
 
   const filterOpts = {
     onFilter: (params) => {
       handleRefresh({conditions: JSON.stringify(params)});
     }
-  }
+  };
 
   const listOpts = {
     dataSource: teacher.data,
@@ -80,7 +80,7 @@ const Teacher = ({
     setIsTest: (record) => {
       dispatch({type: "teacher/setIsTest", payload: {id: record.id, isTest: record.isTest==="1"?"0":"1"}}).then(()=>{handleRefresh()});
     }
-  }
+  };
 
   const addOpts = {
     maskClosable: false,
@@ -99,7 +99,7 @@ const Teacher = ({
     onCancel() {
       dispatch({ type: 'teacher/modifyState', payload: { addVisible: false } });
     }
-  }
+  };
 
   const updateOpts = {
     maskClosable: false,
@@ -119,7 +119,7 @@ const Teacher = ({
     onCancel: () => {
       dispatch({ type: 'teacher/modifyState', payload: { updateVisible: false } });
     }
-  }
+  };
 
   const teaCountOpts = {
     maskClosable: false,
@@ -137,7 +137,7 @@ const Teacher = ({
       //console.log(obj);
       dispatch({type: 'teacher/saveCount', payload:obj});
     }
-  }
+  };
 
   const teaRoleOpts = {
     maskClosable: false,
@@ -153,10 +153,10 @@ const Teacher = ({
       dispatch({ type: 'teacher/modifyState', payload: { authRoleVisible: false } });
     },
     saveAuth: (obj) => {
-      // console.log(obj);
+      console.log(obj);
       dispatch({type: 'teacher/authRole', payload:obj});
     }
-  }
+  };
 
   const teaGradeOpts = {
     maskClosable: false,
@@ -175,7 +175,7 @@ const Teacher = ({
       // console.log(obj);
       dispatch({type: 'teacher/setGrade', payload:obj});
     }
-  }
+  };
 
   return(
     <div>
@@ -196,6 +196,6 @@ const Teacher = ({
       {teacher.setGradeVisible && <TeacherGradeModal {...teaGradeOpts}/>}
     </div>
   );
-}
+};
 
 export default connect(({ loading, teacher }) => ({ loading, teacher }))(Teacher);

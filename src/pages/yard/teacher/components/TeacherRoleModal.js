@@ -7,6 +7,8 @@ export default class TeacherRoleModal extends React.Component {
 
     const {ridList, roleList, saveAuth, item} = this.props;
 
+   //console.log(ridList)
+
     const columns = [{
       title: '角色名称',
       dataIndex: 'name'
@@ -18,13 +20,18 @@ export default class TeacherRoleModal extends React.Component {
         onSetMenu(selectedRowKeys)
       },*/
       onSelect: (record, selected, selectedRows) => {
+        console.log(record)
         // console.log(`record:${record.name},,selected:${selected}`,`selectedRows::${selectedRows}`);
         saveAuth({tid: item.id, rid: record.id, checked:(selected?"1":"0")});
       },
       getCheckboxProps(record) {
+        const include = ridList.includes(record.id);
+        //console.log(record.id+"---", include);
         return {
           // defaultChecked: record.id === 1, // 配置默认勾选的列
-          defaultChecked: ridList.includes(record.id)
+          defaultChecked: include,
+          checked: include,
+          name: 'name_'+record.id
         };
       },
     };

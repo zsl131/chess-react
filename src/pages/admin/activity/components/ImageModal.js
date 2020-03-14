@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Icon, message, Modal, Popconfirm, Upload} from 'antd';
-import PictureWall from '../../../../components/PictureWall';
 import styles from "./image.css";
 
 const { Dragger } = Upload;
@@ -17,6 +16,8 @@ export default class ImageModal extends React.Component {
       record,
       ...modalProps
     } = this.props;
+
+    // console.log(record)
 
     const {imageList} = this.state;
     const handleOk = (e) => {
@@ -35,8 +36,9 @@ export default class ImageModal extends React.Component {
       data: {
         recordId: record.id,
         actTitle: record.actTitle,
-        actId: record.actId
-
+        actId: record.actId,
+        address: record.address,
+        holdTime: record.holdTime
       },
       action:"/api/upload/recordImage",
       onChange(info) {
