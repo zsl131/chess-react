@@ -68,7 +68,7 @@ export function checkLogin() {
 const NO_NEED_CHECK = ["/admin/users/updatePwd"];
 
 //教师用户专属的忽略路径
-const TEACHER_NO_NEED_CHECK = ["/admin/teacherCourse"];
+const TEACHER_NO_NEED_CHECK = ["/admin/teacherCourse", "/yard/teacherClassImage"];
 
 /** 通过url检测权限 */
 export function checkAuthByUrl(pathname) {

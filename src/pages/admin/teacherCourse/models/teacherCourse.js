@@ -15,6 +15,9 @@ export default {
     course: {},
     video: {},
     commentCount: 0, //评论条数
+
+    uploadVisible: false,
+    courseId: 0,
   },
   reducers: {
     modifyState(state, { payload: options }) {

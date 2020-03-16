@@ -8,6 +8,7 @@ import ListTest from "./components/ListTest";
 import ListHistory from "./components/ListHistory";
 import ShowModal from "./components/ShowModal";
 import ListCourse from "./components/ListCourse";
+import AddModal from './components/AddModal';
 
 const TeacherCourse = ({
   dispatch,
@@ -38,9 +39,12 @@ const TeacherCourse = ({
       handleRefresh({page : page - 1});
     },
     showCourse: (cid) => {
-      console.log(cid);
       dispatch({ type: 'teacherCourse/loadCourse', payload: {cid} });
     },
+    uploadImage: (cid)=> {
+      console.log(cid)
+      dispatch({ type: 'teacherCourse/modifyState', payload: {uploadVisible: true, courseId: cid} });
+    }
   };
 
   const showOpts = {
@@ -58,6 +62,19 @@ const TeacherCourse = ({
     },
     onOk: () => {
       dispatch({ type: 'teacherCourse/modifyState', payload: {showVisible: false} });
+    }
+  };
+
+  const addOpts = {
+    visible: teacherCourse.uploadVisible,
+    title: "添加课堂影像",
+    maskClosable: false,
+    courseId: teacherCourse.courseId,
+    onOk(datas) {
+      dispatch({ type: 'teacherCourse/modifyState', payload: { uploadVisible: false } });
+    },
+    onCancel() {
+      dispatch({ type: 'teacherCourse/modifyState', payload: { uploadVisible: false } });
     }
   };
 
@@ -81,6 +98,7 @@ const TeacherCourse = ({
         {teacherCourse.gid===-1 && <ListTest {...testOpts}/>}
         {teacherCourse.gid===0 && <ListHistory {...testOpts}/>}
         {teacherCourse.gid>0 && <ListCourse {...testOpts}/>}
+        {teacherCourse.uploadVisible && <AddModal {...addOpts}/>}
       </div>
       {teacherCourse.showVisible && <ShowModal {...showOpts}/>}
     </div>

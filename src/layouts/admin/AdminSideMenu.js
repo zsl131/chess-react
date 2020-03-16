@@ -39,6 +39,14 @@ class AdminSideMenu extends React.Component {
       );
     }):"";
 
+    const teacherBase = () => {
+      return (
+        <SubMenu title="课堂影像">
+          <Menu.Item key={'classImage'}><Link to={'/yard/teacherClassImage'}>影像管理</Link></Menu.Item>
+        </SubMenu>
+      )
+    };
+
     const systemData = systemList!==null?<SubMenu title="课程体系">
       {
         systemList.map((item)=>{
@@ -47,7 +55,7 @@ class AdminSideMenu extends React.Component {
           )
         })
       }
-    </SubMenu>:"";
+    </SubMenu>:'';
 
     const collapsed = this.props.collapsed;
 
@@ -70,6 +78,7 @@ class AdminSideMenu extends React.Component {
           onClick={this.handlerClick.bind(this)}
         >
           {isTeacher==="true"?systemData:menus}
+          {isTeacher==='true'?teacherBase():''}
         </Menu>
       </div>
     );

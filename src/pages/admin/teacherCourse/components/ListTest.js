@@ -11,18 +11,10 @@ const ListTest = ({
   onPageChange,
   location,
   showCourse,
+  uploadImage,
   totalElement,
   ...listOpts
 }) => {
-
-  console.log(listOpts);
-
-  const delOpts = {
-    okText: '确定删除',
-    cancelText: '取消',
-    onDelConfirm: onDelConfirm,
-    onUpdate: onUpdate,
-  };
 
   const columns = [{
     title: '封面',
@@ -47,7 +39,10 @@ const ListTest = ({
     dataIndex: 'id',
     render: (text, record) => {
       return (
+        <div>
         <Tooltip title="点击查阅"><Button type="primary" shape="circle" icon="eye" onClick={()=>showCourse(record.id)}/></Tooltip>
+        <Tooltip title="上传影像"><Button type="primary" shape="circle" icon="upload" onClick={()=>uploadImage(record.id)}/></Tooltip>
+        </div>
       );
     }
   }];
