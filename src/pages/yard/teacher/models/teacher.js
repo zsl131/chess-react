@@ -17,6 +17,7 @@ export default {
     countTree:[],
     gradeList:[],
     gradeIds:[],
+    uploadVisible: false
   },
   reducers: {
     modifyState(state, {payload: options}) {

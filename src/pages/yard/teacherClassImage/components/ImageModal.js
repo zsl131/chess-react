@@ -32,7 +32,7 @@ export default class ImageModal extends React.Component {
     const opts = {
       name: 'file',
       multiple: true,
-      accept: "image/png, image/jpeg, image/gif",
+      accept: "image/png, image/jpeg, image/gif, video/*",
       data: {
         recordId: record.id,
         actTitle: record.actTitle,
@@ -40,7 +40,7 @@ export default class ImageModal extends React.Component {
         address: record.address,
         holdTime: record.holdTime
       },
-      action:"/api/upload/recordImage",
+      action:"/api/app/upload/classImage1",
       onChange(info) {
 
         const { status } = info.file;
@@ -95,7 +95,7 @@ export default class ImageModal extends React.Component {
           </p>
           <p className="ant-upload-text">点击这里或将图片拖到这里上传</p>
           <p className="ant-upload-hint">
-            请选择图片文件上传，否则可能会导致未知异常
+            请选择图片或视频文件上传，否则可能会导致未知异常
           </p>
         </Dragger>
         <div className={styles.imageMain}>

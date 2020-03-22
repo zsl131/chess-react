@@ -31,18 +31,18 @@ export default class AddModal extends React.Component {
     };
 
     const opts = {
-      name: 'file',
+      name: 'files',
       multiple: true,
       accept: "image/png, image/jpeg, image/gif, video/*",
       data: {
-        recordId: courseId,
+        courseId: courseId,
         phone: user.username
       },
       action:"/api/app/upload/classImage",
       onChange(info) {
         const { status } = info.file;
         if (status !== 'uploading') {
-          console.log(info.file, info.fileList);
+          //console.log(info.file, info.fileList);
         }
         if (status === 'done') {
           // console.log(info);

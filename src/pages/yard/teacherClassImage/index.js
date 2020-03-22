@@ -59,7 +59,7 @@ const TeacherClassImage = ({
 
   const addOpts = {
     visible: teacherClassImage.addVisible,
-    title: "添加课程标签",
+    title: "添加课程影像",
     maskClosable: false,
     confirmLoading: loading.effects['teacherClassImage/addOrUpdate'],
     onOk(datas) {
@@ -93,8 +93,8 @@ const TeacherClassImage = ({
   return(
     <div>
       <div className="listHeader">
-        <h3><Icon type="bars"/> 课堂影像管理<b>（{teacherClassImage.totalElements}）</b></h3>
-        <Operator {...operatorOpts}/>
+        <h3><Icon type="bars"/> 课堂影像管理<b>（{teacherClassImage.totalElements}）</b><span className="gray">在《课程体系》中上传课堂影像</span></h3>
+        {/*<Operator {...operatorOpts}/>*/}
       </div>
       <div className="listFilter">
         <Filter {...filterOpts}/>

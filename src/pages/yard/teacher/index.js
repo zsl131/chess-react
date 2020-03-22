@@ -10,6 +10,7 @@ import UpdateModal from './components/UpdateModal';
 import TeacherCountModal from './components/TeacherCountModal';
 import TeacherRoleModal from './components/TeacherRoleModal';
 import TeacherGradeModal from "./components/TeacherGradeModal";
+import ImageModal from "./components/ImageModal";
 
 const Teacher = ({
                   dispatch,
@@ -79,6 +80,10 @@ const Teacher = ({
     },
     setIsTest: (record) => {
       dispatch({type: "teacher/setIsTest", payload: {id: record.id, isTest: record.isTest==="1"?"0":"1"}}).then(()=>{handleRefresh()});
+    },
+    onUploadComment: (obj) => {
+      // console.log(obj)
+      dispatch({ type: 'teacher/modifyState', payload: { uploadVisible: true, item: obj } });
     }
   };
 
@@ -177,6 +182,19 @@ const Teacher = ({
     }
   };
 
+  const imgOpts = {
+    visible: teacher.uploadVisible,
+    title: `上传点评到【${teacher.item.name}】`,
+    maskClosable: false,
+    item: teacher.item,
+    onCancel: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { uploadVisible: false } });
+    },
+    onOk: () => {
+      dispatch({ type: 'teacher/modifyState', payload: { uploadVisible: false } });
+    },
+  };
+
   return(
     <div>
       <div className="listHeader">
@@ -194,6 +212,7 @@ const Teacher = ({
       {teacher.videoCountVisible && <TeacherCountModal {...teaCountOpts}/>}
       {teacher.authRoleVisible && <TeacherRoleModal {...teaRoleOpts}/>}
       {teacher.setGradeVisible && <TeacherGradeModal {...teaGradeOpts}/>}
+      {teacher.uploadVisible && <ImageModal {...imgOpts}/>}
     </div>
   );
 };

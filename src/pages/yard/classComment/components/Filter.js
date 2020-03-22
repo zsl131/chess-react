@@ -21,10 +21,16 @@ const Filter = ({
   return (
     <Form layout="inline" onSubmit={handleSubmit}>
       <FormItem>
-        {getFieldDecorator("courseTitle_like")(<Input placeholder="课程名称"/>)}
+        {getFieldDecorator("content_like")(<Input placeholder="点评内容"/>)}
       </FormItem>
       <FormItem>
-        {getFieldDecorator("createYear_eq")(<Input maxLength={4} placeholder="年份"/>)}
+        {getFieldDecorator("schName_like")(<Input placeholder="学校名称"/>)}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("teaName_like")(<Input placeholder="教师姓名"/>)}
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("teaPhone_like")(<Input placeholder="教师电话"/>)}
       </FormItem>
       <FormItem>
         <Button type="dashed" htmlType="submit">筛选</Button>

@@ -1,6 +1,5 @@
 import React from 'react';
-import {Menu, Pagination, Table, Icon, Button, Tooltip} from 'antd';
-import ListOperator from '../../../../components/ListOperator/ListOperator';
+import {Button, Pagination, Table, Tooltip} from 'antd';
 import styles from "./list.css";
 // import { ListOperator } from 'components';
 
@@ -12,6 +11,7 @@ const ListCourse = ({
   location,
   showCourse,
   totalElement,
+  uploadImage,
   ...listOpts
 }) => {
 
@@ -47,7 +47,10 @@ const ListCourse = ({
     dataIndex: 'id',
     render: (text, record) => {
       return (
+        <div>
         <Tooltip title="点击查阅"><Button type="primary" shape="circle" icon="eye" onClick={()=>showCourse(record.id)}/></Tooltip>
+        <Tooltip title="上传课程影像"><Button type="primary" shape="circle" icon="upload" onClick={()=>uploadImage(record.id)}/></Tooltip>
+        </div>
       );
     }
   }];

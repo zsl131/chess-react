@@ -1,6 +1,5 @@
 import React from 'react';
-import {Pagination, Table} from 'antd';
-import ListOperator from '../../../../components/ListOperator/ListOperator';
+import {Button, Pagination, Table, Tooltip} from 'antd';
 import styles from './list.css';
 import {Player} from "video-react";
 
@@ -10,6 +9,7 @@ const List = ({
   onPageChange,
   totalElement,
   dataSource,
+  openReply,
   ...listOpts
 }) => {
  // console.log(dataSource)
@@ -47,10 +47,19 @@ const List = ({
       );
     }
   }, {
-    title: "点评",
+    title: '点评',
     render: (text, record)=> {
       return (
-        record.reply?<div><p>{record.reply}</p><p>{record.replyTime}</p></div>:"未点评"
+        record.content?<div><p>{record.content}</p><p>{record.createTime}</p></div>:<p className="red">未点评</p>
+      )
+    }
+  }, {
+    title:'操作',
+    render: (text, record) => {
+      return (
+        <Tooltip title="点击点评">
+          <Button type="primary" shape="circle" icon="message" onClick={()=>openReply(record)}/>
+        </Tooltip>
       )
     }
   }];

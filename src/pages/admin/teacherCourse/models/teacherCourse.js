@@ -5,7 +5,7 @@ export default {
   state: {
     datas:[],
     totalElements: 0,
-    item: [],
+    item: {},
     showVisible: false,
     gid: '',
     dataList: [], //数据列表

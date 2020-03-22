@@ -1,23 +1,24 @@
 import React from 'react';
-import {Button, Icon, message, Modal, Popconfirm, Upload} from 'antd';
-import styles from "./image.css";
+import {Form, Icon, Input, message, Modal, Upload} from 'antd';
 
 const { Dragger } = Upload;
+const FormItem = Form.Item;
 
-export default class AddModal extends React.Component {
+export default class ImageModal extends React.Component {
   state = {
-    imageList: this.props.imageList
+    imageList: [],
+    content: '',
   };
 
   render() {
 
     const {
       onOk,
-      record,
+      item,
       ...modalProps
     } = this.props;
 
-    console.log(record)
+    //console.log(item.id)
 
     const handleOk = (e) => {
       onOk();
@@ -29,17 +30,14 @@ export default class AddModal extends React.Component {
     };
 
     const opts = {
-      name: 'file',
+      name: 'files',
       multiple: true,
       accept: "image/png, image/jpeg, image/gif, video/*",
       data: {
-        /*recordId: record.id,
-        actTitle: record.actTitle,
-        actId: record.actId,
-        address: record.address,
-        holdTime: record.holdTime*/
+        teaId: item.id,
+        content: this.state.content
       },
-      action:"/api/upload/recordImage",
+      action:"/api/app/upload/classComment",
       onChange(info) {
 
         const { status } = info.file;
@@ -53,10 +51,20 @@ export default class AddModal extends React.Component {
           newList.push(obj);
           pushImage(newList); //更新数据
 
-          // message.success(`${info.file.name} file uploaded successfully.`);
         } else if (status === 'error') {
           message.error(`${info.file.name} file upload failed.`);
         }
+      },
+    };
+
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 17 },
       },
     };
 
@@ -66,17 +74,24 @@ export default class AddModal extends React.Component {
       // console.log(this.state.imageList);
     };
 
-    return(
-      <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
-        {/*<PictureWall fileListLength={20} onBeforeUpload={onBeforeUpload} accept="image/png, image/jpeg, image/gif" showMsg="上传图片" data={{'path':'abcdef'}} onFileChange={onFileChange}/>*/}
+    const changeContent = (e) => {
+      console.log(e.target.value)
+      this.setState({content: e.target.value});
+    };
 
+    return(
+      <Modal {...modalOpts} >
+        {/*<PictureWall fileListLength={20} onBeforeUpload={onBeforeUpload} accept="image/png, image/jpeg, image/gif" showMsg="上传图片" data={{'path':'abcdef'}} onFileChange={onFileChange}/>*/}
+        <FormItem {...formItemLayout} label="点评内容">
+          <Input placeholder="输入点评内容" onChange={changeContent}/>
+        </FormItem>
         <Dragger {...opts}>
           <p className="ant-upload-drag-icon">
             <Icon type="inbox" />
           </p>
-          <p className="ant-upload-text">点击这里或将图片拖到这里上传</p>
+          <p className="ant-upload-text">点击这里或将图片/视频拖到这里上传</p>
           <p className="ant-upload-hint">
-            请选择图片文件上传，否则可能会导致未知异常
+            请选择图片/视频文件上传，否则可能会导致未知异常
           </p>
         </Dragger>
       </Modal>

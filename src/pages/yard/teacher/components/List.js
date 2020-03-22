@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Icon, Menu, Pagination, Popconfirm, Table, Tooltip} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
+import {Link} from "react-router-dom";
 
 const List = ({
                 onDelConfirm,
@@ -11,6 +12,7 @@ const List = ({
                 onPageChange,
                 initPwd,
                 setIsTest,
+                onUploadComment,
                 totalElement,
                 ...listOpts
               }) => {
@@ -59,14 +61,14 @@ const List = ({
       return (
         <ListOperator id={record.id} delName={record.name} {...delOpts}>
           <Menu.Item>
+            <span onClick={()=>onUploadComment(record)}><Icon type="upload"/> 课堂点评</span>
+          </Menu.Item>
+          <Menu.Item>
             <span onClick={()=>handleVideoCount(record)}><Icon type="eye"/> 视频播放次数</span>
           </Menu.Item>
           <Menu.Item>
             <span onClick={()=>authGradeRole(record)}><Icon type="team"/> 授权年级角色</span>
           </Menu.Item>
-          {/*<Menu.Item>*/}
-            {/*<span onClick={()=>setGrade(record)}><Icon type="team"/> 设置年级</span>*/}
-          {/*</Menu.Item>*/}
         </ListOperator>
       );
     }

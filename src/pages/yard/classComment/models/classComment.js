@@ -21,7 +21,7 @@ export default {
   },
   effects: {
     *list({payload: query}, {call,put}) {
-      const data = yield call(objectService.list, query);
+      const data = yield call(objectService.listAll, query);
       yield put({ type: 'modifyState', payload: {datas: data.data, totalElements: data.size} });
     },
     *reply({payload: obj}, {call}) {
@@ -34,7 +34,7 @@ export default {
   subscriptions: {
     setup({history, dispatch}) {
       return history.listen((location) => {
-        if(location.pathname === '/yard/classImage') {
+        if(location.pathname === '/yard/classComment') {
           dispatch({ type: 'list', payload: location.query });
         }
       });

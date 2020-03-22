@@ -2,8 +2,6 @@ import React from 'react';
 import {connect} from 'dva';
 import {Icon} from 'antd';
 import {routerRedux} from 'dva/router'
-import Operator from './components/Operator';
-import Filter from './components/Filter';
 import ListTest from "./components/ListTest";
 import ListHistory from "./components/ListHistory";
 import ShowModal from "./components/ShowModal";
@@ -42,9 +40,9 @@ const TeacherCourse = ({
       dispatch({ type: 'teacherCourse/loadCourse', payload: {cid} });
     },
     uploadImage: (cid)=> {
-      console.log(cid)
+      //console.log(cid)
       dispatch({ type: 'teacherCourse/modifyState', payload: {uploadVisible: true, courseId: cid} });
-    }
+    },
   };
 
   const showOpts = {
