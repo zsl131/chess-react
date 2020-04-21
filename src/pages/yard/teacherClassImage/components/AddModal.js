@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button, Icon, message, Modal, Popconfirm, Upload} from 'antd';
-import styles from "./image.css";
+import {Icon, message, Modal, Upload} from 'antd';
 
 const { Dragger } = Upload;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Pagination, Table, Tooltip} from 'antd';
-import ListOperator from '../../../../components/ListOperator/ListOperator';
 import styles from './list.css';
+// import "node_modules/video-react/dist/video-react.css"; // import css
 import {Player} from "video-react";
 
 const List = ({
