@@ -30,7 +30,7 @@ location
     onFilter: (type, params) => {
       if(type==='filter') {
         handleRefresh({conditions: JSON.stringify(params)});
-      } else {
+      } else if(type==='download') {
         //console.log("======", params)
         //router.push("/api/download/student");
         const p = buildDownloadParams(params);
@@ -38,6 +38,9 @@ location
         // router.push("/api/download/student"+p);
         const w=window.open('about:blank');
         w.location.href="/api/download/student"+p
+      } else if(type==='cal') {
+        const w=window.open('about:blank');
+        w.location.href="/api/download/countRecord"
       }
     }
   }

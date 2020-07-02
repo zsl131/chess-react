@@ -37,6 +37,7 @@ export default class UpdateRecordModal extends React.Component {
 
       validateFieldsAndScroll((errors, values) => {
         if(!errors) {
+          console.log(values)
           this.props.onOk(values);
         }
       });

@@ -1,5 +1,20 @@
 import React from 'react';
-import {Button, Col, Form, Icon, Input, Modal, Radio, Row, Select, Tooltip, TreeSelect, Upload} from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Modal,
+  Radio,
+  Row,
+  Select,
+  Tooltip,
+  TreeSelect,
+  Upload,
+  message,
+  Popconfirm
+} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import request from "../../../../utils/request";
 import CourseTag from "../../../../components/CourseTag";
@@ -10,6 +25,7 @@ const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const TreeNode = TreeSelect.TreeNode;
+const { Dragger } = Upload;
 
 @Form.create()
 export default class UpdateModal extends React.Component {
@@ -26,7 +42,8 @@ export default class UpdateModal extends React.Component {
     fetching: false,
     treeData:[],
     fileList : [],
-  }
+    attachmentList: this.props.attachmentList,
+  };
 
   fetchTree = ()=> {
     if(this.state.treeData<=0) {
@@ -96,23 +113,23 @@ export default class UpdateModal extends React.Component {
           this.props.onOk(values);
         }
       });
-    }
+    };
 
     const handleCancel = (e) => {
       e.preventDefault();
       this.props.onCancel();
-    }
+    };
 
     const handleChangeContent = (html) => {
       // console.log("add===", html);
       setFieldsValue({"content": html});
-    }
+    };
 
     const modalOpts = {
       ...this.props,
       onOk: handleOk,
       onCancel: handleCancel,
-    }
+    };
 
     const handleChange = (file) => {
       this.setState({videos:[file.file]})
@@ -125,7 +142,7 @@ export default class UpdateModal extends React.Component {
         setFieldsValue({"videoId": ''});
         this.setState({videoList: 0, videos:[]})
       }
-    }
+    };
 
     const handlePPTChange = (file) => {
       this.setState({ppts:[file.file]})
@@ -138,7 +155,7 @@ export default class UpdateModal extends React.Component {
         setFieldsValue({"pptId": ''});
         this.setState({pptList: 0, ppts:[]})
       }
-    }
+    };
 
     const handleLearnChange = (file) => {
       this.setState({learns:[file.file]})
@@ -161,7 +178,7 @@ export default class UpdateModal extends React.Component {
         return false;
       }
       return true;
-    }
+    };
 
     const onFileChange = (file) => {
       // console.log("onFileChange", file);
@@ -169,7 +186,36 @@ export default class UpdateModal extends React.Component {
         // console.log(file);
         setFieldsValue({"imgUrl": file.response});
       }
-    }
+    };
+
+    const props = {
+      name: 'file',
+      multiple: true,
+      action: "/api/yardUpload/uploadAttachment",
+      data: {'courseId':this.state.item.id},
+      onChange(info) {
+        const { status } = info.file;
+        if (status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (status === 'done') {
+          message.success(`${info.file.name} 文件上传成功.`);
+        } else if (status === 'error') {
+          message.error(`${info.file.name} 文件上传失败.`);
+        }
+      },
+    };
+
+    const removeAtta = (atta) => {
+      request("classCourseAttaService.delete", {id:atta.id}, true).then((res)=> {
+        message.success(res.message);
+      });
+    };
+
+    const showAtta = (atta) => {
+      // console.log(atta)
+      window.location.href = atta.url;
+    };
 
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
@@ -312,6 +358,36 @@ export default class UpdateModal extends React.Component {
               </Col>
             </Row>
           </FormItem>
+
+          <FormItem {...formItemLayout} label="其他附件">
+            <Row>
+              <Col span={24} style={{"paddingRight":"10px"}}>
+                <Dragger {...props}>
+                  <p className="ant-upload-drag-icon">
+                    <Icon type="inbox" />
+                  </p>
+                  <p className="ant-upload-text">上传其他附件</p>
+                  <p className="ant-upload-hint">
+                    如材料清单等其他文件
+                  </p>
+                </Dragger>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24} style={{"paddingRight":"10px"}}>
+                {
+                  this.state.attachmentList.map((atta)=> {
+                    return (
+                      <Input disabled={true} onClick={()=>showAtta(atta)}
+                             addonAfter={<div><Icon type="eye" onClick={()=>showAtta(atta)}/>&nbsp;&nbsp;<Popconfirm title="确定删除此附件吗？" onConfirm={()=>removeAtta(atta)}><Icon type="close" /></Popconfirm></div>}
+                             defaultValue={atta.name} />
+                    )
+                  })
+                }
+              </Col>
+            </Row>
+          </FormItem>
+
           <FormItem {...formItemLayout} label="课程标签">
             {getFieldDecorator('courseTags')(<CourseTag cid={this.props.item.id}/>)}
           </FormItem>

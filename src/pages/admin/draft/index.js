@@ -8,6 +8,7 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import {getLoginUser} from "../../../utils/authUtils";
+import ShowModal from "./components/ShowModal";
 
 const Draft = ({
   dispatch,
@@ -88,6 +89,10 @@ const Draft = ({
         dispatch({ type: 'draft/onUpdate', payload: obj.id });
       }
     },
+    showContent: (obj)=> {
+      //console.log(obj)
+      dispatch({ type: 'draft/modifyState', payload: {showVisible: true, item:obj} });
+    }
   };
 
   const addOpts = {
@@ -128,6 +133,19 @@ const Draft = ({
     }
   };
 
+  const showOpts = {
+    visible: draft.showVisible,
+    title: `内容展示[${draft.item.title}]`,
+    maskClosable: false,
+    item: draft.item,
+    onOk() {
+      dispatch({ type: 'draft/modifyState', payload: { showVisible: false } });
+    },
+    onCancel: () => {
+      dispatch({ type: 'draft/modifyState', payload: { showVisible: false } });
+    }
+  };
+
   return(
     <div>
       <div className="listHeader">
@@ -142,6 +160,7 @@ const Draft = ({
       </div>
       {draft.addVisible && <AddModal {...addOpts}/>}
       {draft.updateVisible && <UpdateModal {...updateOpts}/>}
+      {draft.showVisible && <ShowModal {...showOpts}/>}
     </div>
   );
 }

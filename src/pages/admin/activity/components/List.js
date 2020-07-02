@@ -51,10 +51,15 @@ const List = ({
       return (record.canJoin === '1'?<span className={styles.show}>可报名</span>:<span className={styles.hidden}>不可报名</span>)
     }
   }*/, {
-    title: '创建时间',
+    title: '时间',
     // dataIndex: 'createTime'
     render: (record) => {
-      return (<span title={record.createTime}>{record.createDate}</span>);
+      return (
+        <div>
+          <p title={record.createTime}>创建：{record.createDate}</p>
+          <p>发布：{record.publishDate}</p>
+        </div>
+      );
     }
   }, {
     title: '流量',

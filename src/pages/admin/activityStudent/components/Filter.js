@@ -74,7 +74,14 @@ export default class Filter extends React.Component {
         // console.log("onHandleDownload", errors, values);
         this.props.onFilter("download", values);
       });
-    }
+    };
+
+    const onHandleDownloadExcel = ()=> {
+      validateFields((errors, values) => {
+        // console.log("onHandleDownload", errors, values);
+        this.props.onFilter("cal", values);
+      });
+    };
 
     return (
       <Form layout="inline" onSubmit={handleSubmit}>
@@ -183,7 +190,8 @@ export default class Filter extends React.Component {
         </FormItem>
         <FormItem>
           <Button type="primary" icon="search" htmlType="submit" >筛选</Button> &nbsp;&nbsp;
-          <Button type="primary" icon="download" onClick={()=>onHandleDownload()} >下载</Button>
+          <Button type="primary" icon="download" onClick={()=>onHandleDownload()} >下载</Button> &nbsp;&nbsp;
+          <Button type="primary" icon="download" onClick={()=>onHandleDownloadExcel()} >报名情况下载</Button>
         </FormItem>
       </Form>
     );

@@ -8,6 +8,7 @@ export default {
     item:[],
     addVisible: false,
     updateVisible: false,
+    showVisible: false,
   },
   reducers: {
     modifyState(state, { payload: options }) {

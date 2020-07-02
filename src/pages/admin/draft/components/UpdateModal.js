@@ -1,8 +1,9 @@
 import React from 'react';
-import {Form, Input, Modal} from 'antd';
+import {Form, Input, Modal, Select} from 'antd';
 
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
+const Option = Select.Option;
 
 @Form.create()
 export default class UpdateModal extends React.Component {
@@ -47,6 +48,14 @@ export default class UpdateModal extends React.Component {
           </FormItem>
           <FormItem {...formItemLayout} label="引导问题">
             {getFieldDecorator('content', {rules: [{required: true, message: '内容不能为空'}]})(<TextArea rows={8} placeholder="内容部份">&nbsp;</TextArea>)}
+          </FormItem>
+          <FormItem  {...formItemLayout} label="是否录制">
+            {getFieldDecorator("hasProcess")(
+              <Select placeholder="是否录制" style={{"width":100}}>
+                <Option value="0">未录制</Option>
+                <Option value="1">已录制</Option>
+              </Select>
+            )}
           </FormItem>
         </Form>
       </Modal>

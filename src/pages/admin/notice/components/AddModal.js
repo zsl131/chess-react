@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Form, Icon, Input, Modal, Row, Select, Spin, Switch, Upload} from 'antd';
+import {Button, Col, DatePicker, Form, Icon, Input, Modal, Row, Select, Spin, Switch, Upload} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
 import request from "../../../../utils/request";
@@ -14,7 +14,7 @@ export default class AddModal extends React.Component {
   state = {
     cateList: [],
     fetching: true,
-  }
+  };
 
   fetchCate = ()=> {
     if(this.state.cateList<=0) {
@@ -28,7 +28,7 @@ export default class AddModal extends React.Component {
         this.setState({cateList: data, fetching: false});
       });
     }
-  }
+  };
 
   render() {
     const {getFieldDecorator, setFieldsValue, validateFieldsAndScroll} = this.props.form;
@@ -57,12 +57,12 @@ export default class AddModal extends React.Component {
           this.props.onOk(values);
         }
       });
-    }
+    };
 
     const modalOpts = {
       ...this.props,
       onOk: handleOk
-    }
+    };
 
 
     const handleChangeContent = (html) => {
@@ -80,19 +80,19 @@ export default class AddModal extends React.Component {
         }
       }
       setFieldsValue({"content": html});
-    }
+    };
 
     const onFileChange = (file) => {
       // console.log("onFileChange", file);
       if(file.status === 'done') {
         setFieldsValue({"picPath": file.response});
       }
-    }
+    };
 
     const onCateChange = (value, e) => {
       // console.log(value, e.props.children)
       setFieldsValue({"cateName": e.props.children});
-    }
+    };
 
     const handleChange = (file) => {
       if(file.file.status==='done') {
@@ -104,7 +104,11 @@ export default class AddModal extends React.Component {
         setFieldsValue({"videoId": ''});
         this.setState({videoList: 0})
       }
-    }
+    };
+
+    const changeDate = (date, dateStr) => {
+      setFieldsValue({"publishDate": dateStr});
+    };
 
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
@@ -126,8 +130,13 @@ export default class AddModal extends React.Component {
                   </Select>
                 )}
               </Col>
-              <Col span={20}>
+              <Col span={11}>
                 {getFieldDecorator('title', {rules: [{required: true, message: '通知公告标题不能为空'}]})(<Input placeholder="输入通知公告标题"/>)}
+              </Col>
+
+              <Col span={9}>
+                {getFieldDecorator('publishDate')(<Input type="hidden"/>)}
+                <DatePicker placeholder="选择发布日期" onChange={changeDate}/>
               </Col>
             </Row>
           </FormItem>

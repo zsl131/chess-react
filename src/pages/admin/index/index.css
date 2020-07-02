@@ -15,3 +15,10 @@
 .scoreBtn {
   margin: 10px 8px 10px 0px;
 }
+
+.adminContainer {
+  background:#FFF; padding: 10px;
+}
+.singleBtn {
+  margin-right: 12px;
+}

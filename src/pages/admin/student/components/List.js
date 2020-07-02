@@ -15,7 +15,7 @@ const List = ({
     cancelText: '取消',
     onDelConfirm: onDelConfirm,
     onUpdate: onUpdate,
-  }
+  };
 
   const columns = [{
     title: '头像',

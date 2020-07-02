@@ -23,7 +23,7 @@ const CourseNew = ({
         ...newQuery,
       },
     }));
-  }
+  };
 
   const treeOpts = {
     treeData: courseNew.treeData,
@@ -34,7 +34,7 @@ const CourseNew = ({
       // console.log(key[0]);
       dispatch({ type: 'courseNew/setState', payload: {pid: selectKey, pname: title} });
     }
-  }
+  };
 
   const listOpts = {
     dataSource: courseNew.datas,
@@ -42,12 +42,12 @@ const CourseNew = ({
     totalElements: courseNew.totalElements,
     loading: loading.models.courseNew,
     onUpdate: (item) => {
-      dispatch({ type: 'courseNew/setState', payload: { item: item, updateVisible: true } });
+      dispatch({ type: 'courseNew/onUpdate', payload: item.id });
     },
     onDelete: (id) => {
       dispatch({ type: "courseNew/deleteMenu", payload: id }).then(() => {handleRefresh()});
     }
-  }
+  };
 
   const updateOpts = {
     visible: courseNew.updateVisible,
@@ -63,7 +63,7 @@ const CourseNew = ({
         handleRefresh();
       });
     }
-  }
+  };
 
   const addOpts = {
     visible: courseNew.addVisible,
@@ -79,11 +79,11 @@ const CourseNew = ({
         handleRefresh();
       });
     }
-  }
+  };
 
   const handleAdd = () => {
     dispatch({ type: 'courseNew/setState', payload: { addVisible: true } });
-  }
+  };
 
   const listRootOpts = {
     dataSource: courseNew.data,
@@ -107,7 +107,7 @@ const CourseNew = ({
       // console.log(obj)
       dispatch({ type: "courseNew/deleteCategory", payload: obj.id }).then(() => {handleRefresh()});
     }
-  }
+  };
 
   const listCourseOpts = {
     dataSource: courseNew.data,
@@ -127,14 +127,14 @@ const CourseNew = ({
     deleteCourse: (obj) => {
       dispatch({type: "courseNew/deleteCourse", payload: obj.id }).then(()=>{handleRefresh()});
     }
-  }
+  };
 
   const showCourseOpts = {
     course: courseNew.obj,
     ppt: courseNew.ppt,
     learn: courseNew.learn,
     video: courseNew.video,
-  }
+  };
 
   return(
     <div style={{"minHeight":"100%", "overflowY": 'hidden'}}>

@@ -18,7 +18,8 @@ export default class ListCourse extends React.Component {
     attachment:{},
     playVideoVisible: false,
     showPDFVisible: false,
-  }
+    attachmentList: [],
+  };
 
   render() {
     const {
@@ -93,31 +94,34 @@ export default class ListCourse extends React.Component {
         this.setState({attachment: res.obj, playVideoVisible: true})
       });
 
-    }
+    };
     const handleShowPDF = (objId) => {
       request("attachmentService.loadOne", {id:objId}, true).then((res)=>{
         this.setState({attachment: res.obj, showPDFVisible: true})
       });
-    }
+    };
 
     const handleUpdate = (record) => {
       // onUpdate(record);
-      this.setState({updateVisible: true, item: record})
-    }
+      request("classCourseService.loadOne", {id:record.id}, true).then((res)=>{
+        //console.log(res)
+        this.setState({updateVisible: true, item: record, attachmentList: res.attaList});
+      });
+    };
 
     const handlePageChange = (pageNumber) => {
       onPageChange(pageNumber);
-    }
+    };
 
     const pager = () => {
       return (
         <Pagination defaultPageSize={15} total={totalElements} onChange={handlePageChange}/>
       );
-    }
+    };
 
     const handleAdd = () => {
       this.setState({addVisible: true})
-    }
+    };
 
     const addOpts = {
       maskClosable: false,
@@ -133,13 +137,14 @@ export default class ListCourse extends React.Component {
         addCourse(obj)
         this.setState({addVisible: false});
       }
-    }
+    };
 
     const updateOpts = {
       maskClosable: false,
       visible: this.state.updateVisible,
       title: `修改课程【${this.state.item.title}】`,
       item: this.state.item,
+      attachmentList: this.state.attachmentList,
       onCancel:() => {
         this.setState({updateVisible: false})
       },
@@ -147,7 +152,7 @@ export default class ListCourse extends React.Component {
         addCourse(obj);
         this.setState({updateVisible: false})
       }
-    }
+    };
 
     const playVideoOpts = {
       maskClosable: false,
@@ -162,7 +167,7 @@ export default class ListCourse extends React.Component {
       onCancel: () => {
         this.setState({playVideoVisible: false})
       }
-    }
+    };
 
     const showPDFOpts = {
       maskClosable: false,
@@ -177,7 +182,7 @@ export default class ListCourse extends React.Component {
       onCancel: () => {
         this.setState({showPDFVisible: false})
       }
-    }
+    };
 
     return (
       <div>

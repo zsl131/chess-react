@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, Modal, Select, Switch, message, Row, Col} from 'antd';
+import {Form, Input, Modal, Select, Switch, message, Row, Col, DatePicker} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
 
@@ -37,7 +37,7 @@ const AddModal = ({
         onOk(values);
       }
     });
-  }
+  };
 
   const depSelect = depList.map((dep) => {
     return (<Option value={dep.id} key={dep.id}>{dep.name}</Option>);
@@ -46,12 +46,12 @@ const AddModal = ({
   const modalOpts = {
     ...modalProps,
     onOk: handleOk
-  }
+  };
 
   const handleChangeContent = (html) => {
     // console.log("add===", html);
     setFieldsValue({"content": html});
-  }
+  };
 
   const onBeforeUpload = (file) => {
     // console.log("====", file);
@@ -60,14 +60,18 @@ const AddModal = ({
       return false;
     }
     return true;
-  }
+  };
 
   const onFileChange = (file) => {
     // console.log("onFileChange", file);
     if(file.status === 'done') {
       setFieldsValue({"imgUrl": file.response});
     }
-  }
+  };
+
+  const changeDate = (date, dateStr) => {
+    setFieldsValue({"publishDate": dateStr});
+  };
 
   return(
     <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
@@ -82,8 +86,13 @@ const AddModal = ({
                 </Select>
               )}
             </Col>
-            <Col span={20}>
+            <Col span={11}>
               {getFieldDecorator('title', {rules: [{required: true, message: '活动标题不能为空'}]})(<Input placeholder="输入活动标题"/>)}
+            </Col>
+
+            <Col span={9}>
+              {getFieldDecorator('publishDate')(<Input type="hidden"/>)}
+              <DatePicker placeholder="选择发布日期" onChange={changeDate}/>
             </Col>
           </Row>
         </FormItem>

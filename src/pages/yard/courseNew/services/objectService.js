@@ -31,6 +31,11 @@ function deleteCourse(id) {
   return request(courseService+".delete", id, true);
 }
 
+function loadOne(id) {
+  return request(courseService+".loadOne", id, true);
+}
+
+
 export {
   index,
   addCategory,
@@ -39,4 +44,5 @@ export {
   setShowTest,
   deleteCategory,
   deleteCourse,
+  loadOne,
 }

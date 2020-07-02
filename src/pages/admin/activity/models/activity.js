@@ -38,6 +38,7 @@ export default {
   },
   effects: {
     *index({ payload: query }, { call, put }) {
+      query.sort = "publishDate_d,id_d";
       const data = yield call(activityService.list, query);
       yield put({ type: 'indexPage', payload: data });
     },

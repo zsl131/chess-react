@@ -52,6 +52,14 @@ export default {
       const data = yield call(objService.deleteCategory, {id});
       if(data) {message.success(data.message);}
     },
+    *onUpdate({payload: id}, {call,put}) {
+      console.log("-----------------")
+      const data = yield call(objService.loadOne, {id});
+      console.log(data)
+      if(data) {
+        yield put({ type: 'modifyState', payload: {item: item, updateVisible: true} });
+      }
+    }
   },
   subscriptions: {
     setup({ history, dispatch }) {

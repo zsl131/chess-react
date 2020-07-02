@@ -1,7 +1,8 @@
 import React from 'react';
-import {Button, Form, Input, InputNumber, Tooltip} from 'antd';
+import {Button, Form, Input, InputNumber, Select, Tooltip} from 'antd';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 const Filter = ({
   onFilter,
   form: {
@@ -38,6 +39,15 @@ const Filter = ({
       </FormItem>
       <FormItem>
         <Tooltip title="结束日期，格式yyyyMMdd">{getFieldDecorator("updateDate_le")(<InputNumber style={{"width":"120px"}} placeholder="结束日期，yyyyMMdd"/>)}</Tooltip>
+      </FormItem>
+      <FormItem>
+        {getFieldDecorator("hasProcess_eq")(
+          <Select placeholder="是否录制" style={{"width":100}}>
+            <Option value="">全部</Option>
+            <Option value="0">未录制</Option>
+            <Option value="1">已录制</Option>
+          </Select>
+        )}
       </FormItem>
       <FormItem>
         <Button type="primary" htmlType="submit">筛选</Button>&nbsp;&nbsp;

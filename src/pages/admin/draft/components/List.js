@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pagination, Table} from 'antd';
+import {Pagination, Table, Tooltip} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
@@ -7,6 +7,7 @@ const List = ({
   onUpdate,
   onPageChange,
   totalElement,
+  showContent,
   ...listOpts
 }) => {
 
@@ -29,6 +30,14 @@ const List = ({
       )
     }
   }, {
+    title: "录制",
+    render: (record)=> {
+      const status = record.hasProcess;
+      return (
+        status==='1'?<span className="blue">已录制</span>:<span className="red">未录制</span>
+      )
+    }
+  }, {
     title: '标题',
     // dataIndex: 'name'
     render: (record)=> {
@@ -44,9 +53,11 @@ const List = ({
     // dataIndex: 'name'
     render: (record)=> {
       return (
-        <div>
+        <Tooltip title="点击查看全部">
+        <div onClick={()=>showContent(record)} style={{"maxWidth":"300px", "maxHeight":"80px", "overflow":"hidden", "text-overflow":"ellipsis", "cursor":"pointer"}}>
           <p dangerouslySetInnerHTML={{__html: record.content}}></p>
         </div>
+        </Tooltip>
       )
     }
   }, {

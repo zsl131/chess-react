@@ -1,7 +1,8 @@
 import React from 'react';
-import {Col, Form, Input, Modal, Row, Select, Switch} from 'antd';
+import {Col, DatePicker, Form, Input, Modal, Row, Select, Switch} from 'antd';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
+import moment from "moment";
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -15,7 +16,7 @@ export default class UpdateModal extends React.Component {
     status: false,
     isTop: false,
     needSend:false,
-  }
+  };
 
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
@@ -30,7 +31,7 @@ export default class UpdateModal extends React.Component {
         status: 'done',
         url: curItem.picPath,
         // url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-      }]
+      }];
       this.setState({fileList: fileList});
     }
   }
@@ -61,7 +62,7 @@ export default class UpdateModal extends React.Component {
          this.props.onOk(values);
         }
       });
-    }
+    };
 
     const handleChangeContent = (html) => {
       // console.log("add===", html);
@@ -78,24 +79,30 @@ export default class UpdateModal extends React.Component {
         }
       }
       setFieldsValue({"content": html});
-    }
+    };
 
     const onFileChange = (file) => {
       // console.log("onFileChange", file);
       if(file.status === 'done') {
         setFieldsValue({"picPath": file.response});
       }
-    }
+    };
 
     const onCateChange = (value, e) => {
       // console.log(value, e.props.children)
       setFieldsValue({"cateName": e.props.children});
-    }
+    };
 
     const modalOpts = {
       ...this.props,
       onOk: handleOk
-    }
+    };
+
+    const changeDate = (date, dateStr) => {
+      setFieldsValue({"publishDate": dateStr});
+    };
+
+    const dateFormat = "YYYY-MM-DD";
 
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
@@ -116,8 +123,13 @@ export default class UpdateModal extends React.Component {
                   </Select>
                 )}
               </Col>
-              <Col span={20}>
+              <Col span={11}>
                 {getFieldDecorator('title', {rules: [{required: true, message: '通知公告标题不能为空'}]})(<Input placeholder="输入通知公告标题"/>)}
+              </Col>
+
+              <Col span={9}>
+                {getFieldDecorator('publishDate')(<Input type="hidden"/>)}
+                <DatePicker placeholder="选择发布日期" defaultValue={moment(this.props.item.publishDate, dateFormat)} format={dateFormat} onChange={changeDate}/>
               </Col>
             </Row>
           </FormItem>

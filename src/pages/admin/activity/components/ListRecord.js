@@ -50,7 +50,7 @@ const ListRecord = ({
   }, {
     title: '状态',
     render: (record)=> {
-      return (<div>{(record.status === '0' || record.status === '1')?<span className="blue">报名中</span>:<span className="red">停止报名</span>}</div>);
+      return (<div>{(record.status === '1')?<span className="blue">报名中</span>:<span className="red">停止报名</span>}</div>);
     }
   }, {
     title: '照片',

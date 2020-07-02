@@ -1,10 +1,9 @@
 import React from 'react';
-import {Col, Form, Input, Modal, Row, Select, Switch} from 'antd';
+import {Col, Form, Input, Modal, Row, Switch} from 'antd';
 import PictureWall from '../../../../components/PictureWall';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-const Option = Select.Option;
 
 @Form.create()
 export default class UpdateModal extends React.Component {

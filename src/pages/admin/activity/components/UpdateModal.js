@@ -1,5 +1,6 @@
 import React from 'react';
-import {Form, Input, Modal, Switch, message, Row, Col} from 'antd';
+import {Form, Input, Modal, Switch, message, Row, Col, DatePicker} from 'antd';
+import moment from 'moment';
 import MyEditor from "../../../../components/Editor/MyEditor";
 import PictureWall from '../../../../components/PictureWall';
 
@@ -24,7 +25,7 @@ export default class UpdateModal extends React.Component {
         status: 'done',
         url: curItem.imgUrl,
         // url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-      }]
+      }];
       this.setState({fileList: fileList, imgUrl: curItem.imgUrl});
 
       // console.log(fileList);
@@ -52,12 +53,12 @@ export default class UpdateModal extends React.Component {
          this.props.onOk(values);
         }
       });
-    }
+    };
 
     const handleChangeContent = (html) => {
       // console.log("add===", html);
       setFieldsValue({"content": html});
-    }
+    };
 
     const onBeforeUpload = (file) => {
       // console.log("====", file);
@@ -66,14 +67,20 @@ export default class UpdateModal extends React.Component {
         return false;
       }
       return true;
-    }
+    };
 
     const onFileChange = (file) => {
       // console.log("onFileChange", file);
       if(file.status === 'done') {
         setFieldsValue({"imgUrl": file.response});
       }
-    }
+    };
+
+    const changeDate = (date, dateStr) => {
+      setFieldsValue({"publishDate": dateStr});
+    };
+
+    const dateFormat = "YYYY-MM-DD";
 
     return(
       <Modal {...this.props} onOk={handleOk} style={{ "minWidth": '80%', top: 20 }}>
@@ -86,8 +93,12 @@ export default class UpdateModal extends React.Component {
           <FormItem>
             <Row>
               <Col span={4} style={{"textAlign":'right', "paddingRight":"10px"}}>{this.props.item.depName}</Col>
-              <Col span={20}>
+              <Col span={11}>
                 {getFieldDecorator('title', {rules: [{required: true, message: '活动标题不能为空'}]})(<Input placeholder="输入活动标题"/>)}
+              </Col>
+              <Col span={9}>
+                {getFieldDecorator('publishDate')(<Input type="hidden"/>)}
+                <DatePicker placeholder="选择发布日期" defaultValue={moment(this.props.item.publishDate, dateFormat)} format={dateFormat} onChange={changeDate}/>
               </Col>
             </Row>
           </FormItem>

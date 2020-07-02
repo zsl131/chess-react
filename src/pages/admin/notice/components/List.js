@@ -41,7 +41,7 @@ const List = ({
             {record.videoId && <Tooltip placement="top" title="播放视频"><Button onClick={()=>onPlayVideo(record.videoId)} size="small" icon="play-circle"/></Tooltip>}
             [{record.cateName}]{record.title}
             </p>
-          <p>{record.createTime}</p>
+          <p>{record.createTime}，发布：{record.publishDate}</p>
         </div>
       )
     }

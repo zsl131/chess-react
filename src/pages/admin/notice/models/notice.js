@@ -39,6 +39,7 @@ export default {
   },
   effects: {
     *list({payload: query}, {call,put}) {
+      query.sort = "publishDate_d,id_d";
       const data = yield call(objService.list, query);
       yield put({type: 'modifyState', payload: {data: data.data, totalElements: data.size}})
     },
