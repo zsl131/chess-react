@@ -18,8 +18,9 @@ export function setTeacherInfo(data) {
 }
 
 /** 登陆时调用该方法 */
-export function setLoginUser(loginObj) {
-  const loginUser = loginObj.user;
+export function setLoginUser(loginObj, token) {
+  let loginUser = loginObj.user;
+  loginUser.loginToken = token;
   const navMenus = loginObj.navMenus;
   const authMenus = loginObj.authMenus;
   const depIds = loginObj.depIds;

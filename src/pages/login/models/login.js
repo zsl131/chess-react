@@ -31,8 +31,8 @@ export default {
     *login({ payload: values }, { call }) {
       const data = yield call(userService.remoteCheckLogin, values);
       if(data) {
-        // console.log(data);
-        setLoginUser(data.obj);
+        //console.log(data);
+        setLoginUser(data.obj, data.token);
         setTeacherInfo(data); //设置教师用户信息
         router.push("/admin/index");
       }
@@ -67,7 +67,7 @@ export default {
     *loginByUsername({payload: username}, {call}) {
       const data = yield call(userService.loginByUsername, username);
       if(data) {
-        setLoginUser(data.obj);
+        setLoginUser(data.obj, data.token);
         router.push("/admin/index");
       }
     }

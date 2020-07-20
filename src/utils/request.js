@@ -4,6 +4,7 @@ import configApi from './configApi';
 import {getDepIds, getLoginUser} from "./authUtils";
 import {encodeBase64} from "./Base64Utils";
 import {getOpenid} from "./loginAccountUtils";
+import router from 'umi/router';
 
 function parseJSON(response) {
   return response.json();
@@ -20,8 +21,14 @@ function checkStatus(response) {
 }
 
 function checkDatas(data) {
+  // console.log(data)
   if(data.errCode !== "0") {
     message.error(data.reason);
+    if(data.result.login && data.result.login==='timeout') {
+      // console.log("=======================")
+      sessionStorage.clear();
+      router.push("/login");
+    }
   } else {
     return data.result;
   }
@@ -43,15 +50,18 @@ function catchError(error) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default function request(apiCode, params, isBase, options) {
+  const loginUser = getLoginUser();
+  let loginToken = loginUser?loginUser.loginToken:"noLogin";
   let headers = {
     'auth-token': configApi.authToken,
-    'api-code': apiCode
-  }
+    'api-code': apiCode,
+    'login-token': loginToken
+  };
 
-  const loginUser = getLoginUser();
   if(loginUser) {
-    headers.userId = loginUser.id;
+    headers.userid = loginUser.id;
     headers.username = loginUser.username;
+    headers.phone=loginUser.username;
     headers.isAdminUser = loginUser.isAdmin;
     headers.depids = getDepIds()
   }
