@@ -3,15 +3,39 @@ import {Button, Modal, Tabs} from 'antd';
 import {Player} from 'video-react';
 import styles from './show.css';
 import ShowPDFModal from "../components/ShowPDFModal";
+import request from "../../../../utils/request";
 
 export default class ShowModal extends React.Component {
   state = {
     showPDFVisible: false,
-    attachment: {}
+    attachment: {},
+    canLoad: true,
+    courseId: this.props.courseId,
+    commentList: this.props.commentList,
+    ppt: this.props.ppt,
+    learn: this.props.learn,
+    course: this.props.course,
+    video: this.props.video,
+    commentCount: this.props.commentCount
   };
 
   render() {
-    const {commentList, ppt, learn, course, video, commentCount, ...modalProps} = this.props;
+    let {...modalProps} = this.props;
+    const {canLoad,courseId,commentList,ppt,learn,course,video,commentCount} = this.state;
+    if(!course && canLoad) {
+      request("appCourseService.loadCourse", {cid: courseId}, true).then((res)=> {
+        console.log(res);
+        this.setState({
+          canLoad: false,
+          commentList: res.commentList,
+          ppt: res.ppt,
+          learn: res.learn,
+          course: res.course,
+          video: res.video,
+          commentCount: res.commentCount
+        });
+      });
+    }
 
     const showPDFOpts = {
       maskClosable: false,
@@ -44,7 +68,7 @@ export default class ShowModal extends React.Component {
             <source src={video.url} />
           </Player>
         }
-        <div className={styles.contentDiv} dangerouslySetInnerHTML={{__html: course.content}}/>
+        {course && <div className={styles.contentDiv} dangerouslySetInnerHTML={{__html: course.content}}/>}
 
         {ppt && ppt.id && <Button icon="eye" type="primary" onClick={()=>handleShowPPT()}>查看PPT</Button>}
         &nbsp;&nbsp;

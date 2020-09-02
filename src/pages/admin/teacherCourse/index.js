@@ -7,6 +7,7 @@ import ListHistory from "./components/ListHistory";
 import ShowModal from "./components/ShowModal";
 import ListCourse from "./components/ListCourse";
 import AddModal from './components/AddModal';
+import AddPlan from "../../yard/teachPlan/components/AddPlan";
 
 const TeacherCourse = ({
   dispatch,
@@ -43,6 +44,23 @@ const TeacherCourse = ({
       //console.log(cid)
       dispatch({ type: 'teacherCourse/modifyState', payload: {uploadVisible: true, courseId: cid} });
     },
+    writePlan: (cid) => {
+      // console.log(cid)
+      dispatch({ type: 'teacherCourse/modifyState', payload: {addPlanVisible: true, courseId: cid} });
+    }
+  };
+
+  const planOpts = {
+    visible: teacherCourse.addPlanVisible,
+    title: "填写教案",
+    courseId: teacherCourse.courseId,
+    maskClosable: false,
+    onCancel: ()=> {
+      dispatch({ type: 'teacherCourse/modifyState', payload: {addPlanVisible: false} });
+    },
+    onOk: () => {
+      dispatch({ type: 'teacherCourse/modifyState', payload: {addPlanVisible: false} });
+    }
   };
 
   const showOpts = {
@@ -99,6 +117,7 @@ const TeacherCourse = ({
         {teacherCourse.uploadVisible && <AddModal {...addOpts}/>}
       </div>
       {teacherCourse.showVisible && <ShowModal {...showOpts}/>}
+      {teacherCourse.addPlanVisible && <AddPlan {...planOpts}/>}
     </div>
   );
 }

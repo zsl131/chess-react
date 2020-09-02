@@ -15,27 +15,21 @@ const List = ({
     cancelText: '取消',
     onDelConfirm: onDelConfirm,
     onUpdate: onUpdate,
-  }
+  };
 
   const columns = [{
     title: '序号',
     dataIndex:'orderNo'
   }, {
-    title: '名称',
-    dataIndex: 'name'
+    title: '内容',
+    dataIndex: 'content'
   }, {
-    title: "关联体系",
-    dataIndex: "sname"
-  }, {
-    title: "教师标记",
+    title: "状态",
     render: (record) => {
       return (
-        record.teacherFlag==='1'?<span className="blue">可供教师选择</span>:<span className="red">教师不可选择</span>
+        record.status==='1'?<span className="blue">显示</span>:<span className="red">隐藏</span>
       )
     }
-  }, {
-    title: '备注',
-    dataIndex: 'remark'
   }, {
     title: '操作',
     render: (text, record) => {
@@ -47,17 +41,17 @@ const List = ({
 
   const handlePageChange = (pageNumber) => {
     onPageChange(pageNumber);
-  }
+  };
 
   const pager = () => {
     return (
       <Pagination showQuickJumper defaultPageSize={15} total={totalElement} onChange={handlePageChange}/>
     );
-  }
+  };
 
   return (
     <Table {...listOpts} columns={columns} rowKey="id" pagination={false} footer={pager}/>
   );
-}
+};
 
 export default List;

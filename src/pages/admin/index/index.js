@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import {Alert, Button} from 'antd';
 import {Link} from 'react-router-dom';
 import styles from './index.css';
+import router from "umi/router";
 
 const Index = ({
   loading,
@@ -13,7 +14,10 @@ const Index = ({
 
   const isTeacher = sessionStorage.getItem("isTeacher");
   const systemList = JSON.parse(sessionStorage.getItem("systemList"));
-  console.log(isTeacher)
+  // console.log(isTeacher)
+  if(isTeacher==="true") {
+    router.push("/yard/index");
+  }
 
   const alertMessage = ()=> {
     return (

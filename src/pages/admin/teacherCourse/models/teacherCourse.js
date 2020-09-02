@@ -18,6 +18,7 @@ export default {
 
     uploadVisible: false,
     courseId: 0,
+    addPlanVisible: false, //添加教案
   },
   reducers: {
     modifyState(state, { payload: options }) {

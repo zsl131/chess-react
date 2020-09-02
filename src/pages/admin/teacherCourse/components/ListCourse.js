@@ -6,16 +6,16 @@ import styles from "./list.css";
 const ListCourse = ({
   onDelConfirm,
   onUpdate,
-  onMatchUser,
   onPageChange,
   location,
   showCourse,
   totalElement,
   uploadImage,
+  writePlan,
   ...listOpts
 }) => {
 
-  console.log(listOpts);
+  //console.log(listOpts);
 
   const delOpts = {
     okText: '确定删除',
@@ -50,6 +50,7 @@ const ListCourse = ({
         <div>
         <Tooltip title="点击查阅"><Button type="primary" shape="circle" icon="eye" onClick={()=>showCourse(record.id)}/></Tooltip>
         <Tooltip title="上传课程影像"><Button type="primary" shape="circle" icon="upload" onClick={()=>uploadImage(record.id)}/></Tooltip>
+        <Tooltip title="填写教案"><Button type="primary" shape="circle" icon="edit" onClick={()=>writePlan(record.id)}/></Tooltip>
         </div>
       );
     }

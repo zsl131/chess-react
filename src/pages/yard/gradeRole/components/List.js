@@ -21,7 +21,14 @@ const List = ({
   const columns = [{
     title: '名称',
     dataIndex: 'name'
-  }, {
+  }/*, {
+    title: "教师标记",
+    render: (record) => {
+      return (
+        record.teacherFlag==='1'?<span className="blue">可供教师选择</span>:<span className="red">教师不可选择</span>
+      )
+    }
+  }*/, {
     title: '操作',
     render: (text, record) => {
       return (

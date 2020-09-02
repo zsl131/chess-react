@@ -22,6 +22,7 @@ window.onload = function() {
 }
 
 function checkHrefAuth(sn) {
+  if(!authMenus) {return false;}
   for(const auth of authMenus) {
     const href = auth.href;
     if(href!='#' && href.startsWith(sn)) {

@@ -303,6 +303,27 @@ export default class UpdateModal extends React.Component {
               </Col>
             </Row>
           </FormItem>
+
+          <FormItem {...formItemLayout} label="目标与重点">
+            <Row>
+              <Col span={11}>
+                <FormItem>
+                  <Tooltip placement="topLeft" title="输入情感目标">
+                    {getFieldDecorator('teachTarget')(<TextArea placeholder="输入情感目标" rows={3}>&nbsp;</TextArea>)}
+                  </Tooltip>
+                </FormItem>
+              </Col>
+              <Col span={1}>&nbsp;</Col>
+              <Col span={12}>
+                <FormItem>
+                  <Tooltip placement="topLeft" title="输入重点难点">
+                    {getFieldDecorator('keyPoint')(<TextArea placeholder="输入重点难点" rows={3}>&nbsp;</TextArea>)}
+                  </Tooltip>
+                </FormItem>
+              </Col>
+            </Row>
+          </FormItem>
+
           <FormItem {...formItemLayout} label="附件">
             <Row>
               <Col span={8} style={{"paddingRight":"10px"}}>

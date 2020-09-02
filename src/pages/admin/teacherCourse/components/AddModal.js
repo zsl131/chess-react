@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon, message, Modal, Upload} from 'antd';
-import {getLoginUser} from "../../../../utils/authUtils";
+import {getLoginUser, getTeacherClassroom} from "../../../../utils/authUtils";
 
 const { Dragger } = Upload;
 
@@ -20,6 +20,8 @@ export default class AddModal extends React.Component {
 
     const user = getLoginUser();
     console.log(courseId, user.username)
+    const classroomList = getTeacherClassroom();
+    console.log(classroomList)
 
     const handleOk = (e) => {
       onOk();

@@ -1,14 +1,16 @@
 import React from 'react';
-import {Form, Input, Modal} from 'antd';
+import {Form, Input, Modal, Radio, Tooltip} from 'antd';
 
 const FormItem = Form.Item;
 
 @Form.create()
 export default class UpdateModal extends React.Component {
 
+
   componentDidMount() {
     const {setFieldsValue} = this.props.form;
-    setFieldsValue(this.props.item);
+    const item = this.props.item;
+    setFieldsValue(item);
   }
 
   render() {
@@ -32,25 +34,28 @@ export default class UpdateModal extends React.Component {
          this.props.onOk(values);
         }
       });
-    }
+    };
 
     return(
       <Modal {...this.props} onOk={handleOk}>
         <Form layout="horizontal">
           {getFieldDecorator("id")(<Input type="hidden"/>)}
-          <FormItem {...formItemLayout} label="角色名称">
-            {getFieldDecorator('name', {rules: [{required: true, message: '角色名称不能为空'}]})(<Input placeholder="输入角色名称" />)}
+          <FormItem {...formItemLayout} label="公告内容">
+            {getFieldDecorator('content', {rules: [{required: true, message: '公告内容不能为空'}]})(<Input placeholder="输入公告内容"/>)}
           </FormItem>
-          {/*<FormItem {...formItemLayout} label="教师标记">
-            <Tooltip title="标记上 表示教师在设置管理班级时可以选择此角色，建议以年级名称，如：三年级">
-              {getFieldDecorator('teacherFlag', {rules: [{required: true, message: '教师标记不能为空'}]})(
+          <FormItem {...formItemLayout} label="序号">
+            {getFieldDecorator('orderNo', {rules: [{required: true, message: '序号不能为空'}]})(<Input type="number" placeholder="输入序号"/>)}
+          </FormItem>
+          <FormItem {...formItemLayout} label="显示状态">
+            <Tooltip title="设置是否在前台显示">
+              {getFieldDecorator('status', {rules: [{required: true, message: '请选择显示状态'}]})(
                 <Radio.Group>
-                  <Radio value="1">可选择</Radio>
-                  <Radio value="0">不可选择</Radio>
+                  <Radio value="1">前台显示</Radio>
+                  <Radio value="0">不显示</Radio>
                 </Radio.Group>
               )}
             </Tooltip>
-          </FormItem>*/}
+          </FormItem>
         </Form>
       </Modal>
     );

@@ -17,6 +17,8 @@ import {checkAuthByUrl} from '../utils/authUtils';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import zhCN from 'antd/es/locale/zh_CN';
+import TeacherModel from "./teacher/TeacherModel";
+import TeacherHeader from "./admin/TeacherHeader";
 
 moment.locale('zh-cn');
 
@@ -48,6 +50,8 @@ class MainLayout extends React.Component {
     const props = this.props;
 
     const pathname = props.location.pathname;
+
+    const isTeacher = sessionStorage.getItem("isTeacher");
 
     const isWx = pathname.indexOf("/wx") === 0;
     const isWeixin = pathname.indexOf("/weixin") === 0;
@@ -99,23 +103,46 @@ class MainLayout extends React.Component {
 
     return (
       <ConfigProvider locale={zhCN}>
-      <Layout className={styles.adminLayout}>
-        <Layout className={styles.adminMenuSider}>
-          <Affix offsetTop={0} style={{"overflow": "auto"}}>
-            <Sider collapsed={this.state.collapsed}>
-              <AdminSideMenu onCollapse={onCollapse} collapsed={this.state.collapsed}/>
-            </Sider>
-          </Affix>
-          <Content style={{"background": "#f0f2f5"}}>
-            <Affix>
-              <AdminHeader/>
-            </Affix>
-            <div style={{"width":"100%","float":"left"}}>{props.children}</div>
-            <AdminFooter/>
-          </Content>
-        </Layout>
+        {
+          isTeacher==="true"?
+            <Layout className={styles.adminLayout}>
 
-      </Layout>
+              <Layout className={styles.adminMenuSider}>
+                <Content style={{"background": "#f0f2f5"}}>
+                  <Affix>
+                    <TeacherHeader/>
+                  </Affix>
+                  <div style={{"width":"100%","float":"left"}}>
+                    <TeacherModel>
+                      {props.children}
+                    </TeacherModel>
+                  </div>
+                  <AdminFooter/>
+                </Content>
+              </Layout>
+
+            </Layout>
+            :
+            <Layout className={styles.adminLayout}>
+
+              <Layout className={styles.adminMenuSider}>
+                <Affix offsetTop={0} style={{"overflow": "auto"}}>
+                  <Sider collapsed={this.state.collapsed}>
+                    <AdminSideMenu onCollapse={onCollapse} collapsed={this.state.collapsed}/>
+                  </Sider>
+                </Affix>
+                <Content style={{"background": "#f0f2f5"}}>
+                  <Affix>
+                    <AdminHeader/>
+                  </Affix>
+                  <div style={{"width":"100%","float":"left"}}>
+                    {props.children}</div>
+                  <AdminFooter/>
+                </Content>
+              </Layout>
+
+            </Layout>
+        }
       </ConfigProvider>
     );
   }
