@@ -10,6 +10,8 @@ export default {
     noticeList: [], //公告
     courseDtoList: [], //课程
     planList:[], //教案
+    roomCourseList: [], //课程
+    imageList: [], //影集
   },
   reducers: {
     modifyState(state, { payload: options }) {
@@ -29,7 +31,8 @@ export default {
         }
         yield put({type: "modifyState", payload: {teacher: data.teacher, classroomList: data.classroomList,
           noticeList: data.noticeList, courseDtoList: data.courseDtoList,
-            planList: data.planList}});
+            planList: data.planList, roomCourseList: data.roomCourseList,
+            imageList: data.imageList}});
       }
     }
   },

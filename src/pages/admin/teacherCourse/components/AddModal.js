@@ -1,12 +1,23 @@
 import React from 'react';
-import {Icon, message, Modal, Upload} from 'antd';
-import {getLoginUser, getTeacherClassroom} from "../../../../utils/authUtils";
+import {Button, Icon, message, Modal, Upload} from 'antd';
+import {getLoginUser, getTeacherClassroom, getTeacherInfo} from "../../../../utils/authUtils";
+import request from "../../../../utils/request";
+import {Player} from "video-react";
+
+import styles from "./image.css";
 
 const { Dragger } = Upload;
 
 export default class AddModal extends React.Component {
   state = {
-    courseId: this.props.courseId
+    courseId: this.props.courseId,
+    roomId: this.props.roomId,
+    roomList: [],
+    canLoad: true,
+    imageList: [],
+    canUpload: !!this.props.roomId,
+    classroomList: [],
+    canLoadRoom: true,
   };
 
   render() {
@@ -18,10 +29,37 @@ export default class AddModal extends React.Component {
       ...modalProps
     } = this.props;
 
+    const {canLoad, roomId, canUpload,imageList, canLoadRoom, classroomList} = this.state;
+
     const user = getLoginUser();
-    console.log(courseId, user.username)
-    const classroomList = getTeacherClassroom();
-    console.log(classroomList)
+    //console.log(courseId, user.username)
+    // const classroomList = getTeacherClassroom();
+    const teacher = getTeacherInfo();
+    if(canLoadRoom) {
+      request("teachPlanService.queryClassroom", {courseId: courseId, teaId: teacher.id}, true).then((res) => {
+        const list = res.classroomList;
+        this.setState({classroomList: list, canLoadRoom: false});
+        //console.log(list && list.length===1)
+        if(list && list.length === 1) {
+          const room = list[0];
+          this.setState({roomId: room.id, canUpload: true});
+        }
+      });
+    }
+    //console.log(classroomList)
+
+    const loadImages = (curRoomId) => {
+      request("classImageService.queryByTea", {courseId: courseId, teaId: teacher.id, roomId: curRoomId}, true).then((res)=> {
+        //console.log(res)
+        this.setState({imageList: res.imageList});
+      });
+    };
+
+    if(canLoad && canUpload) {
+      loadImages(roomId);
+      this.setState({canLoad: false});
+    }
+
 
     const handleOk = (e) => {
       onOk();
@@ -38,7 +76,8 @@ export default class AddModal extends React.Component {
       accept: "image/png, image/jpeg, image/gif, video/*",
       data: {
         courseId: courseId,
-        phone: user.username
+        phone: user.username,
+        roomId: roomId,
       },
       action:"/api/app/upload/classImage",
       onChange(info) {
@@ -57,18 +96,53 @@ export default class AddModal extends React.Component {
       },
     };
 
+    //console.log(canUpload, roomList)
+
+    const changeRoom = (room) => {
+      this.setState({roomId: room.id, canUpload: true, imageList: []});
+      //console.log(room)
+      loadImages(room.id);
+    };
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
 
-        <Dragger {...opts}>
-          <p className="ant-upload-drag-icon">
-            <Icon type="inbox" />
-          </p>
-          <p className="ant-upload-text">点击这里或将图片/视频拖到这里上传</p>
-          <p className="ant-upload-hint">
-            请选择图片/视频文件上传，否则可能会导致未知异常
-          </p>
-        </Dragger>
+        <div style={{"paddingBottom": "15px"}}>
+          <b>选择相应班级：</b>
+          {classroomList &&
+            classroomList.map((item)=> {
+              return (
+                <span><Button onClick={()=>changeRoom(item)} type={item.id===roomId?"primary":"default"}>{item.roomName}</Button> &nbsp;&nbsp;</span>
+              )
+            })
+          }
+        </div>
+
+        {
+          canUpload && <Dragger {...opts}>
+            <p className="ant-upload-drag-icon">
+              <Icon type="inbox" />
+            </p>
+            <p className="ant-upload-text">点击这里或将图片/视频拖到这里上传</p>
+            <p className="ant-upload-hint">
+              请选择图片/视频文件上传，否则可能会导致未知异常
+            </p>
+          </Dragger>
+        }
+
+        <div className={styles.imageDiv}>
+          {imageList.map((item)=> {
+            const type = item.fileType;
+            return (
+              type==='1'?<div className={styles.singleDiv}><a key={item.id} href={item.url} target="_blank" rel="noopener noreferrer"><img className={styles.image} src={item.url}/></a></div>:
+                <div className={styles.singleDiv}>
+                  <Player autoPlay={false} ref="player" videoId="myVideo">
+                    <source src={item.url}/>
+                  </Player>
+                </div>
+            )
+          })}
+        </div>
+
       </Modal>
     );
   }

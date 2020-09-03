@@ -24,6 +24,9 @@ const YardIndex = ({
 
   const clsOpts = {
     classroomList: yardIndex.classroomList,
+    roomCourseList: yardIndex.roomCourseList,
+    planList: yardIndex.planList,
+    imageList: yardIndex.imageList,
   };
 
   const courseOpts = {

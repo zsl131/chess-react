@@ -4,6 +4,7 @@ import {Button, Table, Tabs, Tooltip} from "antd";
 import styles from "./notice.css";
 import AddPlan from "../../teachPlan/components/AddPlan";
 import ShowModal from "../../../admin/teacherCourse/components/ShowModal";
+import AddModal from "../../../admin/teacherCourse/components/AddModal";
 
 const { TabPane } = Tabs;
 
@@ -14,6 +15,8 @@ class IndexPlan extends React.Component {
     courseId: 0,
     showVisible: false,
     course: {},
+
+    addImageVisible: false,
   };
 
   render() {
@@ -22,6 +25,8 @@ class IndexPlan extends React.Component {
       courseList,
       planList,
     } = this.props;
+
+    const {addImageVisible, courseId, course} = this.state;
 
     //console.log(dataSource)
 
@@ -77,7 +82,7 @@ class IndexPlan extends React.Component {
         return (
           <div>
             <Tooltip title="点击查阅"><Button type="primary" shape="circle" icon="eye" onClick={()=>showCourse(record)}/></Tooltip>
-            <Tooltip title="上传课程影像"><Button type="primary" shape="circle" icon="upload" onClick={()=>uploadImage(record.id)}/></Tooltip>
+            <Tooltip title="上传课程影像"><Button type="primary" shape="circle" icon="upload" onClick={()=>uploadImage(record)}/></Tooltip>
             <Tooltip title="填写教案"><Button type="primary" shape="circle" icon="edit" onClick={()=>writePlan(record.id)}/></Tooltip>
           </div>
         );
@@ -88,8 +93,8 @@ class IndexPlan extends React.Component {
       this.setState({showVisible: true, course: course, courseId: course.id});
     };
 
-    const uploadImage = () => {
-
+    const uploadImage = (course) => {
+      this.setState({addImageVisible: true, course: course, courseId: course.id});
     };
 
     const writePlan =(courseId) => {
@@ -130,6 +135,23 @@ class IndexPlan extends React.Component {
       this.setState({showVisible: false});
     };
 
+    const addOpts = {
+      visible: addImageVisible,
+      title: `添加课堂影像[${course.title}]`,
+      maskClosable: false,
+      courseId: courseId,
+      onOk(datas) {
+        closeImage();
+      },
+      onCancel() {
+        closeImage();
+      }
+    };
+
+    const closeImage = () => {
+      this.setState({addImageVisible: false});
+    };
+
     return(
       <div>
         <Tabs>
@@ -138,6 +160,7 @@ class IndexPlan extends React.Component {
 
         {this.state.addPlanVisible && <AddPlan {...planOpts}/>}
         {this.state.showVisible && <ShowModal {...showOpts}/>}
+        {addImageVisible && <AddModal {...addOpts}/>}
       </div>
     );
   }

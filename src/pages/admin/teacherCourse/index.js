@@ -40,9 +40,9 @@ const TeacherCourse = ({
     showCourse: (cid) => {
       dispatch({ type: 'teacherCourse/loadCourse', payload: {cid} });
     },
-    uploadImage: (cid)=> {
+    uploadImage: (course)=> {
       //console.log(cid)
-      dispatch({ type: 'teacherCourse/modifyState', payload: {uploadVisible: true, courseId: cid} });
+      dispatch({ type: 'teacherCourse/modifyState', payload: {uploadVisible: true, item: course, courseId: course.id} });
     },
     writePlan: (cid) => {
       // console.log(cid)
@@ -83,7 +83,7 @@ const TeacherCourse = ({
 
   const addOpts = {
     visible: teacherCourse.uploadVisible,
-    title: "添加课堂影像",
+    title: `添加课堂影像[${teacherCourse.item.title}]`,
     maskClosable: false,
     courseId: teacherCourse.courseId,
     onOk(datas) {
