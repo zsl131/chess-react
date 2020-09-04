@@ -1,13 +1,12 @@
 import React from 'react';
-import { connect } from 'dva';
-import {Form, Icon, Card, Button, Input, DatePicker, Radio, Select} from 'antd';
-import { routerRedux } from 'dva/router';
+import {connect} from 'dva';
+import {Button, Card, DatePicker, Form, Icon, Input, Radio} from 'antd';
+import {routerRedux} from 'dva/router';
 import moment from 'moment';
 
 import styles from './index.css';
 
 const FormItem = Form.Item;
-const Option = Select.Option;
 
 @Form.create()
 class TeachPlanConfig extends React.Component {
@@ -15,6 +14,7 @@ class TeachPlanConfig extends React.Component {
   state = {
     item: this.props.teachPlanConfig.item,
     year: '',
+    // canLoad: true,
   };
 
   componentDidMount () {
@@ -22,10 +22,13 @@ class TeachPlanConfig extends React.Component {
     // console.log("didMount::", this.props.teachPlanConfig.item);
     // setFieldsValue(this.state.item || {});
     // console.log(this.props.teachPlanConfig.item);
-    const item = this.state.item;
+    const item = this.props.teachPlanConfig.item;
     //console.log(item)
-    setFieldsValue({term: item.term, flag: item.flag});
-    setFieldsValue({configYear: moment(item.configYear, "YYYY")})
+    if(item && item.id) {
+      //console.log("-----------")
+      setFieldsValue({term: item.term, flag: item.flag});
+      setFieldsValue({configYear: moment(item.configYear, "YYYY")})
+    }
   }
 
   render() {
@@ -67,17 +70,17 @@ class TeachPlanConfig extends React.Component {
       });
     };
 
-    const handlePanelChange = (e, dateString) => {
+      const handlePanelChange = (e, dateString) => {
       const year = moment(e).format('YYYY');
       this.setState({year: year});
       setFieldsValue({configYear: moment(year, "YYYY")})
     };
 
-    const onChangeTerm = (e) => {
+    /*const onChangeTerm = (e) => {
 
       const term = e.target.value;
       console.log(term)
-    };
+    };*/
 
     return (
       <div>

@@ -69,7 +69,7 @@ export default function request(apiCode, params, isBase, options) {
   let defaultOption = {
     method: 'GET',
     headers: headers
-  }
+  };
 
   Object.assign(defaultOption, options || {});
 

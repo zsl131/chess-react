@@ -14,12 +14,10 @@ class TeacherClassroom extends React.Component {
   };
 
   render() {
-    const isTeacher = sessionStorage.getItem("isTeacher");
-    const systemList = JSON.parse(sessionStorage.getItem("systemList"));
 
     const {dispatch} = this.props;
     const {gradeList, classroomList, config, teacher} = this.props.teacherClassroom;
-    // console.log(gradeList);
+    //console.log(config)
     const buildTabs = () => {
       return gradeList.map((grade)=> {
         return (
@@ -89,13 +87,21 @@ class TeacherClassroom extends React.Component {
     return (
       <div>
         <div className="listHeader">
-          <h3><Icon type="setting"/> 配置所教班级<b className="red">【{config.configYear}{config.term==='1'?"春季学期":"冬季学期"}】</b></h3>
+          <h3><Icon type="setting"/> 配置所教班级<b className="red">【{config?config.configYear:"不可设置班级，请与管理员联系"}{config && config.term==='1'?"春季学期":"冬季学期"}】</b></h3>
         </div>
-        <Card>
-          <Tabs defaultActiveKey="1" onChange={changeTabs}>
-            {buildTabs()}
-          </Tabs>
-        </Card>
+        {
+          (!config || config.flag!=='1')?
+            <div>
+              <Card>
+                <h2 className="red">当前不能配置班级信息，请与管理员联系！</h2>
+              </Card>
+            </div>:
+            <Card>
+              <Tabs defaultActiveKey="1" onChange={changeTabs}>
+                {buildTabs()}
+              </Tabs>
+            </Card>
+        }
 
         {this.state.addVisible && <AddModal {...addOpt}/>}
       </div>

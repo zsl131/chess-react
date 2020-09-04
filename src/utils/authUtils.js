@@ -98,25 +98,29 @@ export function getDepIds() {
 /** 检测是否有用户登陆 */
 export function checkLogin() {
   const loginUser = getLoginUser();
-  if(loginUser!=null && loginUser!=undefined) {
+  if(loginUser!==null && loginUser!==undefined) {
     return true;
   }
   return false;
 }
 
 //不需要检测权限的，但需要登陆
-const NO_NEED_CHECK = ["/admin/users/updatePwd"];
+const NO_NEED_CHECK = ["/admin/users/updatePwd", "/yard/index"];
 
 //教师用户专属的忽略路径
-const TEACHER_NO_NEED_CHECK = ["/admin/teacherCourse", "/yard/teacherClassImage", "/yard/index"];
+const TEACHER_NO_NEED_CHECK = ["/admin/teacherCourse", "/yard/teacherClassImage", "/yard/index", "/yard/teacherClassroom"];
 
 /** 通过url检测权限 */
 export function checkAuthByUrl(pathname) {
   if(NO_NEED_CHECK.includes(pathname)) {return true;}
+  //console.log("------->"+sessionStorage.getItem("isTeacher")+(sessionStorage.getItem("isTeacher")==='true'));
+  //console.log(TEACHER_NO_NEED_CHECK)
+  //console.log(sessionStorage.getItem("isTeacher")==='true' && TEACHER_NO_NEED_CHECK.includes(pathname))
+  //console.log(pathname)
   if(sessionStorage.getItem("isTeacher")==='true' && TEACHER_NO_NEED_CHECK.includes(pathname)) {return true;} //如果是教师用户并包含忽略路径
   let hasAuth = false;
   NO_NEED_AUTH.map((url) => {
-    if(pathname == url) {hasAuth = true;}
+    if(pathname === url) {hasAuth = true;}
   });
   if(hasAuth) {return hasAuth;}
   else {
@@ -124,12 +128,12 @@ export function checkAuthByUrl(pathname) {
     const navMenus = JSON.parse(sessionStorage.getItem(NAV_MENU_SESSION));
 
     navMenus.map((item) => {
-      if (item.menu.href == pathname) {
+      if (item.menu.href === pathname) {
         hasAuth = true;
       }
       if (!hasAuth) {
         item.children.map((menu) => {
-          if (menu.href == pathname) {
+          if (menu.href === pathname) {
             hasAuth = true;
           }
         })
@@ -138,7 +142,7 @@ export function checkAuthByUrl(pathname) {
 
     if (!hasAuth) {
       authMenus.map((menu) => {
-        if (menu.href == pathname) {
+        if (menu.href === pathname) {
           hasAuth = true;
         }
       })
