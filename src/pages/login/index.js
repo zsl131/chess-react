@@ -100,6 +100,7 @@ const Login = ({
               <p>&copy; 2020-2022 Created By zsl</p>
               <p>技术支持：奇思教育</p>
               <p>监管部门：昭通市科协、昭通市教体局</p>
+              <p><a href="http://qiniu.qswkx.com/chess.apk">下载安卓App</a></p>
             </Row>
           </Card>
         </Col>

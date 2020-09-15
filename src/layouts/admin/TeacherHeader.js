@@ -51,6 +51,7 @@ export default class TeacherHeader extends React.Component {
 
     const content = (
       <div>
+        <p><a href="http://qiniu.qswkx.com/chess.apk"><Icon type="download"/> 下载安卓App</a></p>
         <p><Link to="/yard/teacherClassroom"><Icon type="setting"/> 班级配置</Link></p>
         <p><Link to="/admin/users/updatePwd"><Icon type="setting"/> 用户配置</Link></p>
         {/*<Divider></Divider>*/}
