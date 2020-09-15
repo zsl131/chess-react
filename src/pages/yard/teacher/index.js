@@ -81,6 +81,9 @@ const Teacher = ({
     setIsTest: (record) => {
       dispatch({type: "teacher/setIsTest", payload: {id: record.id, isTest: record.isTest==="1"?"0":"1"}}).then(()=>{handleRefresh()});
     },
+    setIsUse: (record) => {
+      dispatch({type: "teacher/setIsUse", payload: {id: record.id, isUse: record.isUse==="1"?"0":"1"}}).then(()=>{handleRefresh()});
+    },
     onUploadComment: (obj) => {
       // console.log(obj)
       dispatch({ type: 'teacher/modifyState', payload: { uploadVisible: true, item: obj } });
@@ -158,7 +161,7 @@ const Teacher = ({
       dispatch({ type: 'teacher/modifyState', payload: { authRoleVisible: false } });
     },
     saveAuth: (obj) => {
-      console.log(obj);
+      //console.log(obj);
       dispatch({type: 'teacher/authRole', payload:obj});
     }
   };

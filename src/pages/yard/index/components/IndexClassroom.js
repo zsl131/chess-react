@@ -21,13 +21,14 @@ class IndexClassroom extends React.Component {
     roomId: 0,
   };
 
+
   render() {
 
     const {
       classroomList,
       roomCourseList,
       imageList,
-      planList,
+      planFlagList,
     } = this.props;
 
     const {addImageVisible, courseId, course, roomId} = this.state;
@@ -47,7 +48,7 @@ class IndexClassroom extends React.Component {
 
     const writed = (courseId) => {
       let res = false;
-      planList.map((item) => {
+      planFlagList.map((item) => {
         if(item.courseId===courseId) {res = true;}
         return item;
       });
@@ -73,14 +74,14 @@ class IndexClassroom extends React.Component {
       return res;
     };
 
-    const columns = [{
+    const columns = [/*{
       title: '封面',
       render: (text, record) => {
         return (
           <a key={record.id} href={record.imgUrl} target="_blank" rel="noopener noreferrer"><img src={record.imgUrl} alt={record.id} className={styles.avatarImg}/></a>
         )
       }
-    }, {
+    }, */{
       title: '标题',
       // dataIndex: 'id'
       render:(record)=> {
@@ -150,6 +151,12 @@ class IndexClassroom extends React.Component {
       title: "填写教案",
       courseId: this.state.courseId,
       maskClosable: false,
+      writePlan: (flag)=> {
+        //console.log(flag, planFlagList);
+        //let tmp = planFlagList.push(flag);
+        //this.setState({planFlagList: tmp});
+        //this.setState({planFlagList: planFlagList.push(flag)});
+      },
       onCancel: ()=> {
         closePlan();
       },
@@ -184,6 +191,7 @@ class IndexClassroom extends React.Component {
       title: `添加课堂影像[${course.title}]`,
       maskClosable: false,
       courseId: courseId,
+      classroomId: roomId,
       onOk(datas) {
         closeImage();
       },

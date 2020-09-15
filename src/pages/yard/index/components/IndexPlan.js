@@ -1,10 +1,5 @@
 import React from "react";
-import {Button, Table, Tabs, Tooltip} from "antd";
-
-import styles from "./notice.css";
-import AddPlan from "../../teachPlan/components/AddPlan";
-import ShowModal from "../../../admin/teacherCourse/components/ShowModal";
-import AddModal from "../../../admin/teacherCourse/components/AddModal";
+import {Button, Empty, Table, Tabs, Tooltip} from "antd";
 
 const { TabPane } = Tabs;
 
@@ -23,7 +18,7 @@ class IndexPlan extends React.Component {
 
     const {
       courseList,
-      planList,
+      planFlagList,
     } = this.props;
 
     const {addImageVisible, courseId, course} = this.state;
@@ -32,39 +27,49 @@ class IndexPlan extends React.Component {
 
     const buildTabPanes= () => {
       return courseList.map((item)=> {
+        const data = buildCourse(item.courseList);
         return (
-          <TabPane tab={`${item.classroom.gradeName}（${item.courseList.length}）`} key={item.classroomId}>
-            <SingleCourse {...item}/>
+          <TabPane tab={`${item.classroom.gradeName}（${data.length}）`} key={item.classroomId}>
+            <SingleCourse data={data}/>
           </TabPane>
         )
       })
     };
 
-    const SingleCourse = (item) => {
+    const SingleCourse = ({data}) => {
       return (
         <div>
-          <Table dataSource={item.courseList} columns={columns} rowKey="id" pagination={false} />
+          {(data && data.length>0) ? <Table dataSource={data} columns={columns} rowKey="id" pagination={false} />:
+          <Empty description={`恭喜，该类目下所有课程教案均已完成！`} />
+          }
+
         </div>
       );
     };
 
+    const buildCourse = (data) => {
+      let res = [];
+      data.map((item)=> {if(!writed(item.id)) {res.push(item);} return item;});
+      return res;
+    };
+
     const writed = (courseId) => {
       let res = false;
-      planList.map((item) => {
+      planFlagList.map((item) => {
         if(item.courseId===courseId) {res = true;}
         return item;
       });
       return res;
     };
 
-    const columns = [{
+    const columns = [/*{
       title: '封面',
       render: (text, record) => {
         return (
           <a key={record.id} href={record.imgUrl} target="_blank" rel="noopener noreferrer"><img src={record.imgUrl} alt={record.id} className={styles.avatarImg}/></a>
         )
       }
-    }, {
+    }, */{
       title: '标题',
       // dataIndex: 'id'
       render:(record)=> {

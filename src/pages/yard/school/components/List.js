@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pagination, Table, Menu, Icon} from 'antd';
+import {Pagination, Table, Menu, Icon, Tooltip, Button} from 'antd';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 
 const List = ({
@@ -8,6 +8,7 @@ const List = ({
                 handleImport,
                 onPageChange,
                 totalElement,
+                setIsUse,
                 ...listOpts
               }) => {
 
@@ -49,6 +50,9 @@ const List = ({
         </div>
       )
     }
+  }, {
+    title: '使用',
+    render:(record)=>{return <Tooltip placement="top" title="是否在正常使用"><Button icon={record.isUse==="1"?"check":"close"} type={record.isUse==="1"?"danger":"default"} onClick={()=>setIsUse(record)}/></Tooltip>}
   }, {
     title: "备注",
     dataIndex: "remark",

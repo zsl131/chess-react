@@ -97,7 +97,9 @@ const Login = ({
               </TabPane>
             </Tabs>
             <Row className={styles.infoRow}>
-              &copy; 2018-2020 Created By zsl
+              <p>&copy; 2020-2022 Created By zsl</p>
+              <p>技术支持：奇思教育</p>
+              <p>监管部门：昭通市科协、昭通市教体局</p>
             </Row>
           </Card>
         </Col>

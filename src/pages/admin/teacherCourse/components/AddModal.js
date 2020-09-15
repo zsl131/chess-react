@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Icon, message, Modal, Upload} from 'antd';
-import {getLoginUser, getTeacherClassroom, getTeacherInfo} from "../../../../utils/authUtils";
+import {Button, Dropdown, Icon, Menu, message, Modal, Popconfirm, Upload} from 'antd';
+import {getLoginUser, getTeacherInfo} from "../../../../utils/authUtils";
 import request from "../../../../utils/request";
 import {Player} from "video-react";
 
@@ -26,6 +26,7 @@ export default class AddModal extends React.Component {
       onOk,
       record,
       courseId,
+      classroomId,
       ...modalProps
     } = this.props;
 
@@ -36,7 +37,8 @@ export default class AddModal extends React.Component {
     // const classroomList = getTeacherClassroom();
     const teacher = getTeacherInfo();
     if(canLoadRoom) {
-      request("teachPlanService.queryClassroom", {courseId: courseId, teaId: teacher.id}, true).then((res) => {
+      request("teachPlanService.queryClassroom", {courseId: courseId, teaId: teacher.id, classroomId: classroomId}, true).then((res) => {
+        //console.log(res)
         const list = res.classroomList;
         this.setState({classroomList: list, canLoadRoom: false});
         //console.log(list && list.length===1)
@@ -103,6 +105,35 @@ export default class AddModal extends React.Component {
       //console.log(room)
       loadImages(room.id);
     };
+
+    const dropdown = (item) => {
+      return (
+        <Menu>
+          <Menu.Item><Popconfirm placement="bottom" title={"确定删除此影像吗？删除后无法恢复"} onConfirm={()=>deleteImg(item)}>点这里可删除此影像</Popconfirm></Menu.Item>
+        </Menu>
+      )
+    };
+
+    const deleteImg = (item) => {
+      request("classImageService.deleteByTea", {id: item.id, teaId: teacher.id}, true).then((res)=> {
+        //console.log(res)
+        message.success(res.message);
+        if(res.flag==='1') { //表示删除成功
+          removeImg(item);
+        }
+        this.setState({imageList: res.imageList});
+      });
+    };
+
+    const removeImg = (item) => {
+      /*let list = imageList;
+      console.log(imageList)
+      list.splice(list.findIndex(item => item.id === id), 1);
+      console.log(list)
+      //this.setState({imageList: list});*/
+      loadImages(item.roomId)
+    };
+
     return(
       <Modal {...modalOpts} style={{ "minWidth": '80%', top: 20 }}>
 
@@ -130,17 +161,19 @@ export default class AddModal extends React.Component {
         }
 
         <div className={styles.imageDiv}>
-          {imageList.map((item)=> {
+          {(imageList&&imageList.length>0)?imageList.map((item)=> {
             const type = item.fileType;
             return (
-              type==='1'?<div className={styles.singleDiv}><a key={item.id} href={item.url} target="_blank" rel="noopener noreferrer"><img className={styles.image} src={item.url}/></a></div>:
+              <Dropdown overlay={dropdown(item)}>
+                {type==='1'?<div className={styles.singleDiv}><a key={item.id} href={item.url} target="_blank" rel="noopener noreferrer"><img className={styles.image} src={item.url}/></a></div>:
                 <div className={styles.singleDiv}>
                   <Player autoPlay={false} ref="player" videoId="myVideo">
                     <source src={item.url}/>
                   </Player>
-                </div>
+                </div>}
+              </Dropdown>
             )
-          })}
+          }):""}
         </div>
 
       </Modal>

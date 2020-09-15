@@ -31,6 +31,10 @@ export default {
     *deleteObj({payload: id}, {call}) {
       const data = yield call(objService.deleteObj, {id});
       if(data) {message.success(data.message)}
+    },
+    *setIsUse({payload: obj}, {call}) {
+      const data = yield call(objService.setIsUse, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

@@ -57,6 +57,10 @@ function setIsTest(obj) {
   return request(baseService+".setIsTest", obj, true);
 }
 
+function setIsUse(obj) {
+  return request(baseService+".setIsUse", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
@@ -71,4 +75,5 @@ export {
   onSetGrade,
   setGrade,
   setIsTest,
+  setIsUse
 }

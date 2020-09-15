@@ -3,9 +3,14 @@ import {Col, Icon, Modal, Row, Table} from 'antd';
 
 export default class TeacherRoleModal extends React.Component {
 
+  state = {
+    ridList: this.props.ridList,
+  };
+
   render() {
 
-    const {ridList, roleList, saveAuth, item} = this.props;
+    const {roleList, saveAuth, item} = this.props;
+    const {ridList} = this.state;
 
    //console.log(ridList)
 
@@ -14,15 +19,30 @@ export default class TeacherRoleModal extends React.Component {
       dataIndex: 'name'
     }];
 
+    //console.log(ridList)
+
+    const rebuildIds = (record, selected) => {
+      let list = ridList;
+      if(!selected) {
+        let tmp = [];
+        list.map((id)=> {if(id!==record.id) {tmp.push(id)}});
+        this.setState({ridList: tmp});
+      } else {
+        list.push(record.id);
+        this.setState({ridList: list});
+      }
+    };
+
     const rowSelection = {
       /*onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         onSetMenu(selectedRowKeys)
       },*/
       onSelect: (record, selected, selectedRows) => {
-        console.log(record)
+        //console.log(record);
         // console.log(`record:${record.name},,selected:${selected}`,`selectedRows::${selectedRows}`);
         saveAuth({tid: item.id, rid: record.id, checked:(selected?"1":"0")});
+        rebuildIds(record, selected);
       },
       getCheckboxProps(record) {
         const include = ridList.includes(record.id);

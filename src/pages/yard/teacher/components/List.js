@@ -12,6 +12,7 @@ const List = ({
                 onPageChange,
                 initPwd,
                 setIsTest,
+                setIsUse,
                 onUploadComment,
                 totalElement,
                 ...listOpts
@@ -22,7 +23,7 @@ const List = ({
     cancelText: '取消',
     onDelConfirm: onDelConfirm,
     onUpdate: onUpdate,
-  }
+  };
 
   const columns = [{
     title: '所在学校',
@@ -55,6 +56,9 @@ const List = ({
   }, {
     title: '测试',
     render:(record)=>{return <Tooltip placement="top" title="是否为测试教师用户"><Button icon={record.isTest==="1"?"check":"close"} type={record.isTest==="1"?"danger":"default"} onClick={()=>setIsTest(record)}/></Tooltip>}
+  }, {
+    title: '使用',
+    render:(record)=>{return <Tooltip placement="top" title="是否在正常使用"><Button icon={record.isUse==="1"?"check":"close"} type={record.isUse==="1"?"danger":"default"} onClick={()=>setIsUse(record)}/></Tooltip>}
   }, {
     title: '操作',
     render: (text, record) => {

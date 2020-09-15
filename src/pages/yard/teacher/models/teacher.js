@@ -80,6 +80,10 @@ export default {
     *setIsTest({payload: obj}, {call}) {
       const data = yield call(objService.setIsTest, obj);
       if(data) {message.success(data.message);}
+    },
+    *setIsUse({payload: obj}, {call}) {
+      const data = yield call(objService.setIsUse, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

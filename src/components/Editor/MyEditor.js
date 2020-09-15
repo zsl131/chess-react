@@ -6,18 +6,22 @@ export default class MyEditor extends React.Component {
 
   componentDidMount() {
     const editor = new Editor(ReactDOM.findDOMNode(this._div));
+    const menu = this.props.menu;
+    if(menu && menu.length>0) {
+      editor.customConfig.menus = menu;
+    }
     editor.customConfig.onchange = (html) => {
       this.setState({
         editorHtml: html,
         editorText: editor.txt.text()
-      })
+      });
       // console.log("onChange", html, editor);
       //将html值设为form表单的desc属性值
       /*this.props.form.setFieldsValue({
         'content': html
       });*/
       this.props.onChangeContent(html);
-    }
+    };
     // console.log("editor", editor.customConfig);
     // 上传图片（举例）
     editor.customConfig.uploadImgServer = '/api/upload/image';
@@ -41,7 +45,7 @@ export default class MyEditor extends React.Component {
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
         console.log("error", editor);
       },
-    }
+    };
     editor.create();
     editor.txt.html(this.props.content);
   }

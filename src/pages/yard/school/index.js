@@ -32,13 +32,13 @@ const School = ({
     onAdd: () => {
       dispatch({ type: 'school/modifyState', payload: {addVisible: true}});
     }
-  }
+  };
 
   const filterOpts = {
     onFilter: (params) => {
       handleRefresh({conditions: JSON.stringify(params)});
     }
-  }
+  };
 
   const listOpts = {
     dataSource: school.data,
@@ -58,8 +58,11 @@ const School = ({
     handleImport:(school) => {
       console.log(school)
       dispatch({type: 'school/modifyState', payload: {item: school, importVisible: true}});
-    }
-  }
+    },
+    setIsUse: (record) => {
+      dispatch({type: "school/setIsUse", payload: {id: record.id, isUse: record.isUse==="1"?"0":"1"}}).then(()=>{handleRefresh()});
+    },
+  };
 
   const addOpts = {
     maskClosable: false,
@@ -77,7 +80,7 @@ const School = ({
     onCancel() {
       dispatch({ type: 'school/modifyState', payload: { addVisible: false } });
     }
-  }
+  };
 
   const updateOpts = {
     maskClosable: false,
@@ -97,7 +100,7 @@ const School = ({
     onCancel: () => {
       dispatch({ type: 'school/modifyState', payload: { updateVisible: false } });
     }
-  }
+  };
 
   const importOpts = {
     maskClosable: false,
@@ -113,7 +116,7 @@ const School = ({
     onCancel: () => {
       dispatch({ type: 'school/modifyState', payload: { importVisible: false } });
     }
-  }
+  };
 
   return(
     <div>

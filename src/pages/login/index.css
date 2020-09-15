@@ -24,5 +24,8 @@ html, body {
 }
 
 .infoRow {
-  width:100%; text-align:center; color:#c8c8c8; padding-top:10px;
+  width:100%; text-align:center; color:#c8c8c8; padding-top:10px; line-height: 25px;
+}
+.infoRow p {
+  margin:0px;
 }

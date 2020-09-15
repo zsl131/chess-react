@@ -9,7 +9,7 @@ export default {
     classroomList:[], //教师班级信息
     noticeList: [], //公告
     courseDtoList: [], //课程
-    planList:[], //教案
+    planFlagList:[], //教案标记
     roomCourseList: [], //课程
     imageList: [], //影集
   },
@@ -31,7 +31,7 @@ export default {
         }
         yield put({type: "modifyState", payload: {teacher: data.teacher, classroomList: data.classroomList,
           noticeList: data.noticeList, courseDtoList: data.courseDtoList,
-            planList: data.planList, roomCourseList: data.roomCourseList,
+            planFlagList: data.planFlagList, roomCourseList: data.roomCourseList,
             imageList: data.imageList}});
       }
     }

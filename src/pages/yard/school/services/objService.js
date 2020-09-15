@@ -24,10 +24,15 @@ function deleteObj(obj) {
   return request(baseService+".delete", obj, true);
 }
 
+function setIsUse(obj) {
+  return request(baseService+".setIsUse", obj, true);
+}
+
 export {
   list,
   addOrUpdate,
   updateStatus,
   deleteObj,
-  loadOne
+  loadOne,
+  setIsUse,
 }
