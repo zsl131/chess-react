@@ -8,6 +8,11 @@ import MyEditor from "../../../../components/Editor/MyEditor";
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
+const theName = "blockName";
+const theImport = "importCon";
+const theStep = "theStepCon";
+const theNext = "theNextCon";
+
 @Form.create()
 class AddPlanContent extends React.Component {
 
@@ -17,7 +22,37 @@ class AddPlanContent extends React.Component {
     course:{},
     showEditor: false,
     canEditor: true,
+    sessionStep: ''
   };
+
+  checkValues() {
+    const {setFieldsValue} = this.props.form;
+    const name = sessionStorage.getItem(theName);
+    if(name) {
+      setFieldsValue({blockName: name});
+    }
+
+    const theImportCon = sessionStorage.getItem(theImport);
+    if(theImportCon) {
+      setFieldsValue({guide: theImportCon});
+    }
+
+    const theStepCon = sessionStorage.getItem(theStep);
+    //console.log(theStepCon)
+    if(theStepCon) {
+      // setFieldsValue({teachStep: theStepCon});
+      this.setState({sessionStep: theStepCon});
+    }
+
+    const theNextCon = sessionStorage.getItem(theNext);
+    if(theNextCon) {
+      setFieldsValue({nextTeach: theNextCon});
+    }
+  };
+
+  componentDidMount() {
+    this.checkValues();
+  }
 
   render() {
 
@@ -34,7 +69,7 @@ class AddPlanContent extends React.Component {
     } = this.props;
 
     // console.log(this.state.plan)
-    const {plan,showEditor,canEditor} = this.state;
+    const {plan,showEditor,canEditor, sessionStep} = this.state;
     const teacher = getTeacherInfo();
     if(planId && planId>0 && this.state.canLoad) {
       request("teachPlanService.loadOne", {id: planId}, true).then((res)=> {
@@ -66,14 +101,24 @@ class AddPlanContent extends React.Component {
             // console.log(res)
             message.success(res.message);
             onOk(res.plan);
+
+            cleanSession();
           });
         }
       });
     };
 
-    const handleChangeContent = (html) => {
+    const cleanSession = () => {
+      sessionStorage.removeItem(theNext);
+      sessionStorage.removeItem(theName);
+      sessionStorage.removeItem(theImport);
+      sessionStorage.removeItem(theStep);
+    };
+
+   const handleChangeContent = (html) => {
       // console.log("add===", html);
       setFieldsValue({"teachStep": html});
+      setValue(theStep, html);
     };
 
     const modalOpts = {
@@ -88,23 +133,37 @@ class AddPlanContent extends React.Component {
       'underline'
     ];
 
+    const changeName = (e) => {
+      setValue(theName, e.target.value);
+    };
+    const changeGuide = (e) => {
+      setValue(theImport, e.target.value);
+    };
+    const changeNext = (e) => {
+      setValue(theNext, e.target.value);
+    };
+
+    const setValue = (name, value) => {
+      sessionStorage.setItem(name, value);
+    };
+
     return(
       <Modal {...modalOpts} style={{"minWidth":"80%", "top":"20px"}}>
         <Form layout="horizontal">
           {getFieldDecorator("id")(<Input type="hidden"/>)}
           <FormItem {...formItemLayout_large} label="知识点名称">
-            {getFieldDecorator('blockName', {rules: [{required: true, message: '此项不能为空'}]})(<Input placeholder="输入知识点名称" />)}
+            {getFieldDecorator('blockName', {rules: [{required: true, message: '此项不能为空'}]})(<Input placeholder="输入知识点名称" onKeyUp={changeName}/>)}
           </FormItem>
           <FormItem {...formItemLayout_large} label="知识点导入">
-              {getFieldDecorator('guide')(<TextArea placeholder="输入知识点导入" rows={2}>&nbsp;</TextArea>)}
+              {getFieldDecorator('guide')(<TextArea placeholder="输入知识点导入" onKeyUp={changeGuide} rows={2}>&nbsp;</TextArea>)}
           </FormItem>
           {showEditor?
             <FormItem {...formItemLayout_large} label="授课过程">
-              {getFieldDecorator('teachStep', {rules: [{required: true, message: '此面不能为空'}]})(<MyEditor content={plan?plan.teachStep:""} placeholder="授课过程" menu={editorMenu} onChangeContent={handleChangeContent}/>)}
+              {getFieldDecorator('teachStep', {rules: [{required: true, message: '此面不能为空'}]})(<MyEditor content={sessionStep?sessionStep:""} placeholder="授课过程" menu={editorMenu} onChangeContent={handleChangeContent}/>)}
             </FormItem>:""}
 
           <FormItem {...formItemLayout_large} label="承上启下">
-            {getFieldDecorator('nextTeach')(<TextArea placeholder="输入如何过渡到下一堂课" rows={3}>&nbsp;</TextArea>)}
+            {getFieldDecorator('nextTeach')(<TextArea placeholder="输入如何过渡到下一堂课" onKeyUp={changeNext} rows={3}>&nbsp;</TextArea>)}
           </FormItem>
         </Form>
       </Modal>

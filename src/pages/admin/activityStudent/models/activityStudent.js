@@ -23,6 +23,10 @@ export default {
       const data = yield call(objectService.updateStatus, obj);
       if(data) {message.success(data.message);}
     },
+    *onUpdatePayFlag({payload: obj}, {call}) {
+      const data = yield call(objectService.onUpdatePayFlag, obj);
+      if(data) {message.success(data.message);}
+    }
   },
   subscriptions: {
     setup({history, dispatch}) {

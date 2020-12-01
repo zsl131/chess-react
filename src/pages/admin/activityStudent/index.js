@@ -71,10 +71,14 @@ location
       dispatch({type: 'activityStudent/onUpdateStatus', payload: {id: id, status: status}}).then(()=>handleRefresh());
     },
     onVerify: (id, status, reason) => {
-      console.log("id::"+id+",,status::"+status, reason);
+      // console.log("id::"+id+",,status::"+status, reason);
       dispatch({type: 'activityStudent/onUpdateStatus', payload: {id: id, status: status, reason: reason}}).then(()=>handleRefresh());
+    },
+    onPay: (id, flag) => {
+      console.log("id::"+id+",,flag::"+flag);
+      dispatch({type: 'activityStudent/onUpdatePayFlag', payload: {id: id, flag: flag}}).then(()=>handleRefresh());
     }
-  }
+  };
 
   const updateOpts = {
     visible: activityStudent.updateVisible,

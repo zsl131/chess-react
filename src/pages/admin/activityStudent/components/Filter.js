@@ -151,6 +151,19 @@ export default class Filter extends React.Component {
         </FormItem>
 
         <FormItem>
+          {getFieldDecorator("payFlag")(
+            <Select
+              placeholder="缴费情况"
+              style={{ width: '100px' }}
+            >
+              <Option key="*">=全部=</Option>
+              <Option key="1">已缴费</Option>
+              <Option key="0">未缴费</Option>
+            </Select>
+          )}
+        </FormItem>
+
+        <FormItem>
           {getFieldDecorator("fromFlag")(
             <Select
               placeholder="报名来源"

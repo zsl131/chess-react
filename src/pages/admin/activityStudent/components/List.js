@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Dropdown, Form, Icon, Input, Menu, Modal, Pagination, Table, Tooltip} from 'antd';
+import {Button, Dropdown, Form, Icon, Input, Menu, Modal, Pagination, Popconfirm, Table, Tooltip} from 'antd';
 
 @Form.create()
 export default class List extends React.Component {
@@ -15,7 +15,7 @@ export default class List extends React.Component {
 
   onPass = (record) => {
     this.setState({isPass: true, item: record});
-  }
+  };
 
   hiddenReject = () => {
     this.setState({isReject: false});
@@ -35,7 +35,7 @@ export default class List extends React.Component {
           this.hiddenReject();
         }
       })
-    }
+    };
     const handlePass = (record) => {
       // this.props.onVerify(record.id, "1", "通过");
       validateFields((errors, values) => {
@@ -45,7 +45,11 @@ export default class List extends React.Component {
           this.hiddenPass();
         }
       })
-    }
+    };
+
+    const onPay = (record) => {
+      this.props.onPay(record.id, "1");
+    };
 
     const menu = (record) => {
       return (
@@ -98,7 +102,7 @@ export default class List extends React.Component {
       title: '状态',
       render:(record) => {
         return (
-          <div>
+          <div style={{"maxWidth":"150px"}}>
             <p>
               {record.status === '0' ? <span className="green">未审核</span> : (record.status === '1' ?<span className="blue">通过：{record.rejectReason}</span>:<span className="red">驳回：{record.rejectReason}</span>)}
             </p>
@@ -114,6 +118,18 @@ export default class List extends React.Component {
               <Button type="default" onClick={()=>this.onPass(record)}> 重新通过审核</Button>
               // <Popconfirm okType="primary" onConfirm={()=>handlePass(record)} title={`确定让【${record.stuName}】通过审核吗？`}><Button type="default"> 重新通过审核</Button></Popconfirm>
             }
+          </div>
+        );
+      }
+    }, {
+      title: '缴费',
+      render:(record) => {
+        const payFlag = record.payFlag;
+        return (
+          <div style={{"maxWidth":"150px"}}>
+            <p>
+              {(payFlag === '0' || !payFlag) ? <p><span className="red">未缴费</span><Popconfirm title="确定已收到相应费用了吗？此操作不可逆" onConfirm={()=>onPay(record)}><Button shape="circle">缴</Button></Popconfirm></p> : <span className="blue">已缴费</span>}
+            </p>
           </div>
         );
       }
