@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Pagination, Table, Tooltip, Popconfirm} from 'antd';
+import {Button, Icon, Pagination, Table, Tooltip, Popconfirm, Dropdown, Menu} from 'antd';
 import UpdateModal from '../../course/components/UpdateModal';
 import AddModal from '../../course/components/AddModal';
 import request from "../../../../utils/request";
@@ -8,6 +8,7 @@ import styles from "./list.css";
 
 import ShowPDFModal from '../../course/components/ShowPDFModal';
 import PlayVideoModal from "../../../../components/PlayVideoModal";
+import menu from "../../../admin/menu/models/menu";
 
 export default class ListCourse extends React.Component {
 
@@ -29,8 +30,20 @@ export default class ListCourse extends React.Component {
       updateCourse,
       deleteCourse,
       setShowTest,
+      handleAtta,
       ...listOpts
     } = this.props;
+
+    const menus = (record) => {
+      return (
+        <Menu>
+          <Menu.Item>视频：{record.videoId?<Tooltip placement="top" title="播放已上传的课程视频"><Button icon="play-circle" onClick={()=>handlePlayVideo(record)} type="dashed"/></Tooltip>:<span className="red">未传</span>}</Menu.Item>
+          <Menu.Item>PPT：{record.pptId?<Tooltip placement="top" title="下载已上传的PPT课件"><Button icon="download" onClick={()=>handleShowPDF(record.pptId)}/></Tooltip>:<span className="red">未传</span>}</Menu.Item>
+          <Menu.Item>学习单：{record.learnId?<Tooltip placement="top" title="查看已上传的学习单"><Button icon="eye" onClick={()=>handleShowPDF(record.learnId)}/></Tooltip>:<span className="red">未传</span>}</Menu.Item>
+          <Menu.Item><Button icon="setting" type="link" onClick={()=>handleAtta(record)}>视频管理</Button></Menu.Item>
+        </Menu>
+      )
+    };
 
     const columns = [{
       title: '封面',
@@ -62,6 +75,17 @@ export default class ListCourse extends React.Component {
         );
       }
     }, {
+      title: "附件",
+      render: (record) => {
+        return (
+          <Dropdown overlay={menus(record)}>
+            <Button>
+              附件 <Icon type="down" />
+            </Button>
+          </Dropdown>
+        );
+      }
+    }/*, {
       title: '视频',
       render:(record)=>{return (record.videoId?<Tooltip placement="top" title="播放已上传的课程视频"><Button icon="play-circle" onClick={()=>handlePlayVideo(record)} type="dashed"/></Tooltip>:<span className="red">未传</span>)}
     }, {
@@ -70,7 +94,7 @@ export default class ListCourse extends React.Component {
     }, {
       title: '学习单',
       render:(record)=>{return record.learnId?<Tooltip placement="top" title="查看已上传的学习单"><Button icon="eye" onClick={()=>handleShowPDF(record.learnId)}/></Tooltip>:<span className="red">未传</span>}
-    }, {
+    }*/, {
       title: '测试',
       render:(record)=>{return <Tooltip placement="top" title="是否显示给测试教师用户"><Button icon={record.showTest==="1"?"check":"close"} type={record.showTest==="1"?"primary":"default"} onClick={()=>setShowTest(record)}/></Tooltip>}
     }, {

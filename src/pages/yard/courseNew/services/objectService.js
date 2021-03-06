@@ -35,6 +35,10 @@ function loadOne(id) {
   return request(courseService+".loadOne", id, true);
 }
 
+function handleAtta(obj) {
+  return request(courseService+".handleAtta", obj, true);
+}
+
 
 export {
   index,
@@ -45,4 +49,5 @@ export {
   deleteCategory,
   deleteCourse,
   loadOne,
+  handleAtta,
 }

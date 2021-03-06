@@ -13,6 +13,8 @@ export default {
     category:{}, //当前分类
     treeData:[],
     totalElements: 0,
+    attaVisible: false,
+    attachmentList: [],
   },
   reducers: {
     modifyState(state,{payload: options}) {
@@ -53,11 +55,19 @@ export default {
       if(data) {message.success(data.message);}
     },
     *onUpdate({payload: id}, {call,put}) {
-      console.log("-----------------")
+      //console.log("-----------------")
       const data = yield call(objService.loadOne, {id});
-      console.log(data)
+      //console.log(data)
       if(data) {
         yield put({ type: 'modifyState', payload: {item: item, updateVisible: true} });
+      }
+    },
+    *handleAtta({payload: obj}, {put, call}) {
+      const data = yield call(objService.handleAtta, obj);
+      //console.log(data)
+      if(data) {
+        //TODO 需要展示相关数据
+        yield put({ type: 'modifyState', payload: {item: data.obj, attachmentList: data.attachmentList, attaVisible: true} });
       }
     }
   },

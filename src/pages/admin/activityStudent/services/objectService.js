@@ -15,4 +15,5 @@ function onUpdatePayFlag(data) {
 export {
   list,
   onUpdatePayFlag,
+  updateStatus,
 }

@@ -6,6 +6,7 @@ import {routerRedux} from 'dva/router'
 import ListRootCategory from './components/ListRootCategory';
 import ListCourse from './components/ListCourse';
 import ShowCourse from './components/ShowCourse';
+import AttachmentModal from "./components/AttachmentModal";
 
 const CourseNew = ({
   loading,
@@ -126,6 +127,10 @@ const CourseNew = ({
     },
     deleteCourse: (obj) => {
       dispatch({type: "courseNew/deleteCourse", payload: obj.id }).then(()=>{handleRefresh()});
+    },
+    handleAtta: (record) => {
+      //console.log(record)
+      dispatch({type: "courseNew/handleAtta", payload: {id: record.id} });
     }
   };
 
@@ -134,6 +139,25 @@ const CourseNew = ({
     ppt: courseNew.ppt,
     learn: courseNew.learn,
     video: courseNew.video,
+  };
+
+  const attaOpts = {
+    visible: courseNew.attaVisible,
+    title: `视频管理【${courseNew.item.title}】`,
+    //pid: courseNew.pid,
+    item: courseNew.item,
+    maskClosable: false,
+    attachmentList: courseNew.attachmentList,
+    // pname: courseNew.pname,
+    onCancel: () => {
+      dispatch({ type: 'courseNew/modifyState', payload: { attaVisible: false } });
+    },
+    onOk : (obj) => {
+      dispatch({type:'courseNew/add', payload: obj}).then(() => {
+        dispatch({ type: 'courseNew/modifyState', payload: { attaVisible: false } });
+        handleRefresh();
+      });
+    }
   };
 
   return(
@@ -146,6 +170,7 @@ const CourseNew = ({
           {(courseNew.type == 'base' || courseNew.type=='root') && <ListRootCategory {...listRootOpts}/>}
           {courseNew.type=='child' && <ListCourse {...listCourseOpts}/>}
           {courseNew.type=='course' && <ShowCourse {...showCourseOpts}/>}
+          {courseNew.attaVisible && <AttachmentModal {...attaOpts}/>}
         </Col>
       </Row>
     </div>

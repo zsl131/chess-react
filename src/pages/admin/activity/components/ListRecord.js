@@ -60,6 +60,13 @@ const ListRecord = ({
       )
     }
   }, {
+    title: '单价',
+    render: (record) => {
+      return (
+        <b style={{"color":"#F00"}}>{record.money} 元</b>
+      )
+    }
+  }, {
     title: '操作',
     dataIndex: 'id',
     render: (text, record) => {

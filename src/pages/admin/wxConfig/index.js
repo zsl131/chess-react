@@ -84,8 +84,23 @@ class WxConfig extends React.Component {
               <FormItem {...formItemLayout} label="aesKey">
                 {getFieldDecorator('aeskey', {rules: [{required: true, message: 'aeskey不能为空'}]})(<Input placeholder="输入aeskey"/>)}
               </FormItem>
+
               <FormItem {...formItemLayout} label="事件模板ID">
                 {getFieldDecorator('eventTemp')(<Input placeholder="输入事件模板ID"/>)}
+              </FormItem>
+
+              <FormItem {...formItemLayout} label="说明">
+                以下是属于微信支付功能的配置
+              </FormItem>
+
+              <FormItem {...formItemLayout} label="商户ID">
+                {getFieldDecorator('mchid')(<Input placeholder="输入商户ID"/>)}
+              </FormItem>
+              <FormItem {...formItemLayout} label="apiKey">
+                {getFieldDecorator('apiKey')(<Input placeholder="输入apiKey"/>)}
+              </FormItem>
+              <FormItem {...formItemLayout} label="支付回调地址">
+                {getFieldDecorator('payNotifyUrl')(<Input placeholder="输入支付回调地址"/>)}
               </FormItem>
 
               <FormItem className={styles.submitOper}>

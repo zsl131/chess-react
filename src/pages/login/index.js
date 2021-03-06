@@ -97,10 +97,11 @@ const Login = ({
               </TabPane>
             </Tabs>
             <Row className={styles.infoRow}>
-              <p>&copy; 2020-2022 Created By zsl</p>
+              <p>&copy; 2021-2025 Created By zsl</p>
               <p>技术支持：奇思教育</p>
               <p>监管部门：昭通市科协、昭通市教体局</p>
               <p><a href="http://qiniu.qswkx.com/chess.apk">下载安卓App</a></p>
+              <p>备案编号：<a href="https://beian.miit.gov.cn" target="_blank">滇ICP备19001062号-1</a></p>
             </Row>
           </Card>
         </Col>

@@ -272,7 +272,7 @@ export default class AddModal extends React.Component {
 
           <FormItem {...formItemLayout} label="附件">
             <Row>
-              <Col span={8} style={{"paddingRight":"10px"}}>
+              {/*<Col span={8} style={{"paddingRight":"10px"}}>
                 {getFieldDecorator('videoId')(<Input type="hidden"/>)}
                 <Upload
                   action="/api/yardUpload/uploadFile"
@@ -286,8 +286,12 @@ export default class AddModal extends React.Component {
                       选择视频文件上传
                     </Button>
                   }
+                  <Button type="primary">
+                    <Icon type='upload'/>
+                    选择视频文件上传
+                  </Button>
                 </Upload>
-              </Col>
+              </Col>*/}
               <Col span={8} style={{"paddingRight":"10px"}}>
                 {getFieldDecorator('pptId')(<Input type="hidden"/>)}
                 <Upload

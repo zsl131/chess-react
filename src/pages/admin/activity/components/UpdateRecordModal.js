@@ -106,6 +106,10 @@ export default class UpdateRecordModal extends React.Component {
 
           </FormItem>
 
+          <FormItem {...formItemLayout} label="单价">
+            {getFieldDecorator("money", {rules:[{required: true, message: "请输入每人所需要支付金额"}]})(<InputNumber placeholder="单价"/>)}
+          </FormItem>
+
           <FormItem {...formItemLayout} label="显示状态">
             {getFieldDecorator("status")(<Switch checkedChildren="可报名" unCheckedChildren="不可报名" defaultChecked={this.state.record.status === "0" || this.state.record.status === "1"}/>)}
           </FormItem>

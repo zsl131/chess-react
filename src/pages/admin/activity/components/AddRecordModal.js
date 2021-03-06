@@ -109,6 +109,10 @@ export default class AddRecordModal extends React.Component {
 
           </FormItem>
 
+          <FormItem {...formItemLayout} label="单价">
+            {getFieldDecorator("money", {rules:[{required: true, message: "请输入每人所需要支付金额"}]})(<InputNumber placeholder="单价"/>)}
+          </FormItem>
+
           {/*<FormItem {...formItemLayout} label="显示状态">
             {getFieldDecorator("status")(<Switch checkedChildren="显示" unCheckedChildren="隐藏"/>)}
           </FormItem>*/}
