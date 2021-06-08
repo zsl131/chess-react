@@ -27,14 +27,6 @@ const Filter = ({
         {getFieldDecorator("name_like")(<Input placeholder="姓名"/>)}
       </FormItem>
       <FormItem>
-        {getFieldDecorator("ageId_eq")(
-          <Select className="filterSelect" placeholder="年龄段" style={{"width":100}}>
-            <Option value="">全部</Option>
-            {ageList.map((item)=> {return <Option value={item.id} key={item.id}>{item.name}</Option>})}
-          </Select>
-        )}
-      </FormItem>
-      <FormItem>
         {getFieldDecorator("schoolId_eq")(
           <Select className="filterSelect" placeholder="就读学校" style={{"width":100}}>
             <Option value="">全部</Option>

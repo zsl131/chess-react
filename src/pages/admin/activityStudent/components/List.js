@@ -93,7 +93,7 @@ export default class List extends React.Component {
       render:(record) => {
         return (
           <div>
-            <p><b>{record.stuName}</b>｜{record.sex === '1'?"男":"女"} ｜ <span>{record.ageName}</span> ｜ {record.schoolName}</p>
+            <p><b>{record.stuName}</b>｜{record.sex === '1'?"男":"女"} ｜ {record.schoolName}</p>
             <p><Tooltip title="报名来源" placement="bottom">{record.fromFlag=='1'?<span className="blue">学校</span>:<span className="yellow">社会</span>}</Tooltip>｜{record.phone}</p>
           </div>
         );

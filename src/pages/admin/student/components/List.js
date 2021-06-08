@@ -39,9 +39,6 @@ const List = ({
       )
     }
   }, {
-    title: '年龄',
-    dataIndex: "ageName"
-  }, {
     title: "学校",
     dataIndex: "schoolName"
   }, {

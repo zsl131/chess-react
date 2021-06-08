@@ -11,7 +11,6 @@ export default class Filter extends React.Component {
   state = {
     data: [],
     fetching: false,
-    ageList:[],
     schoolList:[]
   }
 
@@ -26,20 +25,6 @@ export default class Filter extends React.Component {
         })));
 
         this.setState({data, fetching: false});
-      });
-    }
-  }
-
-  fetchAge = ()=> {
-    if(this.state.ageList<=0) {
-      request("publicCommonService.listAllAge", {}, true).then((response) => {
-        let data = [{value: "*", text: "==所有年龄=="}];
-        data.push( ...response.obj.map((item) => ({
-          value: ""+item.id,
-          text: item.name,
-        })));
-
-        this.setState({ageList: data, fetching: false});
       });
     }
   }
@@ -94,18 +79,6 @@ export default class Filter extends React.Component {
               style={{ width: '120px' }}
             >
               {data.map(d => <Option key={d.value}>{d.text}</Option>)}
-            </Select>
-          )}
-        </FormItem>
-        <FormItem>
-          {getFieldDecorator("ageId")(
-            <Select
-              placeholder="年龄段"
-              notFoundContent={fetching ? <Spin size="small" /> : null}
-              onFocus={this.fetchAge}
-              style={{ width: '120px' }}
-            >
-              {ageList.map(d => <Option key={d.value}>{d.text}</Option>)}
             </Select>
           )}
         </FormItem>
