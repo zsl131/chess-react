@@ -10,6 +10,7 @@ import UpdateRecordModal from './components/UpdateRecordModal';
 
 import Show from "./components/Show";
 import ImageModal from "./components/ImageModal";
+import QrModal from "./components/QrModal";
 
 const Record = ({
   activity,
@@ -49,8 +50,11 @@ const Record = ({
       dispatch({ type: 'activity/onShow', payload: id });
     },
     showImages: (obj) => {
-      console.log(obj);
       dispatch({ type: 'activity/showImages', payload: obj });
+    },
+    showShareQr: (obj) => {
+      obj.qrType = "ActivityRecord";
+      dispatch({ type: 'activity/showShareQr', payload: obj });
     }
   };
 
@@ -123,6 +127,26 @@ const Record = ({
     }
   };
 
+  const qrOpts = {
+    visible: activity.qrVisible,
+    qrList: activity.qrList,
+    record: activity.item,
+    maskClosable: false,
+    title: "推荐码",
+    onCancel:() => {
+      dispatch({type: 'activity/modifyState', payload: {qrVisible: false}});
+    },
+    onOk: (obj) => {
+      dispatch({type: 'activity/modifyState', payload: {qrVisible: false}});
+    },
+    buildQr: () => {
+      // console.log(activity.item)
+      let obj = activity.item;
+      obj.qrType = "ActivityRecord";
+      dispatch({type: 'activity/buildQr', payload: obj});
+    },
+  };
+
   return (
     <div>
       { (activity.item && activity.item.hasOwnProperty("id"))  ?
@@ -143,6 +167,7 @@ const Record = ({
           {activity.addRecordVisible && <AddRecordModal {...addRecordOpts}/>}
           {activity.updateRecordVisible && <UpdateRecordModal {...updateRecordOpts}/>}
           {activity.imageVisible && <ImageModal {...imgOpts}/>}
+          {activity.qrVisible && <QrModal {...qrOpts}/>}
         </div>:
         <h2 className="red" style={{"textAlign":"center"}}>没有权限访问！</h2>
       }

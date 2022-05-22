@@ -175,6 +175,24 @@ export default class Filter extends React.Component {
           {getFieldDecorator("phone_like")(<Input placeholder="联系电话"/>)}
         </FormItem>
         <FormItem>
+          {getFieldDecorator("hasShare")(
+            <Select
+              placeholder="有无推荐"
+              style={{ width: '100px' }}
+            >
+              <Option key="*">=全部=</Option>
+              <Option key="1">有推荐</Option>
+              <Option key="0">无推荐</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator("shareName_like")(<Input placeholder="推荐者姓名"/>)}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator("sharePhone_like")(<Input placeholder="推荐者电话"/>)}
+        </FormItem>
+        <FormItem>
           <Button type="primary" icon="search" htmlType="submit" >筛选</Button> &nbsp;&nbsp;
           <Button type="primary" icon="download" onClick={()=>onHandleDownload()} >下载</Button> &nbsp;&nbsp;
           <Button type="primary" icon="download" onClick={()=>onHandleDownloadExcel()} >报名情况下载</Button>

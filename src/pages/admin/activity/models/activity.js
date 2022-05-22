@@ -18,6 +18,9 @@ export default {
 
     imageVisible: false,
     imageList: [],
+
+    qrVisible: false,
+    qrList: [],
   },
   reducers: {
     modifyState(state, { payload: options }) {
@@ -90,10 +93,26 @@ export default {
         yield put({type: "modifyState", payload: {imageVisible: true, imageList: data.imageList, item: obj}});
       }
     },
+    *showShareQr({payload: obj}, {call,put}) {
+      // console.log(obj)
+      const data =yield call(activityService.loadShareQr, {recordId: obj.id, type: obj.qrType});
+      // console.log(data);
+      if(data) {
+        yield put({type: "modifyState", payload: {qrVisible: true, qrList: data.qrList, item: obj}});
+      }
+    },
     *deleteImage({payload: id}, {call}) {
-      const data = yield call(activityService.deleteImage, {id});
+      const data = yield call(activityService.deleteImage, {recordId: id});
       if(data) {
         message.success(data.message);
+      }
+    },
+    *buildQr({payload: obj}, {call,put}) {
+      const data = yield call(activityService.buildQr, {recordId: obj.id, type: obj.qrType});
+      //console.log(data)
+      if(data) {
+        message.success(data.message);
+        yield put({type: "modifyState", payload: {qrVisible: true, qrList: data.qrList}});
       }
     },
   },

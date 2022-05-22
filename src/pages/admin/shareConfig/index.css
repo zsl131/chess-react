@@ -1,0 +1,25 @@
+.mainContainer {
+  height: 100%; background: #FFF; margin:20px 10%;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.submitBtn {
+  width:60%;
+}
+.submitOper {
+  text-align:center;
+}
+
+.imgDiv {
+  position: relative;
+}
+.imgDiv img {
+  width: 100%;
+}
+.imgDiv .qrSpan {
+  border: 3px #F00 solid; position: absolute;
+  background-color: rgba(0,0,0,0.1); text-align: center; color:#888; font-size: 12px;
+}

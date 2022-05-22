@@ -1,5 +1,5 @@
 import React from 'react';
-import {Menu, Pagination, Table, Icon} from 'antd';
+import {Menu, Pagination, Table, Icon, Button} from 'antd';
 import QRCode from 'qrcode.react';
 import ListOperator from '../../../../components/ListOperator/ListOperator';
 import {Link} from 'react-router-dom';
@@ -11,6 +11,7 @@ const List = ({
   onUpdate,
   onPageChange,
   onShow,
+  showShareQr,
   totalElement,
   ...listOpts
 }) => {
@@ -60,6 +61,13 @@ const List = ({
           <p>发布：{record.publishDate}</p>
         </div>
       );
+    }
+  },{
+    title: '推荐码',
+    render: (record) => {
+      return (
+        <Button onClick={()=>showShareQr(record)}>推荐码</Button>
+      )
     }
   }, {
     title: '流量',

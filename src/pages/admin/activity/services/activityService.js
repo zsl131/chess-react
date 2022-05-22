@@ -48,6 +48,14 @@ function deleteImage(id) {
   return request("activityRecordImageService.deleteImage", id, true);
 }
 
+function loadShareQr(id) {
+  return request("shareUserQrService.listByRecordId", id, true);
+}
+
+function buildQr(id) {
+  return request("shareUserQrService.buildQr", id, true);
+}
+
 export {
   list,
   loadOne,
@@ -60,4 +68,6 @@ export {
   loadOneRecord,
   loadImage,
   deleteImage,
+  loadShareQr,
+  buildQr
 }

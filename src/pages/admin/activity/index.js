@@ -8,6 +8,7 @@ import List from './components/List';
 import AddModal from './components/AddModal';
 import UpdateModal from './components/UpdateModal';
 import Show from "./components/Show";
+import QrModal from "./components/QrModal";
 
 const Activity = ({
   activity,
@@ -58,6 +59,10 @@ const Activity = ({
     },
     onShow: (id) => {
       dispatch({ type: 'activity/onShow', payload: id });
+    },
+    showShareQr: (obj) => {
+      obj.qrType = "Activity";
+      dispatch({ type: 'activity/showShareQr', payload: obj });
     }
   }
 
@@ -106,7 +111,27 @@ const Activity = ({
     onCancel: () => {
       dispatch({ type: 'activity/modifyState', payload: { showVisible: false } });
     }
-  }
+  };
+
+  const qrOpts = {
+    visible: activity.qrVisible,
+    qrList: activity.qrList,
+    record: activity.item,
+    maskClosable: false,
+    title: "推荐码",
+    onCancel:() => {
+      dispatch({type: 'activity/modifyState', payload: {qrVisible: false}});
+    },
+    onOk: (obj) => {
+      dispatch({type: 'activity/modifyState', payload: {qrVisible: false}});
+    },
+    buildQr: () => {
+      // console.log(activity.item)
+      let obj = activity.item;
+      obj.qrType = "Activity";
+      dispatch({type: 'activity/buildQr', payload: obj});
+    },
+  };
 
   return (
     <div>
@@ -123,6 +148,7 @@ const Activity = ({
       {activity.addVisible && <AddModal {...addOpts}/>}
       {activity.updateVisible && <UpdateModal {...updateOpts}/>}
       {activity.showVisible && <Show {...showOpts}/>}
+      {activity.qrVisible && <QrModal {...qrOpts}/>}
     </div>
   );
 }

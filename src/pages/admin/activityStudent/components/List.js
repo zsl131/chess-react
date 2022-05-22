@@ -134,6 +134,15 @@ export default class List extends React.Component {
         );
       }
     }, {
+      title: "推荐者",
+      render:(record) => {
+        return (
+          <div>
+            {!record.userId ? <span className="red">无</span>:<div><p>{record.shareName}</p><p>{record.sharePhone}</p></div>}
+          </div>
+        )
+      }
+    }, {
       title: '签到',
       render:(record) => {
         return (
