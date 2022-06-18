@@ -26,6 +26,10 @@ export default {
     *onUpdatePayFlag({payload: obj}, {call}) {
       const data = yield call(objectService.onUpdatePayFlag, obj);
       if(data) {message.success(data.message);}
+    },
+    *deleteStudent({payload: obj}, {call}) {
+      const data = yield call(objectService.deleteStudent, obj);
+      if(data) {message.success(data.message);}
     }
   },
   subscriptions: {

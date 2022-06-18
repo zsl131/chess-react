@@ -73,7 +73,15 @@ export default class List extends React.Component {
       }
     }, {
       title: '活动标题',
-      dataIndex: 'actTitle'
+      // dataIndex: 'actTitle',
+      render: (record) => {
+        return (
+          <div>
+            <p>{record.actTitle}</p>
+            <p>{record.address}</p>
+          </div>
+        )
+      }
     }, {
       title: "活动时间",
       // dataIndex: 'holdTime'
@@ -93,7 +101,7 @@ export default class List extends React.Component {
       render:(record) => {
         return (
           <div>
-            <p><b>{record.stuName}</b>｜{record.sex === '1'?"男":"女"} ｜ {record.schoolName}</p>
+            <p><b>{record.stuName}</b>｜{record.sex === '1'?"男":"女"} ｜ {record.schoolName} ｜ {record.ageName}</p>
             <p><Tooltip title="报名来源" placement="bottom">{record.fromFlag=='1'?<span className="blue">学校</span>:<span className="yellow">社会</span>}</Tooltip>｜{record.phone}</p>
           </div>
         );
@@ -149,6 +157,13 @@ export default class List extends React.Component {
           <div>
           {record.hasCheck === '1'?<span className="blue">已签到</span>:<span className="red">未签到</span>}
           </div>
+        );
+      }
+    }, {
+      title: '删除',
+      render:(record) => {
+        return (
+          <Popconfirm okType="danger" onConfirm={()=>this.props.handleConfirm(record.id)} title={`确定删除[${record.stuName}]？此操作不可逆！`}><Button type="danger" size="small"><Icon type="close"/> 删除</Button></Popconfirm>
         );
       }
     }];

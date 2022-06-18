@@ -75,9 +75,11 @@ location
       dispatch({type: 'activityStudent/onUpdateStatus', payload: {id: id, status: status, reason: reason}}).then(()=>handleRefresh());
     },
     onPay: (id, flag) => {
-      console.log("id::"+id+",,flag::"+flag);
       dispatch({type: 'activityStudent/onUpdatePayFlag', payload: {id: id, flag: flag}}).then(()=>handleRefresh());
-    }
+    },
+    handleConfirm: (id) => {
+      dispatch({type: 'activityStudent/deleteStudent', payload: {id: id}}).then(()=>handleRefresh());
+  }
   };
 
   const updateOpts = {

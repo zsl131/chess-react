@@ -12,8 +12,13 @@ function onUpdatePayFlag(data) {
   return request("activityStudentService.updatePayFlag", data, true);
 }
 
+function deleteStudent(data) {
+  return request("activityStudentService.deleteStudent", data, true);
+}
+
 export {
   list,
   onUpdatePayFlag,
   updateStatus,
+  deleteStudent
 }
